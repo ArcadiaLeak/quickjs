@@ -1986,7 +1986,7 @@ static JSOSRWHandler *find_rh(JSThreadState *ts, int fd)
     JSOSRWHandler *rh;
     struct list_head *el;
 
-    list_for_each(el, &ts->os_rw_handlers) {
+    for(el = (&ts->os_rw_handlers)->next; el != (&ts->os_rw_handlers); el = el->next) {
         rh = list_entry(el, JSOSRWHandler, link);
         if (rh->fd == fd)
             return rh;
@@ -2050,7 +2050,7 @@ static JSOSSignalHandler *find_sh(JSThreadState *ts, int sig_num)
 {
     JSOSSignalHandler *sh;
     struct list_head *el;
-    list_for_each(el, &ts->os_signal_handlers) {
+    for(el = (&ts->os_signal_handlers)->next; el != (&ts->os_signal_handlers); el = el->next) {
         sh = list_entry(el, JSOSSignalHandler, link);
         if (sh->sig_num == sig_num)
             return sh;
@@ -2198,7 +2198,7 @@ static JSOSTimer *find_timer_by_id(JSThreadState *ts, int timer_id)
     struct list_head *el;
     if (timer_id <= 0)
         return nullptr;
-    list_for_each(el, &ts->os_timers) {
+    for(el = (&ts->os_timers)->next; el != (&ts->os_timers); el = el->next) {
         JSOSTimer *th = list_entry(el, JSOSTimer, link);
         if (th->timer_id == timer_id)
             return th;
@@ -2432,7 +2432,7 @@ static int js_os_poll(JSContext *ctx)
     if (!list_empty(&ts->os_timers)) {
         cur_time = get_time_ms();
         min_delay = 10000;
-        list_for_each(el, &ts->os_timers) {
+        for(el = (&ts->os_timers)->next; el != (&ts->os_timers); el = el->next) {
             JSOSTimer *th = list_entry(el, JSOSTimer, link);
             delay = th->timeout - cur_time;
             if (delay <= 0) {
@@ -2453,7 +2453,7 @@ static int js_os_poll(JSContext *ctx)
     }
 
     count = 0;
-    list_for_each(el, &ts->os_rw_handlers) {
+    for(el = (&ts->os_rw_handlers)->next; el != (&ts->os_rw_handlers); el = el->next) {
         rh = list_entry(el, JSOSRWHandler, link);
         if (rh->fd == 0 && !JS_IsNull(rh->rw_func[0])) {
             handles[count++] = (HANDLE)_get_osfhandle(rh->fd); // stdin
@@ -2462,7 +2462,7 @@ static int js_os_poll(JSContext *ctx)
         }
     }
 
-    list_for_each(el, &ts->port_list) {
+    for(el = (&ts->port_list)->next; el != (&ts->port_list); el = el->next) {
         JSWorkerMessageHandler *port = list_entry(el, JSWorkerMessageHandler, link);
         if (JS_IsNull(port->on_message_func))
             continue;
@@ -2478,7 +2478,7 @@ static int js_os_poll(JSContext *ctx)
         ret = WaitForMultipleObjects(count, handles, FALSE, timeout);
 
         if (ret < count) {
-            list_for_each(el, &ts->os_rw_handlers) {
+            for(el = (&ts->os_rw_handlers)->next; el != (&ts->os_rw_handlers); el = el->next) {
                 rh = list_entry(el, JSOSRWHandler, link);
                 if (rh->fd == 0 && !JS_IsNull(rh->rw_func[0])) {
                     call_handler(ctx, rh->rw_func[0]);
@@ -2487,7 +2487,7 @@ static int js_os_poll(JSContext *ctx)
                 }
             }
 
-            list_for_each(el, &ts->port_list) {
+            for(el = (&ts->port_list)->next; el != (&ts->port_list); el = el->next) {
                 JSWorkerMessageHandler *port = list_entry(el, JSWorkerMessageHandler, link);
                 if (!JS_IsNull(port->on_message_func)) {
                     JSWorkerMessagePipe *ps = port->recv_pipe;
@@ -2524,7 +2524,7 @@ static int js_os_poll(JSContext *ctx)
         JSOSSignalHandler *sh;
         uint64_t mask;
 
-        list_for_each(el, &ts->os_signal_handlers) {
+        for(el = (&ts->os_signal_handlers)->next; el != (&ts->os_signal_handlers); el = el->next) {
             sh = list_entry(el, JSOSSignalHandler, link);
             mask = (uint64_t)1 << sh->sig_num;
             if (os_pending_signals & mask) {
@@ -2542,7 +2542,7 @@ static int js_os_poll(JSContext *ctx)
     if (!list_empty(&ts->os_timers)) {
         cur_time = get_time_ms();
         min_delay = 10000;
-        list_for_each(el, &ts->os_timers) {
+        for(el = (&ts->os_timers)->next; el != (&ts->os_timers); el = el->next) {
             JSOSTimer *th = list_entry(el, JSOSTimer, link);
             delay = th->timeout - cur_time;
             if (delay <= 0) {
@@ -2568,7 +2568,7 @@ static int js_os_poll(JSContext *ctx)
     FD_ZERO(&rfds);
     FD_ZERO(&wfds);
     fd_max = -1;
-    list_for_each(el, &ts->os_rw_handlers) {
+    for(el = (&ts->os_rw_handlers)->next; el != (&ts->os_rw_handlers); el = el->next) {
         rh = list_entry(el, JSOSRWHandler, link);
         fd_max = max_int(fd_max, rh->fd);
         if (!JS_IsNull(rh->rw_func[0]))
@@ -2577,7 +2577,7 @@ static int js_os_poll(JSContext *ctx)
             FD_SET(rh->fd, &wfds);
     }
 
-    list_for_each(el, &ts->port_list) {
+    for(el = (&ts->port_list)->next; el != (&ts->port_list); el = el->next) {
         JSWorkerMessageHandler *port = list_entry(el, JSWorkerMessageHandler, link);
         if (!JS_IsNull(port->on_message_func)) {
             JSWorkerMessagePipe *ps = port->recv_pipe;
@@ -2588,7 +2588,7 @@ static int js_os_poll(JSContext *ctx)
 
     ret = select(fd_max + 1, &rfds, &wfds, nullptr, tvp);
     if (ret > 0) {
-        list_for_each(el, &ts->os_rw_handlers) {
+        for(el = (&ts->os_rw_handlers)->next; el != (&ts->os_rw_handlers); el = el->next) {
             rh = list_entry(el, JSOSRWHandler, link);
             if (!JS_IsNull(rh->rw_func[0]) &&
                 FD_ISSET(rh->fd, &rfds)) {
@@ -2604,7 +2604,7 @@ static int js_os_poll(JSContext *ctx)
             }
         }
 
-        list_for_each(el, &ts->port_list) {
+        for(el = (&ts->port_list)->next; el != (&ts->port_list); el = el->next) {
             JSWorkerMessageHandler *port = list_entry(el, JSWorkerMessageHandler, link);
             if (!JS_IsNull(port->on_message_func)) {
                 JSWorkerMessagePipe *ps = port->recv_pipe;
@@ -4188,7 +4188,7 @@ static JSRejectedPromiseEntry *find_rejected_promise(JSContext *ctx, JSThreadSta
 {
     struct list_head *el;
 
-    list_for_each(el, &ts->rejected_promise_list) {
+    for(el = (&ts->rejected_promise_list)->next; el != (&ts->rejected_promise_list); el = el->next) {
         JSRejectedPromiseEntry *rp = list_entry(el, JSRejectedPromiseEntry, link);
         if (JS_SameValue(ctx, rp->promise, promise))
             return rp;
@@ -4238,7 +4238,7 @@ static void js_std_promise_rejection_check(JSContext *ctx)
     struct list_head *el;
 
     if (unlikely(!list_empty(&ts->rejected_promise_list))) {
-        list_for_each(el, &ts->rejected_promise_list) {
+        for(el = (&ts->rejected_promise_list)->next; el != (&ts->rejected_promise_list); el = el->next) {
             JSRejectedPromiseEntry *rp = list_entry(el, JSRejectedPromiseEntry, link);
             fprintf(stderr, "Possibly unhandled promise rejection: ");
             js_std_dump_error1(ctx, rp->reason);

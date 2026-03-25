@@ -597,7 +597,7 @@ static BOOL is_broadcast_pending(void)
 {
     struct list_head *el;
     Test262Agent *agent;
-    list_for_each(el, &agent_list) {
+    for(el = (&agent_list)->next; el != (&agent_list); el = el->next) {
         agent = list_entry(el, Test262Agent, link);
         if (agent->broadcast_pending)
             return TRUE;
@@ -627,7 +627,7 @@ static JSValue js_agent_broadcast(JSContext *ctx, JSValue this_val,
     /* broadcast the values and wait until all agents have started
        calling their callbacks */
     pthread_mutex_lock(&agent_mutex);
-    list_for_each(el, &agent_list) {
+    for(el = (&agent_list)->next; el != (&agent_list); el = el->next) {
         agent = list_entry(el, Test262Agent, link);
         agent->broadcast_pending = TRUE;
         /* the shared array buffer is used by the thread, so increment
