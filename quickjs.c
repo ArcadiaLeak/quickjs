@@ -49,11 +49,6 @@
 
 #define OPTIMIZE         1
 #define SHORT_OPCODES    1
-#if defined(EMSCRIPTEN)
-#define DIRECT_DISPATCH  0
-#else
-#define DIRECT_DISPATCH  1
-#endif
 
 #if defined(__APPLE__)
 #define MALLOC_OVERHEAD  0
@@ -187,8 +182,8 @@ enum {
 
 /* number of typed array types */
 #define JS_TYPED_ARRAY_COUNT  (JS_CLASS_FLOAT64_ARRAY - JS_CLASS_UINT8C_ARRAY + 1)
-static uint8_t const typed_array_size_log2[JS_TYPED_ARRAY_COUNT];
-#define typed_array_size_log2(classid)  (typed_array_size_log2[(classid)- JS_CLASS_UINT8C_ARRAY])
+extern uint8_t const typed_array_size_log2_arr[JS_TYPED_ARRAY_COUNT];
+uint8_t typed_array_size_log2(auto classid) { return typed_array_size_log2_arr[classid - JS_CLASS_UINT8C_ARRAY]; }
 
 typedef enum JSErrorEnum {
     JS_EVAL_ERROR,
@@ -233,8 +228,6 @@ typedef enum {
     JS_GC_PHASE_DECREF,
     JS_GC_PHASE_REMOVE_CYCLES,
 } JSGCPhaseEnum;
-
-typedef enum OPCodeEnum OPCodeEnum;
 
 struct JSRuntime {
     JSMallocFunctions mf;
@@ -1346,10 +1339,10 @@ static JSValue js_error_toString(JSContext *ctx, JSValueConst this_val,
 static JSVarRef *js_global_object_find_uninitialized_var(JSContext *ctx, JSObject *p,
                                                          JSAtom atom, BOOL is_lexical);
 
-static const JSClassExoticMethods js_arguments_exotic_methods;
-static const JSClassExoticMethods js_string_exotic_methods;
-static const JSClassExoticMethods js_proxy_exotic_methods;
-static const JSClassExoticMethods js_module_ns_exotic_methods;
+extern const JSClassExoticMethods js_arguments_exotic_methods;
+extern const JSClassExoticMethods js_string_exotic_methods;
+extern const JSClassExoticMethods js_proxy_exotic_methods;
+extern const JSClassExoticMethods js_module_ns_exotic_methods;
 static JSClassID js_class_id_alloc = JS_CLASS_INIT_COUNT;
 
 static void js_trigger_gc(JSRuntime *rt, size_t size)
@@ -15766,7 +15759,7 @@ static int js_arguments_define_own_property(JSContext *ctx,
                              flags | JS_PROP_NO_EXOTIC);
 }
 
-static const JSClassExoticMethods js_arguments_exotic_methods = {
+const JSClassExoticMethods js_arguments_exotic_methods = {
     .define_own_property = js_arguments_define_own_property,
 };
 
@@ -17384,27 +17377,10 @@ static JSValue JS_CallInternal(JSContext *caller_ctx, JSValueConst func_obj,
     JSVarRef **var_refs;
     size_t alloca_size;
 
-#if !DIRECT_DISPATCH
 #define SWITCH(pc)      switch (opcode = *pc++)
 #define CASE(op)        case op
 #define DEFAULT         default
 #define BREAK           break
-#else
-    static const void * const dispatch_table[256] = {
-#define DEF(id, size, n_pop, n_push, f) && case_OP_ ## id,
-#if SHORT_OPCODES
-#define def(id, size, n_pop, n_push, f)
-#else
-#define def(id, size, n_pop, n_push, f) && case_default,
-#endif
-#include "quickjs-opcode.h"
-        [ OP_COUNT ... 255 ] = &&case_default
-    };
-#define SWITCH(pc)      goto *dispatch_table[opcode = *pc++];
-#define CASE(op)        case_ ## op
-#define DEFAULT         case_default
-#define BREAK           SWITCH(pc)
-#endif
 
     if (js_poll_interrupts(caller_ctx))
         return JS_EXCEPTION;
@@ -29771,7 +29747,7 @@ static int js_module_ns_has(JSContext *ctx, JSValueConst obj, JSAtom atom)
     return (find_own_property1(JS_VALUE_GET_OBJ(obj), atom) != NULL);
 }
 
-static const JSClassExoticMethods js_module_ns_exotic_methods = {
+const JSClassExoticMethods js_module_ns_exotic_methods = {
     .has_property = js_module_ns_has,
 };
 
@@ -44566,7 +44542,7 @@ static int js_string_delete_property(JSContext *ctx,
     return TRUE;
 }
 
-static const JSClassExoticMethods js_string_exotic_methods = {
+const JSClassExoticMethods js_string_exotic_methods = {
     .get_own_property = js_string_get_own_property,
     .define_own_property = js_string_define_own_property,
     .delete_property = js_string_delete_property,
@@ -50740,7 +50716,7 @@ static int js_resolve_proxy(JSContext *ctx, JSValueConst *pval, BOOL throw_excep
     return 0;
 }
 
-static const JSClassExoticMethods js_proxy_exotic_methods = {
+const JSClassExoticMethods js_proxy_exotic_methods = {
     .get_own_property = js_proxy_get_own_property,
     .define_own_property = js_proxy_define_own_property,
     .delete_property = js_proxy_delete_property,
@@ -56036,7 +56012,7 @@ int JS_AddIntrinsicBaseObjects(JSContext *ctx)
 
 /* Typed Arrays */
 
-static uint8_t const typed_array_size_log2[JS_TYPED_ARRAY_COUNT] = {
+uint8_t const typed_array_size_log2_arr[JS_TYPED_ARRAY_COUNT] = {
     0, 0, 0, 1, 1, 2, 2,
     3, 3,                   // BigInt64Array, BigUint64Array
     1, 2, 3                 // Float16Array, Float32Array, Float64Array
