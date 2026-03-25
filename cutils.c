@@ -97,7 +97,7 @@ void dbuf_init2(DynBuf *s, void *opaque, DynBufReallocFunc *realloc_func)
 
 void dbuf_init(DynBuf *s)
 {
-    dbuf_init2(s, NULL, NULL);
+    dbuf_init2(s, nullptr, nullptr);
 }
 
 /* Try to allocate 'len' more bytes. return < 0 if error */

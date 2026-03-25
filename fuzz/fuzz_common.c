@@ -34,9 +34,9 @@ void test_one_input_init(JSRuntime *rt, JSContext *ctx) {
     // 64 Kb
     JS_SetMaxStackSize(rt, 0x10000);
 
-    JS_SetModuleLoaderFunc(rt, NULL, js_module_loader, NULL);
-    JS_SetInterruptHandler(JS_GetRuntime(ctx), interrupt_handler, NULL);
-    js_std_add_helpers(ctx, 0, NULL);
+    JS_SetModuleLoaderFunc(rt, nullptr, js_module_loader, nullptr);
+    JS_SetInterruptHandler(JS_GetRuntime(ctx), interrupt_handler, nullptr);
+    js_std_add_helpers(ctx, 0, nullptr);
 
     // Load os and std
     js_std_init_handlers(rt);

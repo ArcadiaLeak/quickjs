@@ -24,7 +24,7 @@
 #ifndef LIST_H
 #define LIST_H
 
-#ifndef NULL
+#ifndef nullptr
 #include <stddef.h>
 #endif
 
@@ -73,8 +73,8 @@ static inline void list_del(struct list_head *el)
     next = el->next;
     prev->next = next;
     next->prev = prev;
-    el->prev = NULL; /* fail safe */
-    el->next = NULL; /* fail safe */
+    el->prev = nullptr; /* fail safe */
+    el->next = nullptr; /* fail safe */
 }
 
 static inline int list_empty(struct list_head *el)

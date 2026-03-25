@@ -163,7 +163,7 @@ static void re_string_list_init(REParseState *s1, REStringList *s)
     s->n_strings = 0;
     s->hash_size = 0;
     s->hash_bits = 0;
-    s->hash_table = NULL;
+    s->hash_table = nullptr;
 }
 
 static void re_string_list_free(REStringList *s)
@@ -171,7 +171,7 @@ static void re_string_list_free(REStringList *s)
     REString *p, *p_next;
     int i;
     for(i = 0; i < s->hash_size; i++) {
-        for(p = s->hash_table[i]; p != NULL; p = p_next) {
+        for(p = s->hash_table[i]; p != nullptr; p = p_next) {
             p_next = p->next;
             lre_realloc(s->cr.mem_opaque, p, 0);
         }
@@ -213,7 +213,7 @@ static __maybe_unused void re_string_list_dump(const char *str, const REStringLi
     
     j = 0;
     for(i = 0; i < s->hash_size; i++) {
-        for(p = s->hash_table[i]; p != NULL; p = p->next) {
+        for(p = s->hash_table[i]; p != nullptr; p = p->next) {
             printf("  %d/%d: '", j, s->n_strings);
             for(k = 0; k < p->len; k++) {
                 lre_print_char(p->buf[k], FALSE);
@@ -231,7 +231,7 @@ static int re_string_find2(REStringList *s, int len, const uint32_t *buf,
     REString *p;
     if (s->n_strings != 0) {
         h = h0 >> (32 - s->hash_bits);
-        for(p = s->hash_table[h]; p != NULL; p = p->next) {
+        for(p = s->hash_table[h]; p != nullptr; p = p->next) {
             if (p->hash == h0 && p->len == len &&
                 !memcmp(p->buf, buf, len * sizeof(buf[0]))) {
                 return 1;
@@ -248,13 +248,13 @@ static int re_string_find2(REStringList *s, int len, const uint32_t *buf,
         uint32_t new_hash_size;
         new_hash_bits = max_int(s->hash_bits + 1, 4);
         new_hash_size = 1 << new_hash_bits;
-        new_hash_table = lre_realloc(s->cr.mem_opaque, NULL,
+        new_hash_table = lre_realloc(s->cr.mem_opaque, nullptr,
                                      sizeof(new_hash_table[0]) * new_hash_size);
         if (!new_hash_table)
             return -1;
         memset(new_hash_table, 0, sizeof(new_hash_table[0]) * new_hash_size);
         for(i = 0; i < s->hash_size; i++) {
-            for(p = s->hash_table[i]; p != NULL; p = p_next) {
+            for(p = s->hash_table[i]; p != nullptr; p = p_next) {
                 p_next = p->next;
                 h = p->hash >> (32 - new_hash_bits);
                 p->next = new_hash_table[h];
@@ -268,7 +268,7 @@ static int re_string_find2(REStringList *s, int len, const uint32_t *buf,
         h = h0 >> (32 - s->hash_bits);
     }
 
-    p = lre_realloc(s->cr.mem_opaque, NULL, sizeof(REString) + len * sizeof(buf[0]));
+    p = lre_realloc(s->cr.mem_opaque, nullptr, sizeof(REString) + len * sizeof(buf[0]));
     if (!p)
         return -1;
     p->next = s->hash_table[h];
@@ -312,7 +312,7 @@ static int re_string_list_op(REStringList *a, REStringList *b, int op)
     case CR_OP_UNION:
         if (b->n_strings != 0) {
             for(i = 0; i < b->hash_size; i++) {
-                for(p = b->hash_table[i]; p != NULL; p = p->next) {
+                for(p = b->hash_table[i]; p != nullptr; p = p->next) {
                     if (re_string_find2(a, p->len, p->buf, p->hash, TRUE) < 0)
                         return -1;
                 }
@@ -325,7 +325,7 @@ static int re_string_list_op(REStringList *a, REStringList *b, int op)
             pp = &a->hash_table[i];
             for(;;) {
                 p = *pp;
-                if (p == NULL)
+                if (p == nullptr)
                     break;
                 ret = re_string_find2(b, p->len, p->buf, p->hash, FALSE);
                 if (op == CR_OP_SUB)
@@ -369,10 +369,10 @@ static int re_string_list_canonicalize(REParseState *s1,
         s->n_strings = 0;
         s->hash_size = 0;
         s->hash_bits = 0;
-        s->hash_table = NULL;
+        s->hash_table = nullptr;
 
         for(i = 0; i < a->hash_size; i++) {
-            for(p = a->hash_table[i]; p != NULL; p = p->next) {
+            for(p = a->hash_table[i]; p != nullptr; p = p->next) {
                 for(j = 0; j < p->len; j++) {
                     p->buf[j] = lre_canonicalize(p->buf[j], is_unicode);
                 }
@@ -1008,7 +1008,7 @@ static int parse_class_string_disjunction(REParseState *s, REStringList *cr,
     for(;;) {
         str.size = 0;
         while (*p != '}' && *p != '|') {
-            c = get_class_atom(s, NULL, &p, FALSE);
+            c = get_class_atom(s, nullptr, &p, FALSE);
             if (c < 0)
                 goto fail;
             if (dbuf_put_u32(&str, c)) {
@@ -1039,7 +1039,7 @@ static int parse_class_string_disjunction(REParseState *s, REStringList *cr,
 }
 
 /* return -1 if error otherwise the character or a class range
-   (CLASS_RANGE_BASE) if cr != NULL. In case of class range, 'cr' is
+   (CLASS_RANGE_BASE) if cr != nullptr. In case of class range, 'cr' is
    initialized. Otherwise, it is ignored. */
 static int get_class_atom(REParseState *s, REStringList *cr,
                           const uint8_t **pp, BOOL inclass)
@@ -1287,7 +1287,7 @@ static int re_emit_string_list(REParseState *s, const REStringList *sl)
     } else {
         /* at least one string list is present : match the longest ones first */
         /* XXX: add a new op_switch opcode to compile as a trie */
-        tab = lre_realloc(s->opaque, NULL, sizeof(tab[0]) * sl->n_strings);
+        tab = lre_realloc(s->opaque, nullptr, sizeof(tab[0]) * sl->n_strings);
         if (!tab) {
             re_parse_out_of_memory(s);
             return -1;
@@ -1295,7 +1295,7 @@ static int re_emit_string_list(REParseState *s, const REStringList *sl)
         has_empty_string = FALSE;
         n = 0;
         for(i = 0; i < sl->hash_size; i++) {
-            for(p = sl->hash_table[i]; p != NULL; p = p->next) {
+            for(p = sl->hash_table[i]; p != nullptr; p = p->next) {
                 if (p->len == 0) {
                     has_empty_string = TRUE;
                 } else {
@@ -1305,7 +1305,7 @@ static int re_emit_string_list(REParseState *s, const REStringList *sl)
         }
         assert(n <= sl->n_strings);
         
-        rqsort(tab, n, sizeof(tab[0]), re_string_cmp_len, NULL);
+        rqsort(tab, n, sizeof(tab[0]), re_string_cmp_len, nullptr);
 
         last_match_pos = -1;
         for(i = 0; i < n; i++) {
@@ -1682,7 +1682,7 @@ static int re_parse_group_name(char *buf, int buf_size, const uint8_t **pp)
     return 0;
 }
 
-/* if capture_name = NULL: return the number of captures + 1.
+/* if capture_name = nullptr: return the number of captures + 1.
    Otherwise, return the number of matching capture groups  */
 static int re_parse_captures(REParseState *s, int *phas_named_captures,
                              const char *capture_name, BOOL emit_group_index)
@@ -1744,7 +1744,7 @@ static int re_count_captures(REParseState *s)
 {
     if (s->total_capture_count < 0) {
         s->total_capture_count = re_parse_captures(s, &s->has_named_captures,
-                                                   NULL, FALSE);
+                                                   nullptr, FALSE);
     }
     return s->total_capture_count;
 }
@@ -2509,14 +2509,14 @@ static void *lre_bytecode_realloc(void *opaque, void *ptr, size_t size)
     if (size > (INT32_MAX / 2)) {
         /* the bytecode cannot be larger than 2G. Leave some slack to 
            avoid some overflows. */
-        return NULL;
+        return nullptr;
     } else {
         return lre_realloc(opaque, ptr, size);
     }
 }
 
 /* 'buf' must be a zero terminated UTF-8 string of length buf_len.
-   Return NULL if error and allocate an error message in *perror_msg,
+   Return nullptr if error and allocate an error message in *perror_msg,
    otherwise the compiled bytecode and its length in plen.
 */
 uint8_t *lre_compile(int *plen, char *error_msg, int error_msg_size,
@@ -2568,7 +2568,7 @@ uint8_t *lre_compile(int *plen, char *error_msg, int error_msg_size,
         dbuf_free(&s->group_names);
         pstrcpy(error_msg, error_msg_size, s->u.error_msg);
         *plen = 0;
-        return NULL;
+        return nullptr;
     }
 
     re_emit_op_u8(s, REOP_save_end, 0);
@@ -2755,7 +2755,7 @@ static no_inline int stack_realloc(REExecContext *s, size_t n)
     if (new_size < n)
         new_size = n;
     if (s->stack_buf == s->static_stack_buf) {
-        new_stack = lre_realloc(s->opaque, NULL, new_size * sizeof(StackElem));
+        new_stack = lre_realloc(s->opaque, nullptr, new_size * sizeof(StackElem));
         if (!new_stack)
             return -1;
         /* XXX: could use correct size */
@@ -3045,9 +3045,9 @@ static intptr_t lre_exec_backtrack(REExecContext *s, uint8_t **capture,
                 CHECK_STACK_SPACE(2 * (val2 - val + 1));
                 while (val <= val2) {
                     idx = 2 * val;
-                    SAVE_CAPTURE(idx, NULL);
+                    SAVE_CAPTURE(idx, nullptr);
                     idx = 2 * val + 1;
-                    SAVE_CAPTURE(idx, NULL);
+                    SAVE_CAPTURE(idx, nullptr);
                     val++;
                 }
             }
@@ -3346,7 +3346,7 @@ int lre_exec(uint8_t **capture,
     s->stack_size = countof(s->static_stack_buf);
 
     for(i = 0; i < s->capture_count * 2; i++)
-        capture[i] = NULL;
+        capture[i] = nullptr;
 
     cptr = cbuf + (cindex << cbuf_type);
     if (0 < cindex && cindex < clen && s->cbuf_type == 2) {
@@ -3379,13 +3379,13 @@ int lre_get_flags(const uint8_t *bc_buf)
     return get_u16(bc_buf + RE_HEADER_FLAGS);
 }
 
-/* Return NULL if no group names. Otherwise, return a pointer to
+/* Return nullptr if no group names. Otherwise, return a pointer to
    'capture_count - 1' zero terminated UTF-8 strings. */
 const char *lre_get_groupnames(const uint8_t *bc_buf)
 {
     uint32_t re_bytecode_len;
     if ((lre_get_flags(bc_buf) & LRE_FLAG_NAMED_GROUPS) == 0)
-        return NULL;
+        return nullptr;
     re_bytecode_len = get_u32(bc_buf + RE_HEADER_BYTECODE_LEN);
     return (const char *)(bc_buf + RE_HEADER_LEN + re_bytecode_len);
 }
@@ -3417,7 +3417,7 @@ int main(int argc, char **argv)
     }
     flags = atoi(argv[2]);
     bc = lre_compile(&len, error_msg, sizeof(error_msg), argv[1],
-                     strlen(argv[1]), flags, NULL);
+                     strlen(argv[1]), flags, nullptr);
     if (!bc) {
         fprintf(stderr, "error: %s\n", error_msg);
         exit(1);
@@ -3427,7 +3427,7 @@ int main(int argc, char **argv)
     input_len = strlen(input);
 
     capture = malloc(sizeof(capture[0]) * lre_get_alloc_count(bc));
-    ret = lre_exec(capture, bc, (uint8_t *)input, 0, input_len, 0, NULL);
+    ret = lre_exec(capture, bc, (uint8_t *)input, 0, input_len, 0, nullptr);
     printf("ret=%d\n", ret);
     if (ret == 1) {
         capture_count = lre_get_capture_count(bc);

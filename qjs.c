@@ -109,7 +109,7 @@ static JSContext *JS_NewCustomContext(JSRuntime *rt)
     JSContext *ctx;
     ctx = JS_NewContext(rt);
     if (!ctx)
-        return NULL;
+        return nullptr;
     /* system modules */
     js_init_module_std(ctx, "std");
     js_init_module_os(ctx, "os");
@@ -167,8 +167,8 @@ __attribute__((format(printf, 2, 3)))
             /* only handle %p and %zd */
             if (*fmt == 'p') {
                 uint8_t *ptr = va_arg(ap, void *);
-                if (ptr == NULL) {
-                    printf("NULL");
+                if (ptr == nullptr) {
+                    printf("nullptr");
                 } else {
                     printf("H%+06lld.%zd",
                            js_trace_malloc_ptr_offset(ptr, s->opaque),
@@ -202,7 +202,7 @@ static void *js_trace_malloc(JSMallocState *s, size_t size)
     assert(size != 0);
 
     if (unlikely(s->malloc_size + size > s->malloc_limit))
-        return NULL;
+        return nullptr;
     ptr = malloc(size);
     js_trace_malloc_printf(s, "A %zd -> %p\n", size, ptr);
     if (ptr) {
@@ -229,7 +229,7 @@ static void *js_trace_realloc(JSMallocState *s, void *ptr, size_t size)
 
     if (!ptr) {
         if (size == 0)
-            return NULL;
+            return nullptr;
         return js_trace_malloc(s, size);
     }
     old_size = js_trace_malloc_usable_size(ptr);
@@ -238,10 +238,10 @@ static void *js_trace_realloc(JSMallocState *s, void *ptr, size_t size)
         s->malloc_count--;
         s->malloc_size -= old_size + MALLOC_OVERHEAD;
         free(ptr);
-        return NULL;
+        return nullptr;
     }
     if (s->malloc_size + size - old_size > s->malloc_limit)
-        return NULL;
+        return nullptr;
 
     js_trace_malloc_printf(s, "R %zd %p", size, ptr);
 
@@ -315,9 +315,9 @@ int main(int argc, char **argv)
 {
     JSRuntime *rt;
     JSContext *ctx;
-    struct trace_malloc_data trace_data = { NULL };
+    struct trace_malloc_data trace_data = { nullptr };
     int optind;
-    char *expr = NULL;
+    char *expr = nullptr;
     int interactive = 0;
     int dump_memory = 0;
     int trace_memory = 0;
@@ -474,11 +474,11 @@ int main(int argc, char **argv)
     }
 
     /* loader for ES6 modules */
-    JS_SetModuleLoaderFunc2(rt, NULL, js_module_loader, js_module_check_attributes, NULL);
+    JS_SetModuleLoaderFunc2(rt, nullptr, js_module_loader, js_module_check_attributes, nullptr);
 
     if (dump_unhandled_promise_rejection) {
         JS_SetHostPromiseRejectionTracker(rt, js_std_promise_rejection_tracker,
-                                          NULL);
+                                          nullptr);
     }
 
     if (!empty_run) {
@@ -520,7 +520,7 @@ int main(int argc, char **argv)
                 goto fail;
         }
         if (interactive) {
-            JS_SetHostPromiseRejectionTracker(rt, NULL, NULL);
+            JS_SetHostPromiseRejectionTracker(rt, nullptr, nullptr);
             js_std_eval_binary(ctx, qjsc_repl, qjsc_repl_size, 0);
         }
         js_std_loop(ctx);

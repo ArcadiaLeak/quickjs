@@ -393,7 +393,7 @@ static void *cr_default_realloc(void *opaque, void *ptr, size_t size)
 void cr_init(CharRange *cr, void *mem_opaque, DynBufReallocFunc *realloc_func)
 {
     cr->len = cr->size = 0;
-    cr->points = NULL;
+    cr->points = nullptr;
     cr->mem_opaque = mem_opaque;
     cr->realloc_func = realloc_func ? realloc_func : cr_default_realloc;
 }
@@ -520,7 +520,7 @@ int cr_op1(CharRange *cr, const uint32_t *b_pt, int b_len, int op)
     int ret;
     cr->len = 0;
     cr->size = 0;
-    cr->points = NULL;
+    cr->points = nullptr;
     ret = cr_op(cr, a.points, a.len, b_pt, b_len, op);
     cr_free(&a);
     return ret;
@@ -624,7 +624,7 @@ static void cr_sort_and_remove_overlap(CharRange *cr)
     uint32_t start, end, start1, end1, i, j;
 
     /* the resulting ranges are not necessarily sorted and may overlap */
-    rqsort(cr->points, cr->len / 2, sizeof(cr->points[0]) * 2, point_cmp, NULL);
+    rqsort(cr->points, cr->len / 2, sizeof(cr->points[0]) * 2, point_cmp, nullptr);
     j = 0;
     for(i = 0; i < cr->len; ) {
         start = cr->points[i];
@@ -1198,7 +1198,7 @@ int unicode_normalize(uint32_t **pdst, const uint32_t *src, int src_len,
     to_nfd_rec(dbuf, (const int *)src, src_len, is_compat);
     if (dbuf_error(dbuf)) {
     fail:
-        *pdst = NULL;
+        *pdst = nullptr;
         return -1;
     }
     buf = (int *)dbuf->buf;

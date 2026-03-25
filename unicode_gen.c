@@ -85,7 +85,7 @@ const char *get_field(const char *p, int n)
         while (*p != ';' && *p != '\0')
             p++;
         if (*p == '\0')
-            return NULL;
+            return nullptr;
         p++;
     }
     return p;
@@ -129,11 +129,11 @@ int *get_field_str(int *plen, const char *str, int n)
     p = get_field(str, n);
     if (!p) {
         *plen = 0;
-        return NULL;
+        return nullptr;
     }
     len = 0;
     size = 0;
-    buf = NULL;
+    buf = nullptr;
     for(;;) {
         while (isspace(*p))
             p++;
@@ -149,7 +149,7 @@ char *get_line(char *buf, int buf_size, FILE *f)
 {
     int len;
     if (!fgets(buf, buf_size, f))
-        return NULL;
+        return nullptr;
     len = strlen(buf);
     if (len > 0 && buf[len - 1] == '\n')
         buf[len - 1] = '\0';
@@ -186,7 +186,7 @@ static void re_string_list_init(REStringList *s)
     s->n_strings = 0;
     s->hash_size = 0;
     s->hash_bits = 0;
-    s->hash_table = NULL;
+    s->hash_table = nullptr;
 }
 
 static  __maybe_unused void re_string_list_free(REStringList *s)
@@ -194,7 +194,7 @@ static  __maybe_unused void re_string_list_free(REStringList *s)
     REString *p, *p_next;
     int i;
     for(i = 0; i < s->hash_size; i++) {
-        for(p = s->hash_table[i]; p != NULL; p = p_next) {
+        for(p = s->hash_table[i]; p != nullptr; p = p_next) {
             p_next = p->next;
             free(p);
         }
@@ -223,7 +223,7 @@ static __maybe_unused void re_string_list_dump(const char *str, const REStringLi
     
     j = 0;
     for(i = 0; i < s->hash_size; i++) {
-        for(p = s->hash_table[i]; p != NULL; p = p->next) {
+        for(p = s->hash_table[i]; p != nullptr; p = p->next) {
             printf("  %d/%d: '", j, s->n_strings);
             for(k = 0; k < p->len; k++) {
                 lre_print_char(p->buf[k], FALSE);
@@ -241,7 +241,7 @@ static REString *re_string_find2(REStringList *s, int len, const uint32_t *buf,
     REString *p;
     if (s->n_strings != 0) {
         h = h0 >> (32 - s->hash_bits);
-        for(p = s->hash_table[h]; p != NULL; p = p->next) {
+        for(p = s->hash_table[h]; p != nullptr; p = p->next) {
             if (p->hash == h0 && p->len == len &&
                 !memcmp(p->buf, buf, len * sizeof(buf[0]))) {
                 return p;
@@ -250,7 +250,7 @@ static REString *re_string_find2(REStringList *s, int len, const uint32_t *buf,
     }
     /* not found */
     if (!add_flag)
-        return NULL;
+        return nullptr;
     /* increase the size of the hash table if needed */
     if (unlikely((s->n_strings + 1) > s->hash_size)) {
         REString **new_hash_table, *p_next;
@@ -260,10 +260,10 @@ static REString *re_string_find2(REStringList *s, int len, const uint32_t *buf,
         new_hash_size = 1 << new_hash_bits;
         new_hash_table = malloc(sizeof(new_hash_table[0]) * new_hash_size);
         if (!new_hash_table)
-            return NULL;
+            return nullptr;
         memset(new_hash_table, 0, sizeof(new_hash_table[0]) * new_hash_size);
         for(i = 0; i < s->hash_size; i++) {
-            for(p = s->hash_table[i]; p != NULL; p = p_next) {
+            for(p = s->hash_table[i]; p != nullptr; p = p_next) {
                 p_next = p->next;
                 h = p->hash >> (32 - new_hash_bits);
                 p->next = new_hash_table[h];
@@ -279,7 +279,7 @@ static REString *re_string_find2(REStringList *s, int len, const uint32_t *buf,
 
     p = malloc(sizeof(REString) + len * sizeof(buf[0]));
     if (!p)
-        return NULL;
+        return nullptr;
     p->next = s->hash_table[h];
     s->hash_table[h] = p;
     s->n_strings++;
@@ -488,18 +488,18 @@ void parse_unicode_data(const char *filename)
         p = get_field(line, 0);
         if (!p)
             continue;
-        code = strtoul(p, NULL, 16);
+        code = strtoul(p, nullptr, 16);
         lc = 0;
         uc = 0;
 
         p = get_field(line, 12);
         if (p && *p != ';') {
-            uc = strtoul(p, NULL, 16);
+            uc = strtoul(p, nullptr, 16);
         }
 
         p = get_field(line, 13);
         if (p && *p != ';') {
-            lc = strtoul(p, NULL, 16);
+            lc = strtoul(p, nullptr, 16);
         }
         ci = &tab[code];
         if (uc > 0 || lc > 0) {
@@ -531,7 +531,7 @@ void parse_unicode_data(const char *filename)
         p = get_field(line, 3);
         if (p && *p != ';' && *p != '\0') {
             int cc;
-            cc = strtoul(p, NULL, 0);
+            cc = strtoul(p, nullptr, 0);
             if (cc != 0) {
                 assert(code <= CHARCODE_MAX);
                 ci->combining_class = cc;
@@ -623,7 +623,7 @@ void parse_special_casing(CCInfo *tab, const char *filename)
         p = get_field(line, 0);
         if (!p)
             continue;
-        code = strtoul(p, NULL, 16);
+        code = strtoul(p, nullptr, 16);
         assert(code <= CHARCODE_MAX);
         ci = &tab[code];
 
@@ -699,7 +699,7 @@ void parse_case_folding(CCInfo *tab, const char *filename)
         p = get_field(line, 0);
         if (!p)
             continue;
-        code = strtoul(p, NULL, 16);
+        code = strtoul(p, nullptr, 16);
         assert(code <= CHARCODE_MAX);
         ci = &tab[code];
 
@@ -714,7 +714,7 @@ void parse_case_folding(CCInfo *tab, const char *filename)
             continue;
 
         p = get_field(line, 2);
-        assert(p != NULL);
+        assert(p != nullptr);
         if (status == 'S') {
             /* we always select the simple case folding and assume it
              * comes after the full case folding case */
@@ -1745,7 +1745,7 @@ void dump_case_folding_special_cases(CCInfo *tab)
         }
     }
     free(perm);
-    global_tab = NULL;
+    global_tab = nullptr;
 }
 
 
@@ -2370,7 +2370,7 @@ static void build_rgi_emoji_zwj_sequence(FILE *f, REStringList *sl)
 #if 0
     {
         for(h = 0; h < sl->hash_size; h++) {
-            for(p = sl->hash_table[h]; p != NULL; p = p->next) {
+            for(p = sl->hash_table[h]; p != nullptr; p = p->next) {
                 for(j = 0; j < p->len; j++)
                     printf(" %04x", p->buf[j]);
                 printf("\n");
@@ -2385,7 +2385,7 @@ static void build_rgi_emoji_zwj_sequence(FILE *f, REStringList *sl)
     
     /* avoid duplicating strings with emoji modifiers or hair colors */
     for(h = 0; h < sl->hash_size; h++) {
-        for(p = sl->hash_table[h]; p != NULL; p = p->next) {
+        for(p = sl->hash_table[h]; p != nullptr; p = p->next) {
             if (p->flags) /* already examined */
                 continue;
             mod_count = 0;
@@ -2426,7 +2426,7 @@ static void build_rgi_emoji_zwj_sequence(FILE *f, REStringList *sl)
                 zwj_encode_string(&dbuf, buf, p->len, mod_type, mod_pos, hair_color_pos);
             } else {
             keep:
-                zwj_encode_string(&dbuf, buf, p->len, EMOJI_MOD_NONE, NULL, -1);
+                zwj_encode_string(&dbuf, buf, p->len, EMOJI_MOD_NONE, nullptr, -1);
             }
         }
     }
@@ -2447,7 +2447,7 @@ void build_sequence_prop_list_table(FILE *f)
     fprintf(f, "} UnicodeSequencePropertyEnum;\n\n");
 
     dump_name_table(f, "unicode_sequence_prop_name_table",
-                    unicode_sequence_prop_name, SEQUENCE_PROP_COUNT, NULL);
+                    unicode_sequence_prop_name, SEQUENCE_PROP_COUNT, nullptr);
 
     dump_byte_table(f, "unicode_rgi_emoji_tag_sequence", rgi_emoji_tag_sequence.buf, rgi_emoji_tag_sequence.size);
 
@@ -3634,19 +3634,19 @@ void normalization_test(const char *filename)
 
         //        dump_str("in", in_str, in_len);
 
-        buf_len = unicode_normalize((uint32_t **)&buf, (uint32_t *)in_str, in_len, UNICODE_NFD, NULL, NULL);
+        buf_len = unicode_normalize((uint32_t **)&buf, (uint32_t *)in_str, in_len, UNICODE_NFD, nullptr, nullptr);
         check_str("nfd", pos, in_str, in_len, buf, buf_len, nfd_str, nfd_len);
         free(buf);
 
-        buf_len = unicode_normalize((uint32_t **)&buf, (uint32_t *)in_str, in_len, UNICODE_NFKD, NULL, NULL);
+        buf_len = unicode_normalize((uint32_t **)&buf, (uint32_t *)in_str, in_len, UNICODE_NFKD, nullptr, nullptr);
         check_str("nfkd", pos, in_str, in_len, buf, buf_len, nfkd_str, nfkd_len);
         free(buf);
 
-        buf_len = unicode_normalize((uint32_t **)&buf, (uint32_t *)in_str, in_len, UNICODE_NFC, NULL, NULL);
+        buf_len = unicode_normalize((uint32_t **)&buf, (uint32_t *)in_str, in_len, UNICODE_NFC, nullptr, nullptr);
         check_str("nfc", pos, in_str, in_len, buf, buf_len, nfc_str, nfc_len);
         free(buf);
 
-        buf_len = unicode_normalize((uint32_t **)&buf, (uint32_t *)in_str, in_len, UNICODE_NFKC, NULL, NULL);
+        buf_len = unicode_normalize((uint32_t **)&buf, (uint32_t *)in_str, in_len, UNICODE_NFKC, nullptr, nullptr);
         check_str("nfkc", pos, in_str, in_len, buf, buf_len, nfkc_str, nfkc_len);
         free(buf);
 
@@ -3675,7 +3675,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     unicode_db_path = argv[arg++];
-    outfilename = NULL;
+    outfilename = nullptr;
     if (arg < argc)
         outfilename = argv[arg++];
 

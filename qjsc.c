@@ -75,7 +75,7 @@ static const FeatureEntry feature_list[] = {
     { "typedarray", "TypedArrays" },
     { "promise", "Promise" },
 #define FE_MODULE_LOADER 9
-    { "module-loader", NULL },
+    { "module-loader", nullptr },
     { "weakref", "WeakRef" },
 };
 
@@ -96,7 +96,7 @@ void namelist_add(namelist_t *lp, const char *name, const char *short_name,
     if (short_name)
         e->short_name = strdup(short_name);
     else
-        e->short_name = NULL;
+        e->short_name = nullptr;
     e->flags = flags;
 }
 
@@ -108,7 +108,7 @@ void namelist_free(namelist_t *lp)
         free(e->short_name);
     }
     free(lp->array);
-    lp->array = NULL;
+    lp->array = nullptr;
     lp->size = 0;
 }
 
@@ -120,7 +120,7 @@ namelist_entry_t *namelist_find(namelist_t *lp, const char *name)
         if (!strcmp(e->name, name))
             return e;
     }
-    return NULL;
+    return nullptr;
 }
 
 static void get_c_name(char *buf, size_t buf_size, const char *file)
@@ -196,7 +196,7 @@ static void output_object_code(JSContext *ctx,
         exit(1);
     }
 
-    namelist_add(&cname_list, c_name, NULL, c_name_type);
+    namelist_add(&cname_list, c_name, nullptr, c_name_type);
 
     fprintf(fo, "const uint32_t %s_size = %u;\n\n",
             c_name, (unsigned int)out_buf_len);
@@ -267,7 +267,7 @@ JSModuleDef *jsc_module_loader(JSContext *ctx,
         if (!buf) {
             JS_ThrowReferenceError(ctx, "could not load module filename '%s'",
                                    module_name);
-            return NULL;
+            return nullptr;
         }
 
         res = js_module_test_json(ctx, attributes);
@@ -283,12 +283,12 @@ JSModuleDef *jsc_module_loader(JSContext *ctx,
             val = JS_ParseJSON2(ctx, (char *)buf, buf_len, module_name, flags);
             js_free(ctx, buf);
             if (JS_IsException(val))
-                return NULL;
+                return nullptr;
             /* create a dummy module */
             m = JS_NewCModule(ctx, module_name, js_module_dummy_init);
             if (!m) {
                 JS_FreeValue(ctx, val);
-                return NULL;
+                return nullptr;
             }
 
             get_c_name(cname, sizeof(cname), module_name);
@@ -312,7 +312,7 @@ JSModuleDef *jsc_module_loader(JSContext *ctx,
                                JS_EVAL_TYPE_MODULE | JS_EVAL_FLAG_COMPILE_ONLY);
             js_free(ctx, buf);
             if (JS_IsException(func_val))
-                return NULL;
+                return nullptr;
             get_c_name(cname, sizeof(cname), module_name);
             if (namelist_find(&cname_list, cname)) {
                 find_unique_cname(cname, sizeof(cname));
@@ -504,10 +504,10 @@ static int output_executable(const char *out_filename, const char *cfilename,
     *arg++ = "-lm";
     *arg++ = "-ldl";
     *arg++ = "-lpthread";
-    *arg = NULL;
+    *arg = nullptr;
 
     if (verbose) {
-        for(arg = argv; *arg != NULL; arg++)
+        for(arg = argv; *arg != nullptr; arg++)
             printf("%s ", *arg);
         printf("\n");
     }
@@ -587,9 +587,9 @@ int main(int argc, char **argv)
     size_t stack_size;
     namelist_t dynamic_module_list;
 
-    out_filename = NULL;
+    out_filename = nullptr;
     output_type = OUTPUT_EXECUTABLE;
-    cname = NULL;
+    cname = nullptr;
     feature_bitmap = FE_ALL;
     module = -1;
     byte_swap = FALSE;
@@ -689,7 +689,7 @@ int main(int argc, char **argv)
             }
             if (opt == 'D') {
                 optarg = get_short_optarg(&optind, opt, arg, argc, argv);
-                namelist_add(&dynamic_module_list, optarg, NULL, 0);
+                namelist_add(&dynamic_module_list, optarg, nullptr, 0);
                 break;
             }
             if (opt == 'x') {
@@ -761,7 +761,7 @@ int main(int argc, char **argv)
     JS_SetStripInfo(rt, strip_flags);
 
     /* loader for ES6 modules */
-    JS_SetModuleLoaderFunc2(rt, NULL, jsc_module_loader, NULL, NULL);
+    JS_SetModuleLoaderFunc2(rt, nullptr, jsc_module_loader, nullptr, nullptr);
 
     fprintf(fo, "/* File generated automatically by the QuickJS compiler. */\n"
             "\n"
@@ -780,11 +780,11 @@ int main(int argc, char **argv)
     for(i = optind; i < argc; i++) {
         const char *filename = argv[i];
         compile_file(ctx, fo, filename, cname, module);
-        cname = NULL;
+        cname = nullptr;
     }
 
     for(i = 0; i < dynamic_module_list.count; i++) {
-        if (!jsc_module_loader(ctx, dynamic_module_list.array[i].name, NULL, JS_UNDEFINED)) {
+        if (!jsc_module_loader(ctx, dynamic_module_list.array[i].name, nullptr, JS_UNDEFINED)) {
             fprintf(stderr, "Could not load dynamic module '%s'\n",
                     dynamic_module_list.array[i].name);
             exit(1);
@@ -797,7 +797,7 @@ int main(int argc, char **argv)
                 "{\n"
                 "  JSContext *ctx = JS_NewContextRaw(rt);\n"
                 "  if (!ctx)\n"
-                "    return NULL;\n");
+                "    return nullptr;\n");
         /* add the basic objects */
         fprintf(fo, "  JS_AddIntrinsicBaseObjects(ctx);\n");
         for(i = 0; i < countof(feature_list); i++) {
@@ -843,7 +843,7 @@ int main(int argc, char **argv)
 
         /* add the module loader if necessary */
         if (feature_bitmap & (1 << FE_MODULE_LOADER)) {
-            fprintf(fo, "  JS_SetModuleLoaderFunc2(rt, NULL, js_module_loader, js_module_check_attributes, NULL);\n");
+            fprintf(fo, "  JS_SetModuleLoaderFunc2(rt, nullptr, js_module_loader, js_module_check_attributes, nullptr);\n");
         }
 
         fprintf(fo,

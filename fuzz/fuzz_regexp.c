@@ -51,12 +51,12 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
         return 0;
     }
     bc = lre_compile(&len, error_msg, sizeof(error_msg), (const char *) data,
-                     size1, 0, NULL);
+                     size1, 0, nullptr);
     if (!bc) {
         return 0;
     }
     input = data + size1 + 1;
-    ret = lre_exec(capture, bc, input, 0, size - (size1 + 1), 0, NULL);
+    ret = lre_exec(capture, bc, input, 0, size - (size1 + 1), 0, nullptr);
     if (ret == 1) {
         lre_get_capture_count(bc);
     }

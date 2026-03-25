@@ -38,7 +38,7 @@ static JSClassID js_point_class_id;
 static void js_point_finalizer(JSRuntime *rt, JSValue val)
 {
     JSPointData *s = JS_GetOpaque(val, js_point_class_id);
-    /* Note: 's' can be NULL in case JS_SetOpaque() was not called */
+    /* Note: 's' can be nullptr in case JS_SetOpaque() was not called */
     js_free_rt(rt, s);
 }
 
@@ -145,7 +145,7 @@ JSModuleDef *js_init_module(JSContext *ctx, const char *module_name)
     JSModuleDef *m;
     m = JS_NewCModule(ctx, module_name, js_point_init);
     if (!m)
-        return NULL;
+        return nullptr;
     JS_AddModuleExport(ctx, m, "Point");
     return m;
 }

@@ -978,8 +978,8 @@ quickjs.c:1499:58: note: initializing argument 2 of ‘int js_resize_array(JSCon
                                                    ~~~~~~~^~~~~~
 quickjs.c: In function ‘int push_scope(JSParseState*)’:
 quickjs.c:23522:38: warning: invalid conversion from ‘void*’ to ‘JSVarScope*’ [-fpermissive]
-                 new_buf = js_realloc2(s->ctx, NULL, new_size * sizeof(*fd->scopes), &slack);
-                           ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                 new_buf = js_realloc2(s->ctx, nullptr, new_size * sizeof(*fd->scopes), &slack);
+                           ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                       |
                                       void*
 quickjs.c:23527:38: warning: invalid conversion from ‘void*’ to ‘JSVarScope*’ [-fpermissive]
@@ -1418,13 +1418,6 @@ quickjs.c:39143:73: warning: invalid conversion from ‘uint8_t’ {aka ‘unsig
 quickjs.c:5573:54: note: initializing argument 5 of ‘JSValue JS_NewCFunction2(JSContext*, JSValue (*)(JSContext*, JSValue, int, JSValue*), const char*, int, JSCFunctionEnum, int)’
                           int length, JSCFunctionEnum cproto, int magic)
                                       ~~~~~~~~~~~~~~~~^~~~~~
-quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:40433:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("__proto__", js_object_get___proto__, js_object_set___proto__ ),
-     ^~~~~~~~~~~~~~
 quickjs.c: In function ‘JSValue js_function_constructor(JSContext*, JSValue, int, JSValue*, int)’:
 quickjs.c:40452:36: warning: invalid conversion from ‘int’ to ‘JSFunctionKindEnum’ [-fpermissive]
      JSFunctionKindEnum func_kind = magic;
@@ -1450,23 +1443,17 @@ quickjs.c:40744:24: warning: invalid conversion from ‘uint8_t’ {aka ‘unsig
                         |
                         uint8_t {aka unsigned char}
 quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:40790:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("fileName", js_function_proto_fileName, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:40791:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("lineNumber", js_function_proto_lineNumber, NULL, 0 ),
+     JS_CGETSET_MAGIC_DEF("lineNumber", js_function_proto_lineNumber, nullptr, 0 ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:40792:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("columnNumber", js_function_proto_lineNumber, NULL, 1 ),
+     JS_CGETSET_MAGIC_DEF("columnNumber", js_function_proto_lineNumber, nullptr, 1 ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
@@ -1624,12 +1611,6 @@ quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
 quickjs.c:40959:5: note: in expansion of macro ‘DEF’
      DEF(JS_ATOM_AggregateError)
      ^~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:41304:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.species]", js_get_this, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.c: In function ‘int js_array_cmp_generic(const void*, const void*, void*)’:
 quickjs.c:42647:38: warning: invalid conversion from ‘void*’ to ‘array_sort_context*’ [-fpermissive]
      struct array_sort_context *psc = opaque;
@@ -1714,12 +1695,6 @@ quickjs.c:43756:23: warning: invalid conversion from ‘void*’ to ‘JSIterato
                        |
                        void*
 quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:44021:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.toStringTag]", js_iterator_proto_get_toStringTag, js_iterator_proto_set_toStringTag),
-     ^~~~~~~~~~~~~~
 quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
                                                                                                ^
@@ -2316,8 +2291,8 @@ quickjs.c:47973:19: warning: invalid conversion from ‘void*’ to ‘JSRegExpS
                    void*
 quickjs.c: In function ‘int value_buffer_append(ValueBuffer*, JSValue)’:
 quickjs.c:48037:34: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
-             new_arr = js_realloc2(b->ctx, NULL, sizeof(*b->arr) * new_size, &slack);
-                       ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             new_arr = js_realloc2(b->ctx, nullptr, sizeof(*b->arr) * new_size, &slack);
+                       ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
 quickjs.c:48041:34: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
@@ -2326,71 +2301,53 @@ quickjs.c:48041:34: warning: invalid conversion from ‘void*’ to ‘JSValue*�
                                   |
                                   void*
 quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:48513:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.species]", js_get_this, NULL ),
-     ^~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:48517:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("flags", js_regexp_get_flags, NULL ),
-     ^~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:48518:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("source", js_regexp_get_source, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:48519:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("global", js_regexp_get_flag, NULL, LRE_FLAG_GLOBAL ),
+     JS_CGETSET_MAGIC_DEF("global", js_regexp_get_flag, nullptr, LRE_FLAG_GLOBAL ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:48520:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("ignoreCase", js_regexp_get_flag, NULL, LRE_FLAG_IGNORECASE ),
+     JS_CGETSET_MAGIC_DEF("ignoreCase", js_regexp_get_flag, nullptr, LRE_FLAG_IGNORECASE ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:48521:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("multiline", js_regexp_get_flag, NULL, LRE_FLAG_MULTILINE ),
+     JS_CGETSET_MAGIC_DEF("multiline", js_regexp_get_flag, nullptr, LRE_FLAG_MULTILINE ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:48522:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("dotAll", js_regexp_get_flag, NULL, LRE_FLAG_DOTALL ),
+     JS_CGETSET_MAGIC_DEF("dotAll", js_regexp_get_flag, nullptr, LRE_FLAG_DOTALL ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:48523:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("unicode", js_regexp_get_flag, NULL, LRE_FLAG_UNICODE ),
+     JS_CGETSET_MAGIC_DEF("unicode", js_regexp_get_flag, nullptr, LRE_FLAG_UNICODE ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:48524:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("unicodeSets", js_regexp_get_flag, NULL, LRE_FLAG_UNICODE_SETS ),
+     JS_CGETSET_MAGIC_DEF("unicodeSets", js_regexp_get_flag, nullptr, LRE_FLAG_UNICODE_SETS ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:48525:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("sticky", js_regexp_get_flag, NULL, LRE_FLAG_STICKY ),
+     JS_CGETSET_MAGIC_DEF("sticky", js_regexp_get_flag, nullptr, LRE_FLAG_STICKY ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:48526:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("hasIndices", js_regexp_get_flag, NULL, LRE_FLAG_INDICES ),
+     JS_CGETSET_MAGIC_DEF("hasIndices", js_regexp_get_flag, nullptr, LRE_FLAG_INDICES ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
@@ -2491,12 +2448,6 @@ quickjs.h:1111:95: error: either all initializer clauses should be designated or
 quickjs.c:50926:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Symbol", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:50927:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("description", js_symbol_get_description, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.c: In function ‘JSValue js_symbol_keyFor(JSContext*, JSValue, int, JSValue*)’:
 quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
  #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
@@ -2807,17 +2758,11 @@ quickjs.c:52434:22: warning: invalid conversion from ‘void*’ to ‘JSMapStat
                       |
                       void*
 quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:52479:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.species]", js_get_this, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:52492:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("size", js_map_get_size, NULL, 0),
+     JS_CGETSET_MAGIC_DEF("size", js_map_get_size, nullptr, 0),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
  #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
@@ -2841,7 +2786,7 @@ quickjs.h:1110:120: error: either all initializer clauses should be designated o
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:52511:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("size", js_map_get_size, NULL, MAGIC_SET ),
+     JS_CGETSET_MAGIC_DEF("size", js_map_get_size, nullptr, MAGIC_SET ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
  #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
@@ -2972,12 +2917,6 @@ quickjs.c:53535:22: warning: invalid conversion from ‘void*’ to ‘JSPromise
                       |
                       void*
 quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:53655:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.species]", js_get_this, NULL),
-     ^~~~~~~~~~~~~~
 quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
                                                                                                ^
@@ -3115,13 +3054,6 @@ quickjs.c:56071:36: warning: invalid conversion from ‘void*’ to ‘uint8_t*�
                           ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
                                     |
                                     void*
-quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:56245:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.species]", js_get_this, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.c: In function ‘JSValue js_array_buffer_get_detached(JSContext*, JSValue)’:
 quickjs.c:56262:40: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      JSArrayBuffer *abuf = JS_GetOpaque2(ctx, this_val, JS_CLASS_ARRAY_BUFFER);
@@ -3195,55 +3127,43 @@ quickjs.h:1110:120: error: either all initializer clauses should be designated o
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:56597:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("byteLength", js_array_buffer_get_byteLength, NULL, JS_CLASS_ARRAY_BUFFER ),
+     JS_CGETSET_MAGIC_DEF("byteLength", js_array_buffer_get_byteLength, nullptr, JS_CLASS_ARRAY_BUFFER ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:56598:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("maxByteLength", js_array_buffer_get_maxByteLength, NULL, JS_CLASS_ARRAY_BUFFER ),
+     JS_CGETSET_MAGIC_DEF("maxByteLength", js_array_buffer_get_maxByteLength, nullptr, JS_CLASS_ARRAY_BUFFER ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:56599:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("resizable", js_array_buffer_get_resizable, NULL, JS_CLASS_ARRAY_BUFFER ),
+     JS_CGETSET_MAGIC_DEF("resizable", js_array_buffer_get_resizable, nullptr, JS_CLASS_ARRAY_BUFFER ),
      ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:56600:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("detached", js_array_buffer_get_detached, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
                                                                                                ^
 quickjs.c:56605:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "ArrayBuffer", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:56611:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.species]", js_get_this, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:56615:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("byteLength", js_array_buffer_get_byteLength, NULL, JS_CLASS_SHARED_ARRAY_BUFFER ),
+     JS_CGETSET_MAGIC_DEF("byteLength", js_array_buffer_get_byteLength, nullptr, JS_CLASS_SHARED_ARRAY_BUFFER ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:56616:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("maxByteLength", js_array_buffer_get_maxByteLength, NULL, JS_CLASS_SHARED_ARRAY_BUFFER ),
+     JS_CGETSET_MAGIC_DEF("maxByteLength", js_array_buffer_get_maxByteLength, nullptr, JS_CLASS_SHARED_ARRAY_BUFFER ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
                                                                                                                         ^
 quickjs.c:56617:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("growable", js_array_buffer_get_resizable, NULL, JS_CLASS_SHARED_ARRAY_BUFFER ),
+     JS_CGETSET_MAGIC_DEF("growable", js_array_buffer_get_resizable, nullptr, JS_CLASS_SHARED_ARRAY_BUFFER ),
      ^~~~~~~~~~~~~~~~~~~~
 quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
@@ -3287,48 +3207,12 @@ quickjs.c:58161:25: warning: invalid conversion from ‘void*’ to ‘uint8_t*�
                          |
                          void*
 quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58235:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.species]", js_get_this, NULL ),
-     ^~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58239:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("length", js_typed_array_get_length, NULL ),
-     ^~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58242:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("buffer", js_typed_array_get_buffer, NULL ),
-     ^~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58243:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("byteLength", js_typed_array_get_byteLength, NULL ),
-     ^~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58244:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("byteOffset", js_typed_array_get_byteOffset, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
  #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
                                                                                                     ^
 quickjs.c:58247:5: note: in expansion of macro ‘JS_ALIAS_DEF’
      JS_ALIAS_DEF("[Symbol.iterator]", "values" ),
      ^~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58250:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("[Symbol.toStringTag]", js_typed_array_get_toStringTag, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.h:1112:92: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_INT32_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_INT32, 0, .u = { .i32 = val } }
                                                                                             ^
@@ -3384,24 +3268,6 @@ quickjs.c:58861:23: warning: invalid conversion from ‘void*’ to ‘JSTypedAr
                        |
                        void*
 quickjs.c: At global scope:
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58943:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("buffer", js_dataview_get_buffer, NULL ),
-     ^~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58944:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("byteLength", js_dataview_get_byteLength, NULL ),
-     ^~~~~~~~~~~~~~
-quickjs.h:1109:97: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
-                                                                                                 ^
-quickjs.c:58945:5: note: in expansion of macro ‘JS_CGETSET_DEF’
-     JS_CGETSET_DEF("byteOffset", js_dataview_get_byteOffset, NULL ),
-     ^~~~~~~~~~~~~~
 quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
                                                                                                ^

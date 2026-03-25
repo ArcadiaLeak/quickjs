@@ -458,7 +458,7 @@ JSValue JS_AtomToString(JSContext *ctx, JSAtom atom);
 const char *JS_AtomToCStringLen(JSContext *ctx, size_t *plen, JSAtom atom);
 static inline const char *JS_AtomToCString(JSContext *ctx, JSAtom atom)
 {
-    return JS_AtomToCStringLen(ctx, NULL, atom);
+    return JS_AtomToCStringLen(ctx, nullptr, atom);
 }
 JSAtom JS_ValueToAtom(JSContext *ctx, JSValueConst val);
 
@@ -479,7 +479,7 @@ typedef struct JSPropertyDescriptor {
 typedef struct JSClassExoticMethods {
     /* Return -1 if exception (can only happen in case of Proxy object),
        FALSE if the property does not exists, TRUE if it exists. If 1 is
-       returned, the property descriptor 'desc' is filled if != NULL. */
+       returned, the property descriptor 'desc' is filled if != nullptr. */
     int (*get_own_property)(JSContext *ctx, JSPropertyDescriptor *desc,
                              JSValueConst obj, JSAtom prop);
     /* '*ptab' should hold the '*plen' property keys. Return 0 if OK,
@@ -505,8 +505,8 @@ typedef struct JSClassExoticMethods {
     int (*set_property)(JSContext *ctx, JSValueConst obj, JSAtom atom,
                         JSValueConst value, JSValueConst receiver, int flags);
 
-    /* To get a consistent object behavior when get_prototype != NULL,
-       get_property, set_property and set_prototype must be != NULL
+    /* To get a consistent object behavior when get_prototype != nullptr,
+       get_property, set_property and set_prototype must be != nullptr
        and the object must be created with a JS_NULL prototype. */
     JSValue (*get_prototype)(JSContext *ctx, JSValueConst obj);
     /* return < 0 if exception or TRUE/FALSE */
@@ -529,7 +529,7 @@ typedef struct JSClassDef {
     const char *class_name;
     JSClassFinalizer *finalizer;
     JSClassGCMark *gc_mark;
-    /* if call != NULL, the object is a function. If (flags &
+    /* if call != nullptr, the object is a function. If (flags &
        JS_CALL_FLAG_CONSTRUCTOR) != 0, the function is called as a
        constructor. In this case, 'this_val' is new.target. A
        constructor call only happens if the object constructor bit is
@@ -746,7 +746,7 @@ static inline const char *JS_ToCStringLen(JSContext *ctx, size_t *plen, JSValueC
 }
 static inline const char *JS_ToCString(JSContext *ctx, JSValueConst val1)
 {
-    return JS_ToCStringLen2(ctx, NULL, val1, 0);
+    return JS_ToCStringLen2(ctx, nullptr, val1, 0);
 }
 void JS_FreeCString(JSContext *ctx, const char *ptr);
 
@@ -928,7 +928,7 @@ void JS_SetIsHTMLDDA(JSContext *ctx, JSValueConst obj);
 
 typedef struct JSModuleDef JSModuleDef;
 
-/* return the module specifier (allocated with js_malloc()) or NULL if
+/* return the module specifier (allocated with js_malloc()) or nullptr if
    exception */
 typedef char *JSModuleNormalizeFunc(JSContext *ctx,
                                     const char *module_base_name,
@@ -942,13 +942,13 @@ typedef JSModuleDef *JSModuleLoaderFunc2(JSContext *ctx,
 typedef int JSModuleCheckSupportedImportAttributes(JSContext *ctx, void *opaque,
                                                    JSValueConst attributes);
                                                    
-/* module_normalize = NULL is allowed and invokes the default module
+/* module_normalize = nullptr is allowed and invokes the default module
    filename normalizer */
 void JS_SetModuleLoaderFunc(JSRuntime *rt,
                             JSModuleNormalizeFunc *module_normalize,
                             JSModuleLoaderFunc *module_loader, void *opaque);
 /* same as JS_SetModuleLoaderFunc but with attributes. if
-   module_check_attrs = NULL, no attribute checking is done. */
+   module_check_attrs = nullptr, no attribute checking is done. */
 void JS_SetModuleLoaderFunc2(JSRuntime *rt,
                              JSModuleNormalizeFunc *module_normalize,
                              JSModuleLoaderFunc2 *module_loader,
@@ -1106,7 +1106,7 @@ auto JS_CFUNC_MAGIC_DEF(const char* name, uint8_t length, auto func1, int16_t ma
 auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
 auto JS_CFUNC_F_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f_f, { .f_f_f = func1 } } } }; }
 auto JS_ITERATOR_NEXT_DEF(const char* name, uint8_t length, auto func1, int16_t magic) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, magic, { .func = { length, JS_CFUNC_iterator_next, { .iterator_next = func1 } } } }; }
-#define JS_CGETSET_DEF(name, fgetter, fsetter) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, .u = { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }
+auto JS_CGETSET_DEF(const char* name, auto fgetter, auto fsetter) { return JSCFunctionListEntry{ name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET, 0, { .getset = { .get = { .getter = fgetter }, .set = { .setter = fsetter } } } }; }
 #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
 #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
 #define JS_PROP_INT32_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_INT32, 0, .u = { .i32 = val } }

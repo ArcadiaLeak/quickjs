@@ -90,7 +90,7 @@ JSModuleDef *JS_INIT_MODULE(JSContext *ctx, const char *module_name)
     JSModuleDef *m;
     m = JS_NewCModule(ctx, module_name, js_bjson_init);
     if (!m)
-        return NULL;
+        return nullptr;
     JS_AddModuleExportList(ctx, m, js_bjson_funcs, countof(js_bjson_funcs));
     return m;
 }
