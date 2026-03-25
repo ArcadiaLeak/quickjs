@@ -380,22 +380,10 @@ quickjs.c:12468:27: warning: invalid conversion from ‘void*’ to ‘char*’ 
                ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
                            |
                            void*
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:12532:11: note: in expansion of macro ‘JS_NAN’
-     val = JS_NAN;
-           ^~~~~~
 quickjs.c: In function ‘JSValue JS_ToNumberHintFree(JSContext*, JSValue, JSToNumberHintEnum)’:
 quickjs.c:12553:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:12571:15: note: in expansion of macro ‘JS_NAN’
-         ret = JS_NAN;
-               ^~~~~~
 quickjs.c:12573:10: warning: narrowing conversion of ‘JS_TAG_OBJECT’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_OBJECT:
           ^~~~~~~~~~~~~
@@ -405,21 +393,9 @@ quickjs.c:12578:10: warning: narrowing conversion of ‘JS_TAG_STRING’ from �
 quickjs.c:12579:10: warning: narrowing conversion of ‘JS_TAG_STRING_ROPE’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING_ROPE:
           ^~~~~~~~~~~~~~~~~~
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:12600:31: note: in expansion of macro ‘JS_NAN’
-                         ret = JS_NAN;
-                               ^~~~~~
 quickjs.c:12607:10: warning: narrowing conversion of ‘JS_TAG_SYMBOL’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_SYMBOL:
           ^~~~~~~~~~~~~
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:12612:15: note: in expansion of macro ‘JS_NAN’
-         ret = JS_NAN;
-               ^~~~~~
 quickjs.c: In function ‘BOOL JS_NumberIsNegativeOrMinusZero(JSContext*, JSValue)’:
 quickjs.c:13146:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
@@ -533,13 +509,6 @@ quickjs.c:14046:16: warning: invalid conversion from ‘void*’ to ‘FILE*’ 
                 ^~~~~~
                 |
                 void*
-quickjs.c: In function ‘JSValue JS_StringToBigInt(JSContext*, JSValue)’:
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:14228:23: note: in expansion of macro ‘JS_NAN’
-                 val = JS_NAN;
-                       ^~~~~~
 quickjs.c: In function ‘JSValue JS_ToBigIntFree(JSContext*, JSValue)’:
 quickjs.c:14253:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
@@ -1941,14 +1910,6 @@ quickjs.h:1114:94: error: either all initializer clauses should be designated or
 quickjs.c:44208:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
      JS_PROP_DOUBLE_DEF("MIN_SAFE_INTEGER", -9007199254740991.0, 0 ), /* ES6 */
      ^~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_parseInt(JSContext*, JSValue, int, JSValue*)’:
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:44381:15: note: in expansion of macro ‘JS_NAN’
-         ret = JS_NAN;
-               ^~~~~~
-quickjs.c: At global scope:
 quickjs.c:44549:1: error: designator order for field ‘JSClassExoticMethods::delete_property’ does not match declaration order in ‘const JSClassExoticMethods’
  };
  ^
@@ -1961,13 +1922,6 @@ quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruc
 quickjs.c:44559:31: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSAtomStruct *p = JS_VALUE_GET_PTR(argv[0]);
                                ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_string_charCodeAt(JSContext*, JSValue, int, JSValue*)’:
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:44745:15: note: in expansion of macro ‘JS_NAN’
-         ret = JS_NAN;
-               ^~~~~~
 quickjs.c: In function ‘int JS_ToUTF32String(JSContext*, uint32_t**, JSValue)’:
 quickjs.c:45833:20: warning: invalid conversion from ‘void*’ to ‘uint32_t*’ {aka ‘unsigned int*’} [-fpermissive]
      buf = js_malloc(ctx, sizeof(buf[0]) * max_int(len, 1));
@@ -3107,92 +3061,6 @@ quickjs.c:54475:19: warning: using value of assignment with ‘volatile’-quali
 quickjs.c:54479:16: warning: using value of assignment with ‘volatile’-qualified left operand is deprecated [-Wvolatile]
      tv = (temp = day * 86400000) + time;   /* prevent generation of FMA */
           ~~~~~~^~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue get_date_field(JSContext*, JSValue, int, JSValue*, int)’:
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:54519:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.h:249:25: error: expected ‘;’ before ‘{’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                         ^
-quickjs.c:54519:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.h:249:27: error: expected primary-expression before ‘.’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                           ^
-quickjs.c:54519:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.c: In function ‘JSValue set_date_field(JSContext*, JSValue, int, JSValue*, int)’:
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:54556:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN; /* thisTimeValue is NaN */
-                ^~~~~~
-quickjs.h:249:25: error: expected ‘;’ before ‘{’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                         ^
-quickjs.c:54556:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN; /* thisTimeValue is NaN */
-                ^~~~~~
-quickjs.h:249:27: error: expected primary-expression before ‘.’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                           ^
-quickjs.c:54556:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN; /* thisTimeValue is NaN */
-                ^~~~~~
-quickjs.c: In function ‘JSValue js_Date_UTC(JSContext*, JSValue, int, JSValue*)’:
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:54765:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.h:249:25: error: expected ‘;’ before ‘{’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                         ^
-quickjs.c:54765:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.h:249:27: error: expected primary-expression before ‘.’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                           ^
-quickjs.c:54765:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.c: In function ‘JSValue js_Date_parse(JSContext*, JSValue, int, JSValue*)’:
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:55201:10: note: in expansion of macro ‘JS_NAN’
-     rv = JS_NAN;
-          ^~~~~~
-quickjs.c: In function ‘JSValue js_date_getTimezoneOffset(JSContext*, JSValue, int, JSValue*)’:
-quickjs.h:249:24: error: expected primary-expression before ‘)’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                        ^
-quickjs.c:55287:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.h:249:25: error: expected ‘;’ before ‘{’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                         ^
-quickjs.c:55287:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.h:249:27: error: expected primary-expression before ‘.’ token
- #define JS_NAN (JSValue){ .u.float64 = JS_FLOAT64_NAN, JS_TAG_FLOAT64 }
-                           ^
-quickjs.c:55287:16: note: in expansion of macro ‘JS_NAN’
-         return JS_NAN;
-                ^~~~~~
-quickjs.c:55288:5: error: ‘else’ without a previous ‘if’
-     else
-     ^~~~
 quickjs.c: At global scope:
 quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
  #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
