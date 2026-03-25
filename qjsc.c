@@ -198,8 +198,10 @@ static void output_object_code(JSContext *ctx,
 
     namelist_add(&cname_list, c_name, nullptr, c_name_type);
 
+    fprintf(fo, "extern const uint32_t %s_size;\n\n", c_name);
     fprintf(fo, "const uint32_t %s_size = %u;\n\n",
             c_name, (unsigned int)out_buf_len);
+    fprintf(fo, "extern const uint8_t %s[];\n\n", c_name);
     fprintf(fo, "const uint8_t %s[%u] = {\n",
             c_name, (unsigned int)out_buf_len);
     dump_hex(fo, out_buf, out_buf_len);

@@ -1616,7 +1616,7 @@ static JSValue js_std_urlGet(JSContext *ctx, JSValueConst this_val,
 }
 
 static JSClassDef js_std_file_class = {
-    "FILE",
+    .class_name = "FILE",
     .finalizer = js_std_file_finalizer,
 };
 
@@ -3573,7 +3573,7 @@ static void js_worker_mark(JSRuntime *rt, JSValueConst val,
 }
 
 static JSClassDef js_worker_class = {
-    "Worker",
+    .class_name = "Worker",
     .finalizer = js_worker_finalizer,
     .gc_mark = js_worker_mark,
 };

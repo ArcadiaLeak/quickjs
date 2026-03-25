@@ -110,7 +110,7 @@ static JSValue js_point_norm(JSContext *ctx, JSValueConst this_val,
 }
 
 static JSClassDef js_point_class = {
-    "Point",
+    .class_name = "Point",
     .finalizer = js_point_finalizer,
 };
 

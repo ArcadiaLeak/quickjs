@@ -44544,8 +44544,8 @@ static int js_string_delete_property(JSContext *ctx,
 
 const JSClassExoticMethods js_string_exotic_methods = {
     .get_own_property = js_string_get_own_property,
-    .define_own_property = js_string_define_own_property,
     .delete_property = js_string_delete_property,
+    .define_own_property = js_string_define_own_property,
 };
 
 static JSValue js_string_constructor(JSContext *ctx, JSValueConst new_target,
@@ -50718,9 +50718,9 @@ static int js_resolve_proxy(JSContext *ctx, JSValueConst *pval, BOOL throw_excep
 
 const JSClassExoticMethods js_proxy_exotic_methods = {
     .get_own_property = js_proxy_get_own_property,
-    .define_own_property = js_proxy_define_own_property,
-    .delete_property = js_proxy_delete_property,
     .get_own_property_names = js_proxy_get_own_property_names,
+    .delete_property = js_proxy_delete_property,
+    .define_own_property = js_proxy_define_own_property,
     .has_property = js_proxy_has,
     .get_property = js_proxy_get,
     .set_property = js_proxy_set,
@@ -59495,6 +59495,7 @@ int JS_AddIntrinsicTypedArrays(JSContext *ctx)
 {
     JSValue typed_array_base_func, typed_array_base_proto, obj;
     int i, ret;
+    JSCFunctionType ft;
 
     obj = JS_NewCConstructor(ctx, JS_CLASS_ARRAY_BUFFER, "ArrayBuffer",
                                     js_array_buffer_constructor, 1, JS_CFUNC_constructor, 0,
@@ -59542,7 +59543,7 @@ int JS_AddIntrinsicTypedArrays(JSContext *ctx)
         goto fail;
     
     /* Used to squelch a -Wcast-function-type warning. */
-    JSCFunctionType ft = { .generic_magic = js_typed_array_constructor };
+    ft = { .generic_magic = js_typed_array_constructor };
     for(i = JS_CLASS_UINT8C_ARRAY; i < JS_CLASS_UINT8C_ARRAY + JS_TYPED_ARRAY_COUNT; i++) {
         char buf[ATOM_GET_STR_BUF_SIZE];
         const char *name;
