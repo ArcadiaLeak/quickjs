@@ -1,3 +1,4 @@
+g++ -g -std=c++26 -fpermissive -fno-diagnostics-show-line-numbers -Wall -MMD -MF .obj/quickjs.check.o.d -Wno-array-bounds -Wno-format-truncation -Wno-infinite-recursion -fwrapv  -D_GNU_SOURCE -DCONFIG_VERSION=\"2025-09-13\" -DHAVE_CLOSEFROM -DCONFIG_CHECK_JSVALUE -c -o .obj/quickjs.check.o quickjs.c
 quickjs.c: In function ‘char* js_strndup(JSContext*, const char*, size_t)’:
 quickjs.c:1468:20: warning: invalid conversion from ‘void*’ to ‘char*’ [-fpermissive]
      ptr = js_malloc(ctx, n + 1);
@@ -16,7 +17,7 @@ quickjs.c:1649:23: warning: invalid conversion from ‘void*’ to ‘JSRuntime*
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: In function ‘int JS_EnqueueJob2(JSContext*, JSValue (*)(JSContext*, int, JSValue*), int, JSValue*, BOOL)’:
+quickjs.c: In function ‘int JS_EnqueueJob2(JSContext*, __JSValue* (*)(JSContext*, int, const __JSValue**), int, const __JSValue**, BOOL)’:
 quickjs.c:1847:25: warning: invalid conversion from ‘void*’ to ‘JSJobEntry*’ [-fpermissive]
          e = js_malloc_rt(ctx->rt, sizeof(*e) + argc * sizeof(JSValue));
              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,19 +40,31 @@ quickjs.c:2174:24: warning: invalid conversion from ‘void*’ to ‘JSContext*
            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
                         |
                         void*
-quickjs.c:2180:36: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c:2180:36: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
      ctx->class_proto = js_malloc_rt(rt, sizeof(ctx->class_proto[0]) *
                         ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                     |
                                     void*
                                      rt->class_count);
                                      ~~~~~~~~~~~~~~~~
+In file included from quickjs.c:30:
+quickjs.c: In function ‘void JS_SetClassProto(JSContext*, JSClassID, JSValue)’:
+quickjs.c:2251:21: warning: comparison of integer expressions of different signedness: ‘JSClassID’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     assert(class_id < rt->class_count);
+            ~~~~~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘__JSValue* JS_GetClassProto(JSContext*, JSClassID)’:
+quickjs.c:2258:21: warning: comparison of integer expressions of different signedness: ‘JSClassID’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     assert(class_id < rt->class_count);
+            ~~~~~~~~~^~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int JS_ResizeAtomHash(JSRuntime*, int)’:
 quickjs.c:2631:29: warning: invalid conversion from ‘void*’ to ‘uint32_t*’ {aka ‘unsigned int*’} [-fpermissive]
      new_hash = js_mallocz_rt(rt, sizeof(rt->atom_hash[0]) * new_hash_size);
                 ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                              |
                              void*
+quickjs.c:2634:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     for(i = 0; i < rt->atom_hash_size; i++) {
+                ~~^~~~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘JSAtom __JS_NewAtom(JSRuntime*, JSString*, int)’:
 quickjs.c:2815:34: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct**’ {aka ‘JSString**’} [-fpermissive]
          new_array = js_realloc_rt(rt, rt->atom_array, sizeof(*new_array) * new_size);
@@ -77,14 +90,47 @@ quickjs.c:2870:25: warning: invalid conversion from ‘void*’ to ‘JSAtomStru
              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
                          |
                          void*
+quickjs.c: In function ‘__JSValue* JS_NewSymbolFromAtom(JSContext*, JSAtom, int)’:
+quickjs.c:3111:18: warning: comparison of integer expressions of different signedness: ‘JSAtom’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     assert(descr < rt->atom_size);
+            ~~~~~~^~~~~~~~~~~~~~~
+quickjs.c: In function ‘const char* JS_AtomGetStrRT(JSRuntime*, char*, int, JSAtom)’:
+quickjs.c:3127:21: warning: comparison of integer expressions of different signedness: ‘JSAtom’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         assert(atom < rt->atom_size);
+                ~~~~~^~~~~~~~~~~~~~~
+quickjs.c: In function ‘__JSValue* __JS_AtomToValue(JSContext*, JSAtom, BOOL)’:
+quickjs.c:3181:21: warning: comparison of integer expressions of different signedness: ‘JSAtom’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         assert(atom < rt->atom_size);
+                ~~~~~^~~~~~~~~~~~~~~
+quickjs.c: In function ‘BOOL JS_AtomIsArrayIndex(JSContext*, uint32_t*, JSAtom)’:
+quickjs.c:3220:21: warning: comparison of integer expressions of different signedness: ‘JSAtom’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         assert(atom < rt->atom_size);
+                ~~~~~^~~~~~~~~~~~~~~
+quickjs.c:3223:43: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             is_num_string(&val, p) && val != -1) {
+                                       ~~~~^~~~~
+quickjs.c: In function ‘__JSValue* JS_AtomIsNumericIndex1(JSContext*, JSAtom)’:
+quickjs.c:3246:17: warning: comparison of integer expressions of different signedness: ‘JSAtom’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     assert(atom < rt->atom_size);
+            ~~~~~^~~~~~~~~~~~~~~
 quickjs.c: In function ‘JSAtom js_atom_concat_str(JSContext*, JSAtom, const char*)’:
 quickjs.c:3361:22: warning: invalid conversion from ‘void*’ to ‘char*’ [-fpermissive]
      cstr2 = js_malloc(ctx, len + len1 + 1);
              ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
                       |
                       void*
+quickjs.c: In function ‘BOOL JS_IsRegisteredClass(JSRuntime*, JSClassID)’:
+quickjs.c:3427:22: warning: comparison of integer expressions of different signedness: ‘JSClassID’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     return (class_id < rt->class_count &&
+             ~~~~~~~~~^~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int JS_NewClass1(JSRuntime*, JSClassID, const JSClassDef*, JSAtom)’:
-quickjs.c:3454:36: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c:3442:18: warning: comparison of integer expressions of different signedness: ‘JSClassID’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     if (class_id < rt->class_count &&
+         ~~~~~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:3446:18: warning: comparison of integer expressions of different signedness: ‘JSClassID’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     if (class_id >= rt->class_count) {
+         ~~~~~~~~~^~~~~~~~~~~~~~~~~~
+quickjs.c:3454:36: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
              new_tab = js_realloc_rt(rt, ctx->class_proto,
                        ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
                                     |
@@ -110,7 +156,7 @@ quickjs.c:3662:26: warning: invalid conversion from ‘void*’ to ‘JSString*�
                ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                           |
                           void*
-quickjs.c: In function ‘JSValue string_buffer_end(StringBuffer*)’:
+quickjs.c: In function ‘__JSValue* string_buffer_end(StringBuffer*)’:
 quickjs.c:3915:28: warning: invalid conversion from ‘void*’ to ‘JSString*’ [-fpermissive]
          str = js_realloc_rt(s->ctx->rt, str, sizeof(JSString) +
                ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,7 +164,7 @@ quickjs.c:3915:28: warning: invalid conversion from ‘void*’ to ‘JSString*�
                             void*
                              (s->len << s->is_wide_char) + 1 - s->is_wide_char);
                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_new_string_rope(JSContext*, JSValue, JSValue)’:
+quickjs.c: In function ‘__JSValue* js_new_string_rope(JSContext*, JSValue, JSValue)’:
 quickjs.c:4477:18: warning: invalid conversion from ‘void*’ to ‘JSStringRope*’ [-fpermissive]
      r = js_malloc(ctx, sizeof(*r));
          ~~~~~~~~~^~~~~~~~~~~~~~~~~
@@ -140,19 +186,43 @@ quickjs.c:4763:35: warning: invalid conversion from ‘void*’ to ‘JSShape**�
                                    void*
                                     new_shape_hash_size);
                                     ~~~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘JSShape* js_clone_shape(JSContext*, JSShape*)’:
+quickjs.c:4884:43: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     for(i = 0, pr = get_shape_prop(sh); i < sh->prop_count; i++, pr++) {
+                                         ~~^~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void js_free_shape0(JSRuntime*, JSShape*)’:
+quickjs.c:4908:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     for(i = 0; i < sh->prop_count; i++) {
+                ~~^~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int resize_properties(JSContext*, JSShape**, JSObject*, uint32_t)’:
 quickjs.c:4946:30: warning: invalid conversion from ‘void*’ to ‘JSProperty*’ [-fpermissive]
          new_prop = js_realloc(ctx, p->prop, sizeof(new_prop[0]) * new_size);
                     ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                               |
                               void*
+quickjs.c:4973:37: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         for(i = 0, pr = sh->prop; i < sh->prop_count; i++, pr++) {
+                                   ~~^~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int compact_properties(JSContext*, JSObject*)’:
+quickjs.c:5006:21: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     assert(new_size <= sh->prop_size);
+            ~~~~~~~~~^~~~~~~~~~~~~~~~
+quickjs.c:5030:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     for(i = 0; i < sh->prop_count; i++) {
+                ~~^~~~~~~~~~~~~~~~
+quickjs.c:5043:14: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     assert(j == (sh->prop_count - sh->deleted_prop_count));
+            ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 quickjs.c:5053:26: warning: invalid conversion from ‘void*’ to ‘JSProperty*’ [-fpermissive]
      new_prop = js_realloc(ctx, p->prop, sizeof(new_prop[0]) * new_size);
                 ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                           |
                           void*
-quickjs.c: In function ‘JSValue JS_NewObjectFromShape(JSContext*, JSShape*, JSClassID, JSProperty*)’:
+quickjs.c: In function ‘JSShape* find_hashed_shape_prop(JSRuntime*, JSShape*, JSAtom, int)’:
+quickjs.c:5138:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+             sh1->prop_count == ((n = sh->prop_count) + 1)) {
+             ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘__JSValue* JS_NewObjectFromShape(JSContext*, JSShape*, JSClassID, JSProperty*)’:
 quickjs.c:5208:18: warning: invalid conversion from ‘void*’ to ‘JSObject*’ [-fpermissive]
      p = js_malloc(ctx, sizeof(JSObject));
          ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
@@ -169,19 +239,19 @@ quickjs.c:5589:44: warning: invalid conversion from ‘void*’ to ‘JSCFunctio
                                 ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                             |
                                             void*
-quickjs.c: In function ‘void js_c_function_data_mark(JSRuntime*, JSValue, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.c: In function ‘void js_c_function_data_mark(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
 quickjs.c:5603:44: warning: invalid conversion from ‘void*’ to ‘JSCFunctionDataRecord*’ [-fpermissive]
      JSCFunctionDataRecord *s = JS_GetOpaque(val, JS_CLASS_C_FUNCTION_DATA);
                                 ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                             |
                                             void*
-quickjs.c: In function ‘JSValue js_c_function_data_call(JSContext*, JSValue, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_c_function_data_call(JSContext*, JSValueConst, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:5617:44: warning: invalid conversion from ‘void*’ to ‘JSCFunctionDataRecord*’ [-fpermissive]
      JSCFunctionDataRecord *s = JS_GetOpaque(func_obj, JS_CLASS_C_FUNCTION_DATA);
                                 ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                             |
                                             void*
-quickjs.c: In function ‘JSValue JS_NewCFunctionData(JSContext*, JSValue (*)(JSContext*, JSValue, int, JSValue*, int, JSValue*), int, int, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* JS_NewCFunctionData(JSContext*, __JSValue* (*)(JSContext*, JSValueConst, int, const __JSValue**, int, __JSValue**), int, int, int, const __JSValue**)’:
 quickjs.c:5647:18: warning: invalid conversion from ‘void*’ to ‘JSCFunctionDataRecord*’ [-fpermissive]
      s = js_malloc(ctx, sizeof(*s) + data_len * sizeof(JSValue));
          ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -193,6 +263,18 @@ quickjs.c:5671:36: warning: invalid conversion from ‘uintptr_t’ {aka ‘long
             ~~~~~~~~~~~~~~~~~~~~~~~~^~~
                                     |
                                     uintptr_t {aka long unsigned int}
+quickjs.c: In function ‘void js_array_finalizer(JSRuntime*, JSValue)’:
+quickjs.c:5779:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     for(i = 0; i < p->u.array.count; i++) {
+                ~~^~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void js_array_mark(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.c:5791:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     for(i = 0; i < p->u.array.count; i++) {
+                ~~^~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void js_for_in_iterator_finalizer(JSRuntime*, JSValue)’:
+quickjs.c:5912:22: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+         for(i = 0; i < it->atom_count; i++) {
+                    ~~^~~~~~~~~~~~~~~~
 quickjs.c: In function ‘void __JS_FreeValueRT(JSRuntime*, JSValue)’:
 quickjs.c:6037:10: warning: narrowing conversion of ‘JS_TAG_STRING’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING:
@@ -210,55 +292,79 @@ quickjs.c:6061:10: warning: narrowing conversion of ‘JS_TAG_MODULE’ from ‘
      case JS_TAG_MODULE:
           ^~~~~~~~~~~~~
 In file included from quickjs.c:45:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSGCObjectHeader*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSGCObjectHeader*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:6063:35: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSGCObjectHeader *p = JS_VALUE_GET_PTR(v);
                                    ^~~~~~~~~~~~~~~~
 quickjs.c:6074:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:6076:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSBigInt *p = JS_VALUE_GET_PTR(v);
                            ^~~~~~~~~~~~~~~~
 quickjs.c:6080:10: warning: narrowing conversion of ‘JS_TAG_SYMBOL’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_SYMBOL:
           ^~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:6082:31: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSAtomStruct *p = JS_VALUE_GET_PTR(v);
                                ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘void JS_MarkValue(JSRuntime*, JSValue, void (*)(JSRuntime*, JSGCObjectHeader*))’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSGCObjectHeader*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘void JS_MarkValue(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSGCObjectHeader*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:6148:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              mark_func(rt, JS_VALUE_GET_PTR(val));
                            ^~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void JS_ComputeMemoryUsage(JSRuntime*, JSMemoryUsage*)’:
+quickjs.c:6625:35: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+                     for (i = 0; i < p->u.array.count; i++) {
+                                 ~~^~~~~~~~~~~~~~~~~~
+quickjs.c:6639:35: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+                     for (i = 0; i < p->u.array.count; i++) {
+                                 ~~^~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void JS_DumpMemoryUsage(FILE*, const JSMemoryUsage*, JSRuntime*)’:
+quickjs.c:6829:22: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+         for(i = 0; i < countof(object_types); i++) {
+quickjs.c: In function ‘int find_line_num(JSContext*, JSFunctionBytecode*, uint32_t, int*)’:
+quickjs.c:7050:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     if (pc_value != -1) {
+         ~~~~~~~~~^~~~~
+quickjs.c:7076:26: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             if (pc_value < pc)
+                 ~~~~~~~~~^~~~
 quickjs.c: In function ‘int JS_AutoInitProperty(JSContext*, JSObject*, JSAtom, JSProperty*, JSShapeProperty*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSVarRef*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSVarRef*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:7780:25: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          pr->u.var_ref = JS_VALUE_GET_PTR(val);
                          ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue JS_GetPropertyInternal(JSContext*, JSValue, JSAtom, JSValue, BOOL)’:
+In file included from quickjs.c:43:
+quickjs.c: In function ‘__JSValue* JS_GetPropertyInternal(JSContext*, JSValueConst, JSAtom, JSValueConst, BOOL)’:
+quickjs.c:7808:22: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     if (unlikely(tag != JS_TAG_OBJECT)) {
+                  ~~~~^~~~~~~~~~~~~~~~
+cutils.h:33:45: note: in definition of macro ‘unlikely’
+ #define unlikely(x)     __builtin_expect(!!(x), 0)
+                                             ^
 quickjs.c:7816:14: warning: narrowing conversion of ‘JS_TAG_STRING’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
          case JS_TAG_STRING:
               ^~~~~~~~~~~~~
@@ -272,26 +378,35 @@ quickjs.c:8157:22: warning: invalid conversion from ‘void*’ to ‘JSContext*
                       |
                       void*
 quickjs.c: In function ‘int JS_GetOwnPropertyNamesInternal(JSContext*, JSPropertyEnum**, uint32_t*, JSObject*, int)’:
+quickjs.c:8257:30: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+                 for(i = 0; i < exotic_count; i++) {
+                            ~~^~~~~~~~~~~~~~
 quickjs.c:8305:25: warning: invalid conversion from ‘void*’ to ‘JSPropertyEnum*’ [-fpermissive]
      tab_atom = js_malloc(ctx, sizeof(tab_atom[0]) * max_int(atom_count, 1));
                 ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                          |
                          void*
+quickjs.c:8361:26: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+             for(i = 0; i < exotic_count; i++) {
+                        ~~^~~~~~~~~~~~~~
 quickjs.c: In function ‘JSAtom js_symbol_to_atom(JSContext*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:8586:23: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      JSAtomStruct *p = JS_VALUE_GET_PTR(val);
                        ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSAtom JS_ValueToAtom(JSContext*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘JSAtom JS_ValueToAtom(JSContext*, JSValueConst)’:
+quickjs.c:8600:20: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     } else if (tag == JS_TAG_SYMBOL) {
+                ~~~~^~~~~~~~~~~~~~~~
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:8601:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          JSAtomStruct *p = JS_VALUE_GET_PTR(val);
                            ^~~~~~~~~~~~~~~~
@@ -303,12 +418,34 @@ quickjs.c:8802:38: warning: invalid conversion from ‘void*’ to ‘JSProperty
                                       void*
                                        new_sh->prop_size);
                                        ~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘int convert_fast_array_to_array(JSContext*, JSObject*)’:
+quickjs.c:8845:19: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     if (new_count > sh->prop_size) {
+         ~~~~~~~~~~^~~~~~~~~~~~~~~
+quickjs.c: In function ‘int delete_property(JSContext*, JSObject*, JSAtom)’:
+quickjs.c:8950:40: warning: comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+                 sh->deleted_prop_count >= ((unsigned)sh->prop_count / 2)) {
+                 ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘int set_array_length(JSContext*, JSObject*, JSValue, int)’:
+quickjs.c:9038:28: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+             for(i = len; i < old_len; i++) {
+                          ~~^~~~~~~~~
+quickjs.c:9055:19: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             if (d <= sh->prop_count) {
+                 ~~^~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int expand_fast_array(JSContext*, JSObject*, uint32_t)’:
-quickjs.c:9119:33: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c:9119:33: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
      new_array_prop = js_realloc2(ctx, p->u.array.u.values, sizeof(JSValue) * new_size, &slack);
                       ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                  |
                                  void*
+quickjs.c: In function ‘int JS_SetPropertyInternal(JSContext*, JSValueConst, JSAtom, JSValue, JSValueConst, int)’:
+quickjs.c:9264:22: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     if (unlikely(tag != JS_TAG_OBJECT)) {
+                  ~~~~^~~~~~~~~~~~~~~~
+cutils.h:33:45: note: in definition of macro ‘unlikely’
+ #define unlikely(x)     __builtin_expect(!!(x), 0)
+                                             ^
 quickjs.c: In function ‘int JS_ToBoolFree(JSContext*, JSValue)’:
 quickjs.c:10760:10: warning: narrowing conversion of ‘JS_TAG_STRING’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING:
@@ -319,17 +456,25 @@ quickjs.c:10766:10: warning: narrowing conversion of ‘JS_TAG_STRING_ROPE’ fr
 quickjs.c:10774:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:10776:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSBigInt *p = JS_VALUE_GET_PTR(val);
                            ^~~~~~~~~~~~~~~~
 quickjs.c:10793:10: warning: narrowing conversion of ‘JS_TAG_OBJECT’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_OBJECT:
           ^~~~~~~~~~~~~
+quickjs.c: In function ‘js_limb_t mp_add(js_limb_t*, const js_limb_t*, const js_limb_t*, js_limb_t, js_limb_t)’:
+quickjs.c:10905:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘js_limb_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+     for(i = 0;i < n; i++) {
+               ~~^~~
+quickjs.c: In function ‘void mp_mul_basecase(js_limb_t*, const js_limb_t*, js_limb_t, const js_limb_t*, js_limb_t)’:
+quickjs.c:10997:14: warning: comparison of integer expressions of different signedness: ‘int’ and ‘js_limb_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+     for(i=1;i<op2_size;i++) {
+             ~^~~~~~~~~
 quickjs.c: In function ‘JSBigInt* js_bigint_new(JSContext*, int)’:
 quickjs.c:11186:18: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
      r = js_malloc(ctx, sizeof(JSBigInt) + len * sizeof(js_limb_t));
@@ -337,12 +482,21 @@ quickjs.c:11186:18: warning: invalid conversion from ‘void*’ to ‘JSBigInt*
                   |
                   void*
 quickjs.c: In function ‘JSBigInt* js_bigint_normalize1(JSContext*, JSBigInt*, int)’:
+quickjs.c:11327:26: warning: comparison of integer expressions of different signedness: ‘js_limb_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+         if ((v != 0 && v != -1) ||
+                        ~~^~~~~
+quickjs.c:11333:11: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     if (l != a->len) {
+         ~~^~~~~~~~~
 quickjs.c:11337:24: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
          a1 = js_realloc(ctx, a, sizeof(JSBigInt) + l * sizeof(js_limb_t));
               ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                         |
                         void*
 quickjs.c: In function ‘JSBigInt* js_bigint_extend(JSContext*, JSBigInt*, js_limb_t)’:
+quickjs.c:11379:26: warning: comparison of integer expressions of different signedness: ‘js_limb_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+     if ((op1 != 0 && op1 != -1) ||
+                      ~~~~^~~~~
 quickjs.c:11382:24: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
          r1 = js_realloc(ctx, r,
               ~~~~~~~~~~^~~~~~~~
@@ -356,16 +510,39 @@ quickjs.c:11499:21: warning: invalid conversion from ‘void*’ to ‘js_limb_t
             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
+quickjs.c: In function ‘JSBigInt* js_bigint_not(JSContext*, const JSBigInt*)’:
+quickjs.c:11632:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const uint32_t’ {aka ‘const unsigned int’} [-Wsign-compare]
+     for(i = 0; i < a->len; i++) {
+                ~~^~~~~~~~
+quickjs.c: In function ‘JSBigInt* js_bigint_shl(JSContext*, const JSBigInt*, unsigned int)’:
+quickjs.c:11656:22: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const uint32_t’ {aka ‘const unsigned int’} [-Wsign-compare]
+         for(i = 0; i < a->len; i++) {
+                    ~~^~~~~~~~
+quickjs.c: In function ‘JSBigInt* js_bigint_shr(JSContext*, const JSBigInt*, unsigned int)’:
+quickjs.c:11677:11: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const uint32_t’ {aka ‘const unsigned int’} [-Wsign-compare]
+     if (d >= a->len)
+         ~~^~~~~~~~~
+quickjs.c: In function ‘JSBigInt* js_bigint_pow(JSContext*, const JSBigInt*, JSBigInt*)’:
+quickjs.c:11716:20: warning: comparison of integer expressions of different signedness: ‘js_limb_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+         else if (v == -1)
+                  ~~^~~~~
+quickjs.c: In function ‘JSBigInt* js_bigint_from_string(JSContext*, const char*, int)’:
+quickjs.c:12087:23: warning: comparison of integer expressions of different signedness: ‘js_limb_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+                 if (c >= radix)
+                     ~~^~~~~~~~
+quickjs.c:12115:22: warning: comparison of integer expressions of different signedness: ‘js_limb_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+             assert(c < radix);
+                    ~~^~~~~~~
 quickjs.c: At global scope:
 quickjs.c:12139:32: warning: initializer-string for ‘const char [36]’ is too long [-fpermissive]
  static char const digits[36] = "0123456789abcdefghijklmnopqrstuvwxyz";
                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_bigint_to_string1(JSContext*, JSValue, int)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_bigint_to_string1(JSContext*, JSValueConst, int)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:12235:13: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          r = JS_VALUE_GET_PTR(val);
              ^~~~~~~~~~~~~~~~
@@ -374,13 +551,19 @@ quickjs.c:12261:24: warning: invalid conversion from ‘void*’ to ‘char*’ 
                ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
                         |
                         void*
-quickjs.c: In function ‘JSValue js_atof(JSContext*, const char*, const char**, int, int)’:
+quickjs.c: In function ‘__JSValue* js_atof(JSContext*, const char*, const char**, int, int)’:
+quickjs.c:12467:28: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+     if (unlikely((len + 2) > sizeof(buf1))) {
+                  ~~~~~~~~~~^~~~~~~~~~~~~~
+cutils.h:33:45: note: in definition of macro ‘unlikely’
+ #define unlikely(x)     __builtin_expect(!!(x), 0)
+                                             ^
 quickjs.c:12468:27: warning: invalid conversion from ‘void*’ to ‘char*’ [-fpermissive]
          buf = js_malloc_rt(ctx->rt, len + 2); /* no exception raised */
                ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
                            |
                            void*
-quickjs.c: In function ‘JSValue JS_ToNumberHintFree(JSContext*, JSValue, JSToNumberHintEnum)’:
+quickjs.c: In function ‘__JSValue* JS_ToNumberHintFree(JSContext*, JSValue, JSToNumberHintEnum)’:
 quickjs.c:12553:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
@@ -393,28 +576,37 @@ quickjs.c:12578:10: warning: narrowing conversion of ‘JS_TAG_STRING’ from �
 quickjs.c:12579:10: warning: narrowing conversion of ‘JS_TAG_STRING_ROPE’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING_ROPE:
           ^~~~~~~~~~~~~~~~~~
+quickjs.c:12591:27: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+             if ((p - str) == len) {
+                 ~~~~~~~~~~^~~~~~
+quickjs.c:12598:35: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+                     if ((p - str) != len) {
+                         ~~~~~~~~~~^~~~~~
 quickjs.c:12607:10: warning: narrowing conversion of ‘JS_TAG_SYMBOL’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_SYMBOL:
           ^~~~~~~~~~~~~
-quickjs.c: In function ‘BOOL JS_NumberIsNegativeOrMinusZero(JSContext*, JSValue)’:
+quickjs.c: In function ‘BOOL JS_NumberIsNegativeOrMinusZero(JSContext*, JSValueConst)’:
 quickjs.c:13146:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:13148:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSBigInt *p = JS_VALUE_GET_PTR(val);
                            ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_dtoa2(JSContext*, double, int, int, int)’:
+quickjs.c: In function ‘__JSValue* js_dtoa2(JSContext*, double, int, int, int)’:
+quickjs.c:13171:17: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+     if (len_max > sizeof(static_buf) - 1) {
+         ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
 quickjs.c:13172:28: warning: invalid conversion from ‘void*’ to ‘char*’ [-fpermissive]
          tmp_buf = js_malloc(ctx, len_max + 1);
                    ~~~~~~~~~^~~~~~~~~~~~~~~~~~
                             |
                             void*
-quickjs.c: In function ‘JSValue JS_ToStringInternal(JSContext*, JSValue, BOOL)’:
+quickjs.c: In function ‘__JSValue* JS_ToStringInternal(JSContext*, JSValueConst, BOOL)’:
 quickjs.c:13193:10: warning: narrowing conversion of ‘JS_TAG_STRING’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING:
           ^~~~~~~~~~~~~
@@ -433,70 +625,92 @@ quickjs.c:13226:10: warning: narrowing conversion of ‘JS_TAG_SYMBOL’ from �
 quickjs.c:13236:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
-quickjs.c: In function ‘uint32_t js_string_get_length(JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSStringRope*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘uint32_t js_string_get_length(JSValueConst)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSStringRope*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:13326:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          JSStringRope *r = JS_VALUE_GET_PTR(val);
                            ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘void js_print_string_rec(JSPrintValueState*, JSValue, int, uint32_t)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSStringRope*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘void js_print_string_rec(JSPrintValueState*, JSValueConst, int, uint32_t)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSStringRope*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:13402:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          JSStringRope *r = JS_VALUE_GET_PTR(val);
                            ^~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void js_print_atom(JSPrintValueState*, JSAtom)’:
+quickjs.c:13463:21: warning: comparison of integer expressions of different signedness: ‘JSAtom’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         assert(atom < s->rt->atom_size);
+                ~~~~~^~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void js_print_regexp(JSPrintValueState*, JSObject*)’:
+quickjs.c:13582:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+     for(i = 0; i < countof(regexp_flags); i++) {
 quickjs.c: In function ‘void js_print_object(JSPrintValueState*, JSObject*)’:
 quickjs.c:13731:31: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
          JSMapState *ms = p->u.opaque;
                           ~~~~~^~~~~~
                                |
                                void*
-quickjs.c: In function ‘void js_print_value(JSPrintValueState*, JSValue)’:
+quickjs.c:13783:48: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         for(i = 0, prs = get_shape_prop(sh); i < sh->prop_count; i++, prs++) {
+                                              ~~^~~~~~~~~~~~~~~~
+quickjs.c:13844:26: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             for(i = 0; i < b->closure_var_count; i++) {
+                        ~~^~~~~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void js_print_value(JSPrintValueState*, JSValueConst)’:
 quickjs.c:13911:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:13923:17: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p = JS_VALUE_GET_PTR(val);
                  ^~~~~~~~~~~~~~~~
+quickjs.c:13930:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+                 if (i != p->len - 1)
+                     ~~^~~~~~~~~~~~~
 quickjs.c:13943:10: warning: narrowing conversion of ‘JS_TAG_STRING’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING:
           ^~~~~~~~~~~~~
 quickjs.c:13944:10: warning: narrowing conversion of ‘JS_TAG_STRING_ROPE’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING_ROPE:
           ^~~~~~~~~~~~~~~~~~
+quickjs.c:13945:40: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+         if (s->options.raw_dump && tag == JS_TAG_STRING_ROPE) {
+                                    ~~~~^~~~~~~~~~~~~~~~~~~~~
 quickjs.c:13952:10: warning: narrowing conversion of ‘JS_TAG_FUNCTION_BYTECODE’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_FUNCTION_BYTECODE:
           ^~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:13954:37: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSFunctionBytecode *b = JS_VALUE_GET_PTR(val);
                                      ^~~~~~~~~~~~~~~~
 quickjs.c:13960:10: warning: narrowing conversion of ‘JS_TAG_OBJECT’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_OBJECT:
           ^~~~~~~~~~~~~
+quickjs.c:13967:33: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+             } else if (s->level < s->options.max_depth) {
+                        ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
 quickjs.c:13982:10: warning: narrowing conversion of ‘JS_TAG_SYMBOL’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_SYMBOL:
           ^~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:13984:31: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSAtomStruct *p = JS_VALUE_GET_PTR(val);
                                ^~~~~~~~~~~~~~~~
@@ -509,7 +723,14 @@ quickjs.c:14046:16: warning: invalid conversion from ‘void*’ to ‘FILE*’ 
                 ^~~~~~
                 |
                 void*
-quickjs.c: In function ‘JSValue JS_ToBigIntFree(JSContext*, JSValue)’:
+quickjs.c: In function ‘__JSValue* JS_StringToBigInt(JSContext*, JSValue)’:
+quickjs.c:14219:19: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+     if ((p - str) == len) {
+         ~~~~~~~~~~^~~~~~
+quickjs.c:14226:27: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+             if ((p - str) != len) {
+                 ~~~~~~~~~~^~~~~~
+quickjs.c: In function ‘__JSValue* JS_ToBigIntFree(JSContext*, JSValue)’:
 quickjs.c:14253:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
@@ -523,141 +744,214 @@ quickjs.c:14269:10: warning: narrowing conversion of ‘JS_TAG_OBJECT’ from �
      case JS_TAG_OBJECT:
           ^~~~~~~~~~~~~
 quickjs.c: In function ‘int JS_ToBigInt64Free(JSContext*, int64_t*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14300:23: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          JSBigInt *p = JS_VALUE_GET_PTR(val);
                        ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int js_unary_arith_slow(JSContext*, JSValue*, OPCodeEnum)’:
+quickjs.c: In function ‘int js_unary_arith_slow(JSContext*, __JSValue**, OPCodeEnum)’:
 quickjs.c:14395:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14398:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p1 = JS_VALUE_GET_PTR(op1);
                   ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int js_post_inc_slow(JSContext*, JSValue*, OPCodeEnum)’:
+quickjs.c: In function ‘int js_post_inc_slow(JSContext*, __JSValue**, OPCodeEnum)’:
 quickjs.c:14472:62: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
      return js_unary_arith_slow(ctx, sp + 1, op - OP_post_dec + OP_dec);
                                              ~~~~~~~~~~~~~~~~~^~~~~~~~
                                                               |
                                                               int
-quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                       OPCodeEnum op)
                                                       ~~~~~~~~~~~^~
-quickjs.c: In function ‘int js_not_slow(JSContext*, JSValue*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘const JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘int js_not_slow(JSContext*, __JSValue**)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘const JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14487:32: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          r = js_bigint_not(ctx, JS_VALUE_GET_PTR(op1));
                                 ^~~~~~~~~~~~~~~~
 quickjs.c:11624:64: note: initializing argument 2 of ‘JSBigInt* js_bigint_not(JSContext*, const JSBigInt*)’
  static JSBigInt *js_bigint_not(JSContext *ctx, const JSBigInt *a)
                                                 ~~~~~~~~~~~~~~~~^
-quickjs.c: In function ‘int js_binary_arith_slow(JSContext*, JSValue*, OPCodeEnum)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘int js_binary_arith_slow(JSContext*, __JSValue**, OPCodeEnum)’:
+quickjs.c:14612:54: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     } else if ((tag1 == JS_TAG_SHORT_BIG_INT || tag1 == JS_TAG_BIG_INT) &&
+                                                 ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:14613:54: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+                (tag2 == JS_TAG_SHORT_BIG_INT || tag2 == JS_TAG_BIG_INT)) {
+                                                 ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14621:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p1 = JS_VALUE_GET_PTR(op1);
                   ^~~~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14625:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p2 = JS_VALUE_GET_PTR(op2);
                   ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int js_add_slow(JSContext*, JSValue*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘BOOL tag_is_string(uint32_t)’:
+quickjs.c:14693:16: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     return tag == JS_TAG_STRING || tag == JS_TAG_STRING_ROPE;
+            ~~~~^~~~~~~~~~~~~~~~
+quickjs.c:14693:40: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     return tag == JS_TAG_STRING || tag == JS_TAG_STRING_ROPE;
+                                    ~~~~^~~~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘int js_add_slow(JSContext*, __JSValue**)’:
+quickjs.c:14732:14: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     if (tag1 == JS_TAG_OBJECT || tag2 == JS_TAG_OBJECT) {
+         ~~~~~^~~~~~~~~~~~~~~~
+quickjs.c:14732:39: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     if (tag1 == JS_TAG_OBJECT || tag2 == JS_TAG_OBJECT) {
+                                  ~~~~~^~~~~~~~~~~~~~~~
+quickjs.c:14775:22: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     } else if ((tag1 == JS_TAG_BIG_INT || tag1 == JS_TAG_SHORT_BIG_INT) &&
+                 ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:14776:22: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+                (tag2 == JS_TAG_BIG_INT || tag2 == JS_TAG_SHORT_BIG_INT)) {
+                 ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14783:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p1 = JS_VALUE_GET_PTR(op1);
                   ^~~~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14787:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p2 = JS_VALUE_GET_PTR(op2);
                   ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int js_binary_logic_slow(JSContext*, JSValue*, OPCodeEnum)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘int js_binary_logic_slow(JSContext*, __JSValue**, OPCodeEnum)’:
+quickjs.c:14894:15: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     if ((tag1 == JS_TAG_BIG_INT || tag1 == JS_TAG_SHORT_BIG_INT) &&
+          ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:14895:15: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+         (tag2 == JS_TAG_BIG_INT || tag2 == JS_TAG_SHORT_BIG_INT)) {
+          ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14902:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p1 = JS_VALUE_GET_PTR(op1);
                   ^~~~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14906:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p2 = JS_VALUE_GET_PTR(op2);
                   ^~~~~~~~~~~~~~~~
 quickjs.c: In function ‘JSBigInt* JS_ToBigIntBuf(JSContext*, JSBigIntBuf*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:14987:14: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          p1 = JS_VALUE_GET_PTR(op1);
               ^~~~~~~~~~~~~~~~
+quickjs.c: In function ‘int js_relational_slow(JSContext*, __JSValue**, OPCodeEnum)’:
+quickjs.c:15091:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+         if (tag1 == JS_TAG_STRING && tag2 == JS_TAG_STRING) {
+             ~~~~~^~~~~~~~~~~~~~~~
+quickjs.c:15091:43: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+         if (tag1 == JS_TAG_STRING && tag2 == JS_TAG_STRING) {
+                                      ~~~~~^~~~~~~~~~~~~~~~
+quickjs.c:15119:21: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+         if ((((tag1 == JS_TAG_BIG_INT || tag1 == JS_TAG_SHORT_BIG_INT) &&
+                ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:15121:21: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+              ((tag2 == JS_TAG_BIG_INT || tag2 == JS_TAG_SHORT_BIG_INT) &&
+                ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:15156:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+         if (tag1 == JS_TAG_BIG_INT || tag1 == JS_TAG_SHORT_BIG_INT ||
+             ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:15157:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+             tag2 == JS_TAG_BIG_INT || tag2 == JS_TAG_SHORT_BIG_INT) {
+             ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘BOOL tag_is_number(uint32_t)’:
+quickjs.c:15204:17: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+             tag == JS_TAG_BIG_INT || tag == JS_TAG_SHORT_BIG_INT);
+             ~~~~^~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘int js_eq_slow(JSContext*, __JSValue**, BOOL)’:
+quickjs.c:15252:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+         if (tag1 == JS_TAG_BIG_INT || tag1 == JS_TAG_SHORT_BIG_INT ||
+             ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:15253:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+             tag2 == JS_TAG_BIG_INT || tag2 == JS_TAG_SHORT_BIG_INT) {
+             ~~~~~^~~~~~~~~~~~~~~~~
+quickjs.c:15290:22: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     } else if ((tag1 == JS_TAG_OBJECT &&
+                 ~~~~~^~~~~~~~~~~~~~~~
+quickjs.c:15291:69: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+                 (tag_is_number(tag2) || tag_is_string(tag2) || tag2 == JS_TAG_SYMBOL)) ||
+                                                                ~~~~~^~~~~~~~~~~~~~~~
+quickjs.c:15292:22: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+                (tag2 == JS_TAG_OBJECT &&
+                 ~~~~~^~~~~~~~~~~~~~~~
+quickjs.c:15293:69: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+                 (tag_is_number(tag1) || tag_is_string(tag1) || tag1 == JS_TAG_SYMBOL))) {
+                                                                ~~~~~^~~~~~~~~~~~~~~~
 quickjs.c: In function ‘BOOL js_strict_eq2(JSContext*, JSValue, JSValue, JSStrictEqModeEnum)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:15407:22: note: in expansion of macro ‘JS_VALUE_GET_PTR’
                  p1 = JS_VALUE_GET_PTR(op1);
                       ^~~~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:15408:22: note: in expansion of macro ‘JS_VALUE_GET_PTR’
                  p2 = JS_VALUE_GET_PTR(op2);
                       ^~~~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:15473:22: note: in expansion of macro ‘JS_VALUE_GET_PTR’
                  p1 = JS_VALUE_GET_PTR(op1);
                       ^~~~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:15477:22: note: in expansion of macro ‘JS_VALUE_GET_PTR’
                  p2 = JS_VALUE_GET_PTR(op2);
                       ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int js_operator_typeof(JSContext*, JSValue)’:
+quickjs.c: In function ‘int js_operator_typeof(JSContext*, JSValueConst)’:
 quickjs.c:15641:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
@@ -673,19 +967,30 @@ quickjs.c:15658:10: warning: narrowing conversion of ‘JS_TAG_OBJECT’ from �
 quickjs.c:15674:10: warning: narrowing conversion of ‘JS_TAG_SYMBOL’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_SYMBOL:
           ^~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_build_arguments(JSContext*, int, JSValue*)’:
-quickjs.c:15787:24: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c: In function ‘__JSValue* js_build_arguments(JSContext*, int, const __JSValue**)’:
+quickjs.c:15787:24: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
          tab = js_malloc(ctx, sizeof(tab[0]) * argc);
                ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
                         |
                         void*
-quickjs.c: In function ‘JSValue js_build_mapped_arguments(JSContext*, int, JSValue*, JSStackFrame*, int)’:
+quickjs.c: In function ‘void js_mapped_arguments_finalizer(JSRuntime*, JSValue)’:
+quickjs.c:15810:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     for(i = 0; i < p->u.array.count; i++)
+                ~~^~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void js_mapped_arguments_mark(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.c:15822:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     for(i = 0; i < p->u.array.count; i++)
+                ~~^~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘__JSValue* js_build_mapped_arguments(JSContext*, int, const __JSValue**, JSStackFrame*, int)’:
 quickjs.c:15850:24: warning: invalid conversion from ‘void*’ to ‘JSVarRef**’ [-fpermissive]
          tab = js_malloc(ctx, sizeof(tab[0]) * argc);
                ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
                         |
                         void*
-quickjs.c: In function ‘JSValue build_for_in_iterator(JSContext*, JSValue)’:
+quickjs.c: In function ‘__JSValue* build_for_in_iterator(JSContext*, JSValue)’:
+quickjs.c:15890:13: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     if (tag != JS_TAG_OBJECT && tag != JS_TAG_NULL && tag != JS_TAG_UNDEFINED) {
+         ~~~~^~~~~~~~~~~~~~~~
 quickjs.c:15894:19: warning: invalid conversion from ‘void*’ to ‘JSForInIterator*’ [-fpermissive]
      it = js_malloc(ctx, sizeof(*it));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
@@ -703,51 +1008,63 @@ quickjs.c:16653:24: warning: invalid conversion from ‘void*’ to ‘JSVarRef*
                ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
                         |
                         void*
-quickjs.c: In function ‘JSValue js_closure2(JSContext*, JSValue, JSFunctionBytecode*, JSVarRef**, JSStackFrame*, BOOL, JSModuleDef*)’:
+quickjs.c: In function ‘__JSValue* js_closure2(JSContext*, JSValue, JSFunctionBytecode*, JSVarRef**, JSStackFrame*, BOOL, JSModuleDef*)’:
 quickjs.c:16901:30: warning: invalid conversion from ‘void*’ to ‘JSVarRef**’ [-fpermissive]
          var_refs = js_mallocz(ctx, sizeof(var_refs[0]) * b->closure_var_count);
                     ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                               |
                               void*
-quickjs.c: In function ‘JSValue js_closure(JSContext*, JSValue, JSVarRef**, JSStackFrame*, BOOL)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_closure(JSContext*, JSValue, JSVarRef**, JSStackFrame*, BOOL)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:17001:9: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      b = JS_VALUE_GET_PTR(bfunc);
          ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int js_op_define_class(JSContext*, JSValue*, JSAtom, int, JSVarRef**, JSStackFrame*, BOOL)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘int js_op_define_class(JSContext*, __JSValue**, JSAtom, int, JSVarRef**, JSStackFrame*, BOOL)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:17088:9: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      b = JS_VALUE_GET_PTR(bfunc);
          ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_call_c_function(JSContext*, JSValue, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_call_c_function(JSContext*, JSValueConst, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:17200:25: warning: invalid conversion from ‘uint8_t’ {aka ‘unsigned char’} to ‘JSCFunctionEnum’ [-fpermissive]
      cproto = p->u.cfunc.cproto;
               ~~~~~~~~~~~^~~~~~
                          |
                          uint8_t {aka unsigned char}
-quickjs.c: In function ‘JSValue JS_CallInternal(JSContext*, JSValue, JSValue, JSValue, int, JSValue*, int)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAsyncFunctionState*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* JS_CallInternal(JSContext*, JSValueConst, JSValueConst, JSValueConst, int, __JSValue**, int)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAsyncFunctionState*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:17389:39: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSAsyncFunctionState *s = JS_VALUE_GET_PTR(func_obj);
                                        ^~~~~~~~~~~~~~~~
+quickjs.c:17537:36: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+                     if (likely(tag == JS_TAG_OBJECT))
+                                ~~~~^~~~~~~~~~~~~~~~
+cutils.h:32:45: note: in definition of macro ‘likely’
+ #define likely(x)       __builtin_expect(!!(x), 1)
+                                             ^
+quickjs.c:18547:34: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+                 if (unlikely(pos >= b->byte_code_len)) {
+                              ~~~~^~~~~~~~~~~~~~~~~~~
+cutils.h:33:45: note: in definition of macro ‘unlikely’
+ #define unlikely(x)     __builtin_expect(!!(x), 0)
+                                             ^
 quickjs.c:19470:47: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
              if (js_binary_arith_slow(ctx, sp, opcode))
                                                ^~~~~~
                                                |
                                                int
-quickjs.c:14505:66: note: initializing argument 3 of ‘int js_binary_arith_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14505:66: note: initializing argument 3 of ‘int js_binary_arith_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                        OPCodeEnum op)
                                                        ~~~~~~~~~~~^~
 quickjs.c:19486:54: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -755,7 +1072,7 @@ quickjs.c:19486:54: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                       ^~~~~~
                                                       |
                                                       int
-quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                       OPCodeEnum op)
                                                       ~~~~~~~~~~~^~
 quickjs.c:19519:54: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -763,7 +1080,7 @@ quickjs.c:19519:54: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                       ^~~~~~
                                                       |
                                                       int
-quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                       OPCodeEnum op)
                                                       ~~~~~~~~~~~^~
 quickjs.c:19537:54: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -771,7 +1088,7 @@ quickjs.c:19537:54: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                       ^~~~~~
                                                       |
                                                       int
-quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                       OPCodeEnum op)
                                                       ~~~~~~~~~~~^~
 quickjs.c:19555:54: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -779,7 +1096,7 @@ quickjs.c:19555:54: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                       ^~~~~~
                                                       |
                                                       int
-quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14320:65: note: initializing argument 3 of ‘int js_unary_arith_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                       OPCodeEnum op)
                                                       ~~~~~~~~~~~^~
 quickjs.c:19573:51: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -787,7 +1104,7 @@ quickjs.c:19573:51: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                    ^~~~~~
                                                    |
                                                    int
-quickjs.c:14459:65: note: initializing argument 3 of ‘int js_post_inc_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14459:65: note: initializing argument 3 of ‘int js_post_inc_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                          JSValue *sp, OPCodeEnum op)
                                                       ~~~~~~~~~~~^~
 quickjs.c:19592:51: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -795,7 +1112,7 @@ quickjs.c:19592:51: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                    ^~~~~~
                                                    |
                                                    int
-quickjs.c:14459:65: note: initializing argument 3 of ‘int js_post_inc_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14459:65: note: initializing argument 3 of ‘int js_post_inc_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                          JSValue *sp, OPCodeEnum op)
                                                       ~~~~~~~~~~~^~
 quickjs.c:19678:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -803,7 +1120,7 @@ quickjs.c:19678:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                        ^~~~~~
                                                        |
                                                        int
-quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                        OPCodeEnum op)
                                                        ~~~~~~~~~~~^~
 quickjs.c:19719:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -811,7 +1128,7 @@ quickjs.c:19719:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                        ^~~~~~
                                                        |
                                                        int
-quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                        OPCodeEnum op)
                                                        ~~~~~~~~~~~^~
 quickjs.c:19737:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -819,7 +1136,7 @@ quickjs.c:19737:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                        ^~~~~~
                                                        |
                                                        int
-quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                        OPCodeEnum op)
                                                        ~~~~~~~~~~~^~
 quickjs.c:19755:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -827,7 +1144,7 @@ quickjs.c:19755:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                        ^~~~~~
                                                        |
                                                        int
-quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                        OPCodeEnum op)
                                                        ~~~~~~~~~~~^~
 quickjs.c:19773:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -835,7 +1152,7 @@ quickjs.c:19773:55: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
                                                        ^~~~~~
                                                        |
                                                        int
-quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:14814:66: note: initializing argument 3 of ‘int js_binary_logic_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                                        OPCodeEnum op)
                                                        ~~~~~~~~~~~^~
 quickjs.c:19799:58: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -846,7 +1163,7 @@ quickjs.c:19799:58: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
 quickjs.c:19792:25: note: in definition of macro ‘OP_CMP’
                      if (slow_call)                                      \
                          ^~~~~~~~~
-quickjs.c:15067:52: note: initializing argument 3 of ‘int js_relational_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:15067:52: note: initializing argument 3 of ‘int js_relational_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                          OPCodeEnum op)
                                          ~~~~~~~~~~~^~
 quickjs.c:19800:60: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -857,7 +1174,7 @@ quickjs.c:19800:60: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
 quickjs.c:19792:25: note: in definition of macro ‘OP_CMP’
                      if (slow_call)                                      \
                          ^~~~~~~~~
-quickjs.c:15067:52: note: initializing argument 3 of ‘int js_relational_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:15067:52: note: initializing argument 3 of ‘int js_relational_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                          OPCodeEnum op)
                                          ~~~~~~~~~~~^~
 quickjs.c:19801:58: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -868,7 +1185,7 @@ quickjs.c:19801:58: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
 quickjs.c:19792:25: note: in definition of macro ‘OP_CMP’
                      if (slow_call)                                      \
                          ^~~~~~~~~
-quickjs.c:15067:52: note: initializing argument 3 of ‘int js_relational_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:15067:52: note: initializing argument 3 of ‘int js_relational_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                          OPCodeEnum op)
                                          ~~~~~~~~~~~^~
 quickjs.c:19802:60: warning: invalid conversion from ‘int’ to ‘OPCodeEnum’ [-fpermissive]
@@ -879,16 +1196,16 @@ quickjs.c:19802:60: warning: invalid conversion from ‘int’ to ‘OPCodeEnum�
 quickjs.c:19792:25: note: in definition of macro ‘OP_CMP’
                      if (slow_call)                                      \
                          ^~~~~~~~~
-quickjs.c:15067:52: note: initializing argument 3 of ‘int js_relational_slow(JSContext*, JSValue*, OPCodeEnum)’
+quickjs.c:15067:52: note: initializing argument 3 of ‘int js_relational_slow(JSContext*, __JSValue**, OPCodeEnum)’
                                          OPCodeEnum op)
                                          ~~~~~~~~~~~^~
-quickjs.c: In function ‘JSContext* JS_GetFunctionRealm(JSContext*, JSValue)’:
+quickjs.c: In function ‘JSContext* JS_GetFunctionRealm(JSContext*, JSValueConst)’:
 quickjs.c:20163:35: warning: invalid conversion from ‘void*’ to ‘JSProxyData*’ [-fpermissive]
              JSProxyData *s = p->u.opaque;
                               ~~~~~^~~~~~
                                    |
                                    void*
-quickjs.c: In function ‘JSAsyncFunctionState* async_func_init(JSContext*, JSValue, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘JSAsyncFunctionState* async_func_init(JSContext*, JSValueConst, JSValueConst, int, const __JSValue**)’:
 quickjs.c:20310:18: warning: invalid conversion from ‘void*’ to ‘JSAsyncFunctionState*’ [-fpermissive]
      s = js_malloc(ctx, sizeof(*s) + sizeof(JSValue) * (arg_buf_len + b->var_count + b->stack_size) + sizeof(JSVarRef *) * b->var_ref_count);
          ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -900,13 +1217,13 @@ quickjs.c:20452:38: warning: invalid conversion from ‘void*’ to ‘JSGenerat
                           ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
                                       |
                                       void*
-quickjs.c: In function ‘JSValue js_generator_next(JSContext*, JSValue, int, JSValue*, BOOL*, int)’:
+quickjs.c: In function ‘__JSValue* js_generator_next(JSContext*, JSValueConst, int, const __JSValue**, BOOL*, int)’:
 quickjs.c:20485:38: warning: invalid conversion from ‘void*’ to ‘JSGeneratorData*’ [-fpermissive]
      JSGeneratorData *s = JS_GetOpaque(this_val, JS_CLASS_GENERATOR);
                           ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                       |
                                       void*
-quickjs.c: In function ‘JSValue js_generator_function_call(JSContext*, JSValue, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_generator_function_call(JSContext*, JSValueConst, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:20571:19: warning: invalid conversion from ‘void*’ to ‘JSGeneratorData*’ [-fpermissive]
      s = js_mallocz(ctx, sizeof(*s));
          ~~~~~~~~~~^~~~~~~~~~~~~~~~~
@@ -918,19 +1235,19 @@ quickjs.c:20797:43: warning: invalid conversion from ‘void*’ to ‘JSAsyncGe
                                ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                            |
                                            void*
-quickjs.c: In function ‘void js_async_generator_mark(JSRuntime*, JSValue, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.c: In function ‘void js_async_generator_mark(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
 quickjs.c:20807:43: warning: invalid conversion from ‘void*’ to ‘JSAsyncGeneratorData*’ [-fpermissive]
      JSAsyncGeneratorData *s = JS_GetOpaque(val, JS_CLASS_ASYNC_GENERATOR);
                                ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                            |
                                            void*
-quickjs.c: In function ‘JSValue js_async_generator_resolve_function(JSContext*, JSValue, int, JSValue*, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_async_generator_resolve_function(JSContext*, JSValueConst, int, const __JSValue**, int, __JSValue**)’:
 quickjs.c:21080:43: warning: invalid conversion from ‘void*’ to ‘JSAsyncGeneratorData*’ [-fpermissive]
      JSAsyncGeneratorData *s = JS_GetOpaque(func_data[0], JS_CLASS_ASYNC_GENERATOR);
                                ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                            |
                                            void*
-quickjs.c: In function ‘JSValue js_async_generator_next(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_async_generator_next(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:21114:43: warning: invalid conversion from ‘void*’ to ‘JSAsyncGeneratorData*’ [-fpermissive]
      JSAsyncGeneratorData *s = JS_GetOpaque(this_val, JS_CLASS_ASYNC_GENERATOR);
                                ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -941,12 +1258,16 @@ quickjs.c:21133:21: warning: invalid conversion from ‘void*’ to ‘JSAsyncGe
            ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘JSValue js_async_generator_function_call(JSContext*, JSValue, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_async_generator_function_call(JSContext*, JSValueConst, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:21161:19: warning: invalid conversion from ‘void*’ to ‘JSAsyncGeneratorData*’ [-fpermissive]
      s = js_mallocz(ctx, sizeof(*s));
          ~~~~~~~~~~^~~~~~~~~~~~~~~~~
                    |
                    void*
+quickjs.c: In function ‘int js_parse_string(JSParseState*, int, BOOL, const uint8_t*, JSToken*, const uint8_t**)’:
+quickjs.c:21894:15: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         if (c == sep)
+             ~~^~~~~~
 quickjs.c: In function ‘int ident_realloc(JSContext*, char**, size_t*, char*)’:
 quickjs.c:22128:28: warning: invalid conversion from ‘void*’ to ‘char*’ [-fpermissive]
          new_buf = js_malloc(ctx, new_size);
@@ -958,6 +1279,13 @@ quickjs.c:22133:29: warning: invalid conversion from ‘void*’ to ‘char*’ 
                    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
                              |
                              void*
+quickjs.c: In function ‘int json_parse_string(JSParseState*, const uint8_t**, int)’:
+quickjs.c:22725:15: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         if (c == sep)
+             ~~^~~~~~
+quickjs.c:22763:23: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+                 if (c == sep)
+                     ~~^~~~~~
 quickjs.c: In function ‘int new_label_fd(JSFunctionDef*)’:
 quickjs.c:23302:34: warning: invalid conversion from ‘void*’ to ‘void**’ [-fpermissive]
      if (js_resize_array(fd->ctx, (void *)&fd->label_slots,
@@ -1043,45 +1371,45 @@ quickjs.c:29758:36: warning: invalid conversion from ‘const void*’ to ‘con
                                     ^~
                                     |
                                     const void*
-quickjs.c: In function ‘JSValue js_module_ns_autoinit(JSContext*, JSObject*, JSAtom, void*)’:
+quickjs.c: In function ‘__JSValue* js_module_ns_autoinit(JSContext*, JSObject*, JSAtom, void*)’:
 quickjs.c:29780:22: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
      JSModuleDef *m = opaque;
                       ^~~~~~
                       |
                       void*
 quickjs.c: In function ‘int js_create_module_bytecode_function(JSContext*, JSModuleDef*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:29968:9: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      b = JS_VALUE_GET_PTR(bfunc);
          ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_load_module_fulfilled(JSContext*, JSValue, int, JSValue*, int, JSValue*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_load_module_fulfilled(JSContext*, JSValueConst, int, const __JSValue**, int, __JSValue**)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:30355:22: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      JSModuleDef *m = JS_VALUE_GET_PTR(func_data[2]);
                       ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_async_module_execution_rejected(JSContext*, JSValue, int, JSValue*, int, JSValue*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_async_module_execution_rejected(JSContext*, JSValueConst, int, const __JSValue**, int, __JSValue**)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:30658:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      JSModuleDef *module = JS_VALUE_GET_PTR(func_data[0]);
                            ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_async_module_execution_fulfilled(JSContext*, JSValue, int, JSValue*, int, JSValue*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_async_module_execution_fulfilled(JSContext*, JSValueConst, int, const __JSValue**, int, __JSValue**)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:30703:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      JSModuleDef *module = JS_VALUE_GET_PTR(func_data[0]);
                            ^~~~~~~~~~~~~~~~
@@ -1156,6 +1484,17 @@ quickjs.c:33224:73: warning: invalid conversion from ‘uint8_t’ {aka ‘unsig
 quickjs.c:32994:64: note: initializing argument 2 of ‘BOOL is_var_in_arg_scope(JSAtom, JSVarKindEnum)’
  static BOOL is_var_in_arg_scope(JSAtom var_name, JSVarKindEnum var_kind)
                                                   ~~~~~~~~~~~~~~^~~~~~~~
+quickjs.c: In function ‘void add_pc2line_info(JSFunctionDef*, uint32_t, uint32_t)’:
+quickjs.c:33945:12: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     &&  pc >= s->line_number_last_pc
+         ~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+quickjs.c:33946:20: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     &&  source_pos != s->line_number_last) {
+         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void compute_pc2line_info(JSFunctionDef*)’:
+quickjs.c:33981:28: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             if (source_pos == -1)
+                 ~~~~~~~~~~~^~~~~
 quickjs.c: In function ‘RelocEntry* add_reloc(JSContext*, LabelSlot*, uint32_t, int)’:
 quickjs.c:34017:19: warning: invalid conversion from ‘void*’ to ‘RelocEntry*’ [-fpermissive]
      re = js_malloc(ctx, sizeof(*re));
@@ -1173,6 +1512,13 @@ quickjs.c:34220:42: warning: invalid conversion from ‘void*’ to ‘LineNumbe
                                 ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                           |
                                           void*
+quickjs.c:35042:56: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+                         if (s->line_number_slots[j].pc > pos)
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+quickjs.c: In function ‘int ss_check(JSContext*, StackSizeState*, int, int, int, int)’:
+quickjs.c:35109:23: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+     if ((unsigned)pos >= s->bc_len) {
+         ~~~~~~~~~~~~~~^~~~~~~~~~~~
 quickjs.c: In function ‘int compute_stack_size(JSContext*, JSFunctionDef*, int*)’:
 quickjs.c:35159:35: warning: invalid conversion from ‘void*’ to ‘uint16_t*’ {aka ‘short unsigned int*’} [-fpermissive]
      s->stack_level_tab = js_malloc(ctx, sizeof(s->stack_level_tab[0]) *
@@ -1188,7 +1534,7 @@ quickjs.c:35166:33: warning: invalid conversion from ‘void*’ to ‘int32_t*�
                                  void*
                                     s->bc_len);
                                     ~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_create_function(JSContext*, JSFunctionDef*)’:
+quickjs.c: In function ‘__JSValue* js_create_function(JSContext*, JSFunctionDef*)’:
 quickjs.c:35529:19: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
      b = js_mallocz(ctx, function_size);
          ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
@@ -1204,7 +1550,7 @@ quickjs.c:35544:22: warning: invalid conversion from ‘void*’ to ‘JSBytecod
                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                       |
                       void*
-quickjs.c:35589:20: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c:35589:20: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
          b->cpool = (void *)((uint8_t*)b + cpool_offset);
                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     |
@@ -1225,21 +1571,27 @@ quickjs.c:35927:23: warning: invalid conversion from ‘int’ to ‘JSFunctionK
              ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
                        |
                        int
-quickjs.c: In function ‘JSValue JS_EvalFunctionInternal(JSContext*, JSValue, JSValue, JSVarRef**, JSStackFrame*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* JS_EvalFunctionInternal(JSContext*, JSValue, JSValueConst, JSVarRef**, JSStackFrame*)’:
+quickjs.c:36550:13: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     if (tag == JS_TAG_FUNCTION_BYTECODE) {
+         ~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+quickjs.c:36555:20: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘<unnamed enum>’ [-Wsign-compare]
+     } else if (tag == JS_TAG_MODULE) {
+                ~~~~^~~~~~~~~~~~~~~~
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:36557:13: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          m = JS_VALUE_GET_PTR(fun_obj);
              ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int JS_ResolveModule(JSContext*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘int JS_ResolveModule(JSContext*, JSValueConst)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:36762:26: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          JSModuleDef *m = JS_VALUE_GET_PTR(obj);
                           ^~~~~~~~~~~~~~~~
@@ -1249,6 +1601,9 @@ quickjs.c:36804:31: warning: invalid conversion from ‘void*’ to ‘uint32_t*
                       ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                |
                                void*
+quickjs.c:36814:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     for(i = 0; i < s->object_count; i++) {
+                ~~^~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int js_object_list_add(JSContext*, JSObjectList*, JSObject*)’:
 quickjs.c:36830:30: warning: invalid conversion from ‘void*’ to ‘void**’ [-fpermissive]
      if (js_resize_array(ctx, (void *)&s->object_tab,
@@ -1258,40 +1613,64 @@ quickjs.c:36830:30: warning: invalid conversion from ‘void*’ to ‘void**’
 quickjs.c:1499:58: note: initializing argument 2 of ‘int js_resize_array(JSContext*, void**, int, int*, int)’
  static inline int js_resize_array(JSContext *ctx, void **parray, int elem_size,
                                                    ~~~~~~~^~~~~~
+quickjs.c:36834:40: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     if (unlikely((s->object_count + 1) >= s->hash_size)) {
+                  ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+cutils.h:33:45: note: in definition of macro ‘unlikely’
+ #define unlikely(x)     __builtin_expect(!!(x), 0)
+                                             ^
+quickjs.c:36836:30: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         while (new_hash_size <= s->object_count)
+                ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘int js_object_list_find(JSContext*, JSObjectList*, JSObject*)’:
+quickjs.c:36860:14: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     while (p != -1) {
+            ~~^~~~~
+quickjs.c: In function ‘int bc_atom_to_idx(BCWriterState*, uint32_t*, JSAtom)’:
+quickjs.c:37006:14: warning: comparison of integer expressions of different signedness: ‘JSAtom’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     if (atom < s->atom_to_idx_size && s->atom_to_idx[atom] != 0) {
+         ~~~~~^~~~~~~~~~~~~~~~~~~~~
+quickjs.c:37010:14: warning: comparison of integer expressions of different signedness: ‘JSAtom’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     if (atom >= s->atom_to_idx_size) {
+         ~~~~~^~~~~~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int JS_WriteFunctionBytecode(BCWriterState*, const uint8_t*, int)’:
 quickjs.c:37120:23: warning: invalid conversion from ‘void*’ to ‘uint8_t*’ {aka ‘unsigned char*’} [-fpermissive]
      bc_buf = js_malloc(s->ctx, bc_len);
               ~~~~~~~~~^~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: In function ‘int JS_WriteBigInt(BCWriterState*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘int JS_WriteBigInt(BCWriterState*, JSValueConst)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:37183:13: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          p = JS_VALUE_GET_PTR(obj);
              ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int JS_WriteFunctionTag(BCWriterState*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘int JS_WriteFunctionTag(BCWriterState*, JSValueConst)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:37223:29: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      JSFunctionBytecode *b = JS_VALUE_GET_PTR(obj);
                              ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int JS_WriteModule(BCWriterState*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘int JS_WriteModule(BCWriterState*, JSValueConst)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSModuleDef*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:37312:22: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      JSModuleDef *m = JS_VALUE_GET_PTR(obj);
                       ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int JS_WriteObjectRec(BCWriterState*, JSValue)’:
+quickjs.c: In function ‘int JS_WriteObjectTag(BCWriterState*, JSValueConst)’:
+quickjs.c:37457:47: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         for(i = 0, pr = get_shape_prop(sh); i < sh->prop_count; i++, pr++) {
+                                             ~~^~~~~~~~~~~~~~~~
+quickjs.c: In function ‘int JS_WriteObjectRec(BCWriterState*, JSValueConst)’:
 quickjs.c:37559:10: warning: narrowing conversion of ‘JS_TAG_STRING’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING:
           ^~~~~~~~~~~~~
@@ -1310,12 +1689,19 @@ quickjs.c:37588:10: warning: narrowing conversion of ‘JS_TAG_OBJECT’ from �
 quickjs.c:37652:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
+quickjs.c: In function ‘JSString* JS_ReadString(BCReaderState*)’:
+quickjs.c:37976:31: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+     if ((s->buf_end - s->ptr) < size) {
+         ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
 quickjs.c: In function ‘int JS_ReadFunctionBytecode(BCReaderState*, JSFunctionBytecode*, int, uint32_t)’:
 quickjs.c:38022:18: warning: invalid conversion from ‘void*’ to ‘uint8_t*’ {aka ‘unsigned char*’} [-fpermissive]
          bc_buf = (void *)((uint8_t*)b + byte_code_offset);
                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                   |
                   void*
+quickjs.c:38032:16: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     while (pos < bc_len) {
+            ~~~~^~~~~~~~
 quickjs.c: In function ‘int BC_add_object_ref1(BCReaderState*, JSObject*)’:
 quickjs.c:38122:37: warning: invalid conversion from ‘void*’ to ‘void**’ [-fpermissive]
          if (js_resize_array(s->ctx, (void *)&s->objects,
@@ -1325,7 +1711,7 @@ quickjs.c:38122:37: warning: invalid conversion from ‘void*’ to ‘void**’
 quickjs.c:1499:58: note: initializing argument 2 of ‘int js_resize_array(JSContext*, void**, int, int*, int)’
  static inline int js_resize_array(JSContext *ctx, void **parray, int elem_size,
                                                    ~~~~~~~^~~~~~
-quickjs.c: In function ‘JSValue JS_ReadFunctionTag(BCReaderState*)’:
+quickjs.c: In function ‘__JSValue* JS_ReadFunctionTag(BCReaderState*)’:
 quickjs.c:38210:19: warning: invalid conversion from ‘void*’ to ‘JSFunctionBytecode*’ [-fpermissive]
      b = js_mallocz(ctx, function_size);
          ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
@@ -1341,7 +1727,7 @@ quickjs.c:38220:26: warning: invalid conversion from ‘void*’ to ‘JSClosure
                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                           |
                           void*
-quickjs.c:38223:20: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c:38223:20: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
          b->cpool = (void *)((uint8_t*)b + cpool_offset);
                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     |
@@ -1361,7 +1747,7 @@ quickjs.c:38314:41: warning: invalid conversion from ‘void*’ to ‘char*’ 
                                ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
                                          |
                                          void*
-quickjs.c: In function ‘JSValue JS_ReadModule(BCReaderState*)’:
+quickjs.c: In function ‘__JSValue* JS_ReadModule(BCReaderState*)’:
 quickjs.c:38362:43: warning: invalid conversion from ‘void*’ to ‘JSReqModuleEntry*’ [-fpermissive]
          m->req_module_entries = js_mallocz(ctx, sizeof(m->req_module_entries[0]) * m->req_module_entries_size);
                                  ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1387,6 +1773,10 @@ quickjs.c:38421:39: warning: invalid conversion from ‘void*’ to ‘JSImportE
                              ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                        |
                                        void*
+quickjs.c: In function ‘__JSValue* JS_ReadObjectRec(BCReaderState*)’:
+quickjs.c:38803:21: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             if (val >= s->objects_count) {
+                 ~~~~^~~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int JS_ReadObjectAtoms(BCReaderState*)’:
 quickjs.c:38839:36: warning: invalid conversion from ‘void*’ to ‘JSAtom*’ {aka ‘unsigned int*’} [-fpermissive]
          s->idx_to_atom = js_mallocz(s->ctx, s->idx_to_atom_count *
@@ -1395,7 +1785,14 @@ quickjs.c:38839:36: warning: invalid conversion from ‘void*’ to ‘JSAtom*�
                                     void*
                                      sizeof(s->idx_to_atom[0]));
                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue JS_InstantiateFunctionListItem2(JSContext*, JSObject*, JSAtom, void*)’:
+quickjs.c:38844:18: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     for(i = 0; i < s->idx_to_atom_count; i++) {
+                ~~^~~~~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘void bc_reader_free(BCReaderState*)’:
+quickjs.c:38863:22: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+         for(i = 0; i < s->idx_to_atom_count; i++) {
+                    ~~^~~~~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘__JSValue* JS_InstantiateFunctionListItem2(JSContext*, JSObject*, JSAtom, void*)’:
 quickjs.c:38966:37: warning: invalid conversion from ‘void*’ to ‘const JSCFunctionListEntry*’ [-fpermissive]
      const JSCFunctionListEntry *e = opaque;
                                      ^~~~~~
@@ -1406,7 +1803,7 @@ quickjs.c:38972:69: warning: invalid conversion from ‘uint8_t’ {aka ‘unsig
                                                            ~~~~~~~~~~^~~~~~
                                                                      |
                                                                      uint8_t {aka unsigned char}
-quickjs.c:5573:54: note: initializing argument 5 of ‘JSValue JS_NewCFunction2(JSContext*, JSValue (*)(JSContext*, JSValue, int, JSValue*), const char*, int, JSCFunctionEnum, int)’
+quickjs.c:5573:54: note: initializing argument 5 of ‘__JSValue* JS_NewCFunction2(JSContext*, __JSValue* (*)(JSContext*, JSValueConst, int, const __JSValue**), const char*, int, JSCFunctionEnum, int)’
                           int length, JSCFunctionEnum cproto, int magic)
                                       ~~~~~~~~~~~~~~~~^~~~~~
 quickjs.c: In function ‘int JS_SetModuleExportList(JSContext*, JSModuleDef*, const JSCFunctionListEntry*, int)’:
@@ -1415,28 +1812,28 @@ quickjs.c:39143:73: warning: invalid conversion from ‘uint8_t’ {aka ‘unsig
                                                                ~~~~~~~~~~^~~~~~
                                                                          |
                                                                          uint8_t {aka unsigned char}
-quickjs.c:5573:54: note: initializing argument 5 of ‘JSValue JS_NewCFunction2(JSContext*, JSValue (*)(JSContext*, JSValue, int, JSValue*), const char*, int, JSCFunctionEnum, int)’
+quickjs.c:5573:54: note: initializing argument 5 of ‘__JSValue* JS_NewCFunction2(JSContext*, __JSValue* (*)(JSContext*, JSValueConst, int, const __JSValue**), const char*, int, JSCFunctionEnum, int)’
                           int length, JSCFunctionEnum cproto, int magic)
                                       ~~~~~~~~~~~~~~~~^~~~~~
-quickjs.c: In function ‘JSValue js_function_constructor(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_function_constructor(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:40452:36: warning: invalid conversion from ‘int’ to ‘JSFunctionKindEnum’ [-fpermissive]
      JSFunctionKindEnum func_kind = magic;
                                     ^~~~~
                                     |
                                     int
-quickjs.c: In function ‘JSValue* build_arg_list(JSContext*, uint32_t*, JSValue)’:
-quickjs.c:40575:21: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c: In function ‘__JSValue** build_arg_list(JSContext*, uint32_t*, JSValueConst)’:
+quickjs.c:40575:21: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
      tab = js_mallocz(ctx, sizeof(tab[0]) * max_uint32(1, len));
            ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘JSValue js_function_bind(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_function_bind(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:40662:19: warning: invalid conversion from ‘void*’ to ‘JSBoundFunction*’ [-fpermissive]
      bf = js_malloc(ctx, sizeof(*bf) + arg_count * sizeof(JSValue));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_function_toString(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_function_toString(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:40744:24: warning: invalid conversion from ‘uint8_t’ {aka ‘unsigned char’} to ‘JSFunctionKindEnum’ [-fpermissive]
          func_kind = b->func_kind;
                      ~~~^~~~~~~~~
@@ -1611,19 +2008,28 @@ quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
 quickjs.c:40959:5: note: in expansion of macro ‘DEF’
      DEF(JS_ATOM_AggregateError)
      ^~~
+quickjs.c: In function ‘__JSValue* js_array_push(JSContext*, JSValueConst, int, const __JSValue**, int)’:
+quickjs.c:42138:57: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+                    JS_VALUE_GET_INT(p->prop[0].u.value) == p->u.array.count &&
+cutils.h:32:45: note: in definition of macro ‘likely’
+ #define likely(x)       __builtin_expect(!!(x), 1)
+                                             ^
 quickjs.c: In function ‘int js_array_cmp_generic(const void*, const void*, void*)’:
 quickjs.c:42647:38: warning: invalid conversion from ‘void*’ to ‘array_sort_context*’ [-fpermissive]
      struct array_sort_context *psc = opaque;
                                       ^~~~~~
                                       |
                                       void*
-quickjs.c: In function ‘JSValue js_array_sort(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_array_sort(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:42732:36: warning: invalid conversion from ‘void*’ to ‘ValueSlot*’ [-fpermissive]
              new_array = js_realloc2(ctx, array, new_size * sizeof(*array), &slack);
                          ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                     |
                                     void*
-quickjs.c: In function ‘JSValue js_create_array_iterator(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c:42760:26: warning: comparison of integer expressions of different signedness: ‘int64_t’ {aka ‘long int’} and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+         if (array[n].pos == n) {
+             ~~~~~~~~~~~~~^~~~
+quickjs.c: In function ‘__JSValue* js_create_array_iterator(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:42883:18: warning: invalid conversion from ‘int’ to ‘JSIteratorKindEnum’ [-fpermissive]
      kind = magic & 3;
             ~~~~~~^~~
@@ -1634,25 +2040,25 @@ quickjs.c:42897:19: warning: invalid conversion from ‘void*’ to ‘JSArrayIt
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_array_iterator_next(JSContext*, JSValue, int, JSValue*, BOOL*, int)’:
+quickjs.c: In function ‘__JSValue* js_array_iterator_next(JSContext*, JSValueConst, int, const __JSValue**, BOOL*, int)’:
 quickjs.c:42921:23: warning: invalid conversion from ‘void*’ to ‘JSArrayIteratorData*’ [-fpermissive]
      it = JS_GetOpaque2(ctx, this_val, JS_CLASS_ARRAY_ITERATOR);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: In function ‘JSValue js_iterator_wrap_next(JSContext*, JSValue, int, JSValue*, int*, int)’:
+quickjs.c: In function ‘__JSValue* js_iterator_wrap_next(JSContext*, JSValueConst, int, const __JSValue**, int*, int)’:
 quickjs.c:43008:23: warning: invalid conversion from ‘void*’ to ‘JSIteratorWrapData*’ [-fpermissive]
      it = JS_GetOpaque2(ctx, this_val, JS_CLASS_ITERATOR_WRAP);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: In function ‘JSValue js_iterator_concat_next(JSContext*, JSValue, int, JSValue*, int*, int)’:
+quickjs.c: In function ‘__JSValue* js_iterator_concat_next(JSContext*, JSValueConst, int, const __JSValue**, int*, int)’:
 quickjs.c:43115:23: warning: invalid conversion from ‘void*’ to ‘JSIteratorConcatData*’ [-fpermissive]
      it = JS_GetOpaque2(ctx, this_val, JS_CLASS_ITERATOR_CONCAT);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: In function ‘JSValue js_iterator_concat_return(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_iterator_concat_return(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:43186:23: warning: invalid conversion from ‘void*’ to ‘JSIteratorConcatData*’ [-fpermissive]
      it = JS_GetOpaque2(ctx, this_val, JS_CLASS_ITERATOR_CONCAT);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1665,19 +2071,19 @@ quickjs.h:1111:95: error: either all initializer clauses should be designated or
 quickjs.c:43214:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Iterator Concat", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_iterator_concat(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_iterator_concat(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:43223:19: warning: invalid conversion from ‘void*’ to ‘JSIteratorConcatData*’ [-fpermissive]
      it = js_malloc(ctx, sizeof(*it) + 2*argc * sizeof(it->values[0]));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_iterator_from(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_iterator_from(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:43300:19: warning: invalid conversion from ‘void*’ to ‘JSIteratorWrapData*’ [-fpermissive]
      it = js_malloc(ctx, sizeof(*it));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_create_iterator_helper(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_create_iterator_helper(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:43408:19: warning: invalid conversion from ‘void*’ to ‘JSIteratorHelperData*’ [-fpermissive]
      it = js_malloc(ctx, sizeof(*it));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
@@ -1688,7 +2094,7 @@ quickjs.c:43414:16: warning: invalid conversion from ‘int’ to ‘JSIteratorH
                 ^~~~~
                 |
                 int
-quickjs.c: In function ‘JSValue js_iterator_helper_next(JSContext*, JSValue, int, JSValue*, int*, int)’:
+quickjs.c: In function ‘__JSValue* js_iterator_helper_next(JSContext*, JSValueConst, int, const __JSValue**, int*, int)’:
 quickjs.c:43756:23: warning: invalid conversion from ‘void*’ to ‘JSIteratorHelperData*’ [-fpermissive]
      it = JS_GetOpaque2(ctx, this_val, JS_CLASS_ITERATOR_HELPER);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1815,12 +2221,12 @@ quickjs.h:1111:95: error: either all initializer clauses should be designated or
 quickjs.c:44094:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Array Iterator", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_number_constructor(JSContext*, JSValue, int, JSValue*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_number_constructor(JSContext*, JSValueConst, int, const __JSValue**)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:44117:31: note: in expansion of macro ‘JS_VALUE_GET_PTR’
                  JSBigInt *p = JS_VALUE_GET_PTR(val);
                                ^~~~~~~~~~~~~~~~
@@ -1888,28 +2294,44 @@ quickjs.c:44208:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
 quickjs.c:44549:1: error: designator order for field ‘JSClassExoticMethods::delete_property’ does not match declaration order in ‘const JSClassExoticMethods’
  };
  ^
-quickjs.c: In function ‘JSValue js_string_constructor(JSContext*, JSValue, int, JSValue*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_string_constructor(JSContext*, JSValueConst, int, const __JSValue**)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:44559:31: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSAtomStruct *p = JS_VALUE_GET_PTR(argv[0]);
                                ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int JS_ToUTF32String(JSContext*, uint32_t**, JSValue)’:
+quickjs.c: In function ‘int js_string_GetSubstitution(JSContext*, StringBuffer*, JSValueConst, JSString*, uint32_t, JSValueConst, JSValueConst, JSValueConst, uint8_t**, uint32_t)’:
+quickjs.c:45212:28: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+         if (j < 0 || j + 1 >= len)
+                      ~~~~~~^~~~~~
+quickjs.c:45232:19: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+             if (j < len) {
+                 ~~^~~~~
+quickjs.c:45239:39: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+                     if (k1 >= 1 && k1 < captures_len) {
+                                    ~~~^~~~~~~~~~~~~~
+quickjs.c:45245:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+             if (k >= 1 && k < captures_len) {
+                           ~~^~~~~~~~~~~~~~
+quickjs.c: In function ‘int JS_ToUTF32String(JSContext*, uint32_t**, JSValueConst)’:
 quickjs.c:45833:20: warning: invalid conversion from ‘void*’ to ‘uint32_t*’ {aka ‘unsigned int*’} [-fpermissive]
      buf = js_malloc(ctx, sizeof(buf[0]) * max_int(len, 1));
            ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     |
                     void*
-quickjs.c: In function ‘JSValue js_string_normalize(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_string_normalize(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:45913:50: warning: invalid conversion from ‘int’ to ‘UnicodeNormalizationEnum’ [-fpermissive]
              n_type = UNICODE_NFC + is_compat * 2 + (*p - 'C');
                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
                                                   |
                                                   int
-quickjs.c: In function ‘JSValue js_string_iterator_next(JSContext*, JSValue, int, JSValue*, BOOL*, int)’:
+quickjs.c:45914:32: warning: comparison of integer expressions of different signedness: ‘long int’ and ‘size_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+             if ((p + 1 - form) != form_len)
+                 ~~~~~~~~~~~~~~~^~~~~~~~~~~
+quickjs.c: In function ‘__JSValue* js_string_iterator_next(JSContext*, JSValueConst, int, const __JSValue**, BOOL*, int)’:
 quickjs.c:46029:23: warning: invalid conversion from ‘void*’ to ‘JSArrayIteratorData*’ [-fpermissive]
      it = JS_GetOpaque2(ctx, this_val, JS_CLASS_STRING_ITERATOR);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1946,6 +2368,10 @@ quickjs.c:46456:55: warning: invalid conversion from ‘int’ to ‘SumPreciseS
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
                                                        |
                                                        int
+quickjs.c: In function ‘double sum_precise_get_result(SumPreciseState*)’:
+quickjs.c:46558:29: warning: comparison of integer expressions of different signedness: ‘int64_t’ {aka ‘long int’} and ‘uint64_t’ {aka ‘long unsigned int’} [-Wsign-compare]
+     if (n == 1 && s->acc[0] < ((uint64_t)1 << 52))
+                   ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
 quickjs.c: At global scope:
 quickjs.c:46682:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [4], int, JSCFunctionEnum, <unresolved overloaded function type>)’
      JS_CFUNC_F_F_DEF("abs", 1, JS_CFUNC_f_f, fabs ),
@@ -2265,41 +2691,45 @@ quickjs.c:47300:22: warning: invalid conversion from ‘void*’ to ‘JSContext
                       ^~~~~~
                       |
                       void*
-quickjs.c: In function ‘JSValue js_regexp_exec(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_regexp_exec(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:47433:28: warning: invalid conversion from ‘void*’ to ‘uint8_t**’ {aka ‘unsigned char**’} [-fpermissive]
          capture = js_malloc(ctx, sizeof(capture[0]) * alloc_count);
                    ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                             |
                             void*
-quickjs.c: In function ‘JSValue js_regexp_replace(JSContext*, JSValue, JSValue, JSValue)’:
+quickjs.c: In function ‘__JSValue* js_regexp_replace(JSContext*, JSValueConst, JSValueConst, JSValueConst)’:
 quickjs.c:47657:28: warning: invalid conversion from ‘void*’ to ‘uint8_t**’ {aka ‘unsigned char**’} [-fpermissive]
          capture = js_malloc(ctx, sizeof(capture[0]) * alloc_count);
                    ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                             |
                             void*
-quickjs.c: In function ‘JSValue js_regexp_string_iterator_next(JSContext*, JSValue, int, JSValue*, BOOL*, int)’:
+quickjs.c: In function ‘__JSValue* js_regexp_string_iterator_next(JSContext*, JSValueConst, int, const __JSValue**, BOOL*, int)’:
 quickjs.c:47886:23: warning: invalid conversion from ‘void*’ to ‘JSRegExpStringIteratorData*’ [-fpermissive]
      it = JS_GetOpaque2(ctx, this_val, JS_CLASS_REGEXP_STRING_ITERATOR);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: In function ‘JSValue js_regexp_Symbol_matchAll(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_regexp_Symbol_matchAll(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:47973:19: warning: invalid conversion from ‘void*’ to ‘JSRegExpStringIteratorData*’ [-fpermissive]
      it = js_malloc(ctx, sizeof(*it));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
                    |
                    void*
 quickjs.c: In function ‘int value_buffer_append(ValueBuffer*, JSValue)’:
-quickjs.c:48037:34: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c:48037:34: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
              new_arr = js_realloc2(b->ctx, nullptr, sizeof(*b->arr) * new_size, &slack);
                        ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c:48041:34: warning: invalid conversion from ‘void*’ to ‘JSValue*’ [-fpermissive]
+quickjs.c:48041:34: warning: invalid conversion from ‘void*’ to ‘__JSValue**’ [-fpermissive]
              new_arr = js_realloc2(b->ctx, b->arr, sizeof(*b->arr) * new_size, &slack);
                        ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
+quickjs.c: In function ‘__JSValue* js_regexp_Symbol_replace(JSContext*, JSValueConst, int, const __JSValue**)’:
+quickjs.c:48244:22: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+         for(n = 1; n < nCaptures; n++) {
+                    ~~^~~~~~~~~~~
 quickjs.c: At global scope:
 quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
  #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
@@ -2361,6 +2791,24 @@ quickjs.c:48668:31: warning: invalid conversion from ‘void*’ to ‘uint32_t*
                       ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                |
                                void*
+quickjs.c:48678:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     for(i = 0; i < po->count; i++) {
+                ~~^~~~~~~~~~~
+quickjs.c: In function ‘JSONParseRecord* json_parse_record_add(JSContext*, JSONParseRecord*, JSAtom, int*)’:
+quickjs.c:48699:43: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     if (po->count >= 8 && (po->count + 1) > po->hash_size) {
+                           ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+quickjs.c: In function ‘JSONParseRecord* json_parse_record_find(JSONParseRecord*, JSAtom)’:
+quickjs.c:48724:22: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         for(i = 0; i < po->count; i++) {
+                    ~~^~~~~~~~~~~
+quickjs.c:48731:18: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+         while (i != -1) {
+                ~~^~~~~
+quickjs.c: In function ‘__JSValue* internalize_json_property(JSContext*, JSValueConst, JSAtom, JSValueConst, const char*, JSONParseRecord*)’:
+quickjs.c:49014:25: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+                 if (idx < pr->u.array.count) {
+                     ~~~~^~~~~~~~~~~~~~~~~~~
 quickjs.c: At global scope:
 quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
  #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
@@ -2392,25 +2840,25 @@ quickjs.c:49864:34: warning: invalid conversion from ‘void*’ to ‘JSProxyDa
                       ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘void js_proxy_mark(JSRuntime*, JSValue, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.c: In function ‘void js_proxy_mark(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
 quickjs.c:49875:34: warning: invalid conversion from ‘void*’ to ‘JSProxyData*’ [-fpermissive]
      JSProxyData *s = JS_GetOpaque(val, JS_CLASS_PROXY);
                       ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSProxyData* get_proxy_method(JSContext*, JSValue*, JSValue, JSAtom)’:
+quickjs.c: In function ‘JSProxyData* get_proxy_method(JSContext*, __JSValue**, JSValueConst, JSAtom)’:
 quickjs.c:49890:34: warning: invalid conversion from ‘void*’ to ‘JSProxyData*’ [-fpermissive]
      JSProxyData *s = JS_GetOpaque(obj, JS_CLASS_PROXY);
                       ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘int js_proxy_get_own_property_names(JSContext*, JSPropertyEnum**, uint32_t*, JSValue)’:
+quickjs.c: In function ‘int js_proxy_get_own_property_names(JSContext*, JSPropertyEnum**, uint32_t*, JSValueConst)’:
 quickjs.c:50532:25: warning: invalid conversion from ‘void*’ to ‘JSPropertyEnum*’ [-fpermissive]
          tab = js_mallocz(ctx, sizeof(tab[0]) * len);
                ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
                          |
                          void*
-quickjs.c: In function ‘int js_resolve_proxy(JSContext*, JSValue*, BOOL)’:
+quickjs.c: In function ‘int js_resolve_proxy(JSContext*, const __JSValue**, BOOL)’:
 quickjs.c:50708:18: warning: invalid conversion from ‘void*’ to ‘JSProxyData*’ [-fpermissive]
          s = p->u.opaque;
              ~~~~~^~~~~~
@@ -2420,24 +2868,24 @@ quickjs.c: At global scope:
 quickjs.c:50731:1: error: designator order for field ‘JSClassExoticMethods::delete_property’ does not match declaration order in ‘const JSClassExoticMethods’
  };
  ^
-quickjs.c: In function ‘JSValue js_proxy_constructor(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_proxy_constructor(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:50749:18: warning: invalid conversion from ‘void*’ to ‘JSProxyData*’ [-fpermissive]
      s = js_malloc(ctx, sizeof(JSProxyData));
          ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
                   |
                   void*
-quickjs.c: In function ‘JSValue js_proxy_revoke(JSContext*, JSValue, int, JSValue*, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_proxy_revoke(JSContext*, JSValueConst, int, const __JSValue**, int, __JSValue**)’:
 quickjs.c:50767:34: warning: invalid conversion from ‘void*’ to ‘JSProxyData*’ [-fpermissive]
      JSProxyData *s = JS_GetOpaque(func_data[0], JS_CLASS_PROXY);
                       ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_symbol_get_description(JSContext*, JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_symbol_get_description(JSContext*, JSValueConst)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:50911:9: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      p = JS_VALUE_GET_PTR(val);
          ^~~~~~~~~~~~~~~~
@@ -2448,12 +2896,12 @@ quickjs.h:1111:95: error: either all initializer clauses should be designated or
 quickjs.c:50926:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Symbol", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_symbol_keyFor(JSContext*, JSValue, int, JSValue*)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_symbol_keyFor(JSContext*, JSValueConst, int, const __JSValue**)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:50948:9: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      p = JS_VALUE_GET_PTR(argv[0]);
          ^~~~~~~~~~~~~~~~
@@ -2536,25 +2984,25 @@ quickjs.h:1116:90: error: either all initializer clauses should be designated or
 quickjs.c:50969:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
      JS_PROP_ATOM_DEF("asyncIterator", JS_ATOM_Symbol_asyncIterator, 0),
      ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘BOOL js_weakref_is_target(JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘BOOL js_weakref_is_target(JSValueConst)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:50981:31: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              JSAtomStruct *p = JS_VALUE_GET_PTR(val);
                                ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘BOOL js_weakref_is_live(JSValue)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘int*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘BOOL js_weakref_is_live(JSValueConst)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘int*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:51000:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      pref_count = JS_VALUE_GET_PTR(val);
                   ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_map_constructor(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_constructor(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51063:19: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = js_mallocz(ctx, sizeof(*s));
          ~~~~~~~~~~^~~~~~~~~~~~~~~~~
@@ -2565,7 +3013,7 @@ quickjs.c:51075:31: warning: invalid conversion from ‘void*’ to ‘JSMapReco
                      ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                |
                                void*
-quickjs.c: In function ‘uint32_t map_hash_key(JSValue, int)’:
+quickjs.c: In function ‘uint32_t map_hash_key(JSValueConst, int)’:
 quickjs.c:51215:10: warning: narrowing conversion of ‘JS_TAG_STRING’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_STRING:
           ^~~~~~~~~~~~~
@@ -2581,11 +3029,11 @@ quickjs.c:51222:10: warning: narrowing conversion of ‘JS_TAG_SYMBOL’ from �
 quickjs.c:51239:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:51240:13: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          p = JS_VALUE_GET_PTR(key);
              ^~~~~~~~~~~~~~~~
@@ -2597,61 +3045,61 @@ quickjs.c:51287:32: warning: invalid conversion from ‘void*’ to ‘JSMapReco
                                 void*
                                  sizeof(new_hash_table[0]) * new_hash_size);
                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSMapRecord* map_add_record(JSContext*, JSMapState*, JSValue)’:
+quickjs.c: In function ‘JSMapRecord* map_add_record(JSContext*, JSMapState*, JSValueConst)’:
 quickjs.c:51315:19: warning: invalid conversion from ‘void*’ to ‘JSMapRecord*’ [-fpermissive]
      mr = js_malloc(ctx, sizeof(*mr));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_map_set(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_set(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51416:34: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      JSMapState *s = JS_GetOpaque2(ctx, this_val, JS_CLASS_MAP + magic);
                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_map_get(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_get(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51444:34: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      JSMapState *s = JS_GetOpaque2(ctx, this_val, JS_CLASS_MAP + magic);
                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_map_getOrInsert(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_getOrInsert(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51493:34: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      JSMapState *s = JS_GetOpaque2(ctx, this_val, class_id);
                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_map_has(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_has(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51528:34: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      JSMapState *s = JS_GetOpaque2(ctx, this_val, JS_CLASS_MAP + magic);
                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_map_delete(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_delete(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51542:34: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      JSMapState *s = JS_GetOpaque2(ctx, this_val, JS_CLASS_MAP + magic);
                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_map_clear(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_clear(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51551:34: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      JSMapState *s = JS_GetOpaque2(ctx, this_val, JS_CLASS_MAP + magic);
                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_map_get_size(JSContext*, JSValue, int)’:
+quickjs.c: In function ‘__JSValue* js_map_get_size(JSContext*, JSValueConst, int)’:
 quickjs.c:51570:34: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      JSMapState *s = JS_GetOpaque2(ctx, this_val, JS_CLASS_MAP + magic);
                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_map_forEach(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_forEach(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51579:34: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      JSMapState *s = JS_GetOpaque2(ctx, this_val, JS_CLASS_MAP + magic);
                      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
-quickjs.c: In function ‘JSValue js_create_map_iterator(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_create_map_iterator(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:51836:18: warning: invalid conversion from ‘int’ to ‘JSIteratorKindEnum’ [-fpermissive]
      kind = magic >> 2;
             ~~~~~~^~~~
@@ -2667,7 +3115,7 @@ quickjs.c:51844:19: warning: invalid conversion from ‘void*’ to ‘JSMapIter
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_map_iterator_next(JSContext*, JSValue, int, JSValue*, BOOL*, int)’:
+quickjs.c: In function ‘__JSValue* js_map_iterator_next(JSContext*, JSValueConst, int, const __JSValue**, BOOL*, int)’:
 quickjs.c:51867:23: warning: invalid conversion from ‘void*’ to ‘JSMapIteratorData*’ [-fpermissive]
      it = JS_GetOpaque2(ctx, this_val, JS_CLASS_MAP_ITERATOR + magic);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2678,13 +3126,13 @@ quickjs.c:51874:21: warning: invalid conversion from ‘void*’ to ‘JSMapStat
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘int get_set_record(JSContext*, JSValue, int64_t*, JSValue*, JSValue*)’:
+quickjs.c: In function ‘int get_set_record(JSContext*, JSValueConst, int64_t*, __JSValue**, __JSValue**)’:
 quickjs.c:51930:21: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque(obj, JS_CLASS_SET);
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘JSValue js_copy_set(JSContext*, JSValue)’:
+quickjs.c: In function ‘__JSValue* js_copy_set(JSContext*, JSValueConst)’:
 quickjs.c:52003:22: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_SET);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2695,25 +3143,25 @@ quickjs.c:52010:21: warning: invalid conversion from ‘void*’ to ‘JSMapStat
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘JSValue js_set_isDisjointFrom(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_set_isDisjointFrom(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:52040:22: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_SET);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                       |
                       void*
-quickjs.c: In function ‘JSValue js_set_isSubsetOf(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_set_isSubsetOf(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:52107:22: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_SET);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                       |
                       void*
-quickjs.c: In function ‘JSValue js_set_isSupersetOf(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_set_isSupersetOf(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:52154:22: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_SET);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                       |
                       void*
-quickjs.c: In function ‘JSValue js_set_intersection(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_set_intersection(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:52205:22: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_SET);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2729,7 +3177,7 @@ quickjs.c:52246:25: warning: invalid conversion from ‘void*’ to ‘JSMapStat
              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
                          |
                          void*
-quickjs.c: In function ‘JSValue js_set_difference(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_set_difference(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:52296:22: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_SET);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2740,7 +3188,7 @@ quickjs.c:52305:21: warning: invalid conversion from ‘void*’ to ‘JSMapStat
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘JSValue js_set_symmetricDifference(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_set_symmetricDifference(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:52367:22: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_SET);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2751,7 +3199,7 @@ quickjs.c:52385:21: warning: invalid conversion from ‘void*’ to ‘JSMapStat
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘JSValue js_set_union(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_set_union(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:52434:22: warning: invalid conversion from ‘void*’ to ‘JSMapState*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_SET);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2847,13 +3295,13 @@ quickjs.c:52644:16: warning: invalid conversion from ‘int’ to ‘JSPromiseSt
                 ^~
                 |
                 int
-quickjs.c: In function ‘JSValue JS_PromiseResult(JSContext*, JSValue)’:
+quickjs.c: In function ‘__JSValue* JS_PromiseResult(JSContext*, JSValue)’:
 quickjs.c:52650:36: warning: invalid conversion from ‘void*’ to ‘JSPromiseData*’ [-fpermissive]
      JSPromiseData *s = JS_GetOpaque(promise, JS_CLASS_PROMISE);
                         ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
                                     |
                                     void*
-quickjs.c: In function ‘void fulfill_or_reject_promise(JSContext*, JSValue, JSValue, BOOL)’:
+quickjs.c: In function ‘void fulfill_or_reject_promise(JSContext*, JSValueConst, JSValueConst, BOOL)’:
 quickjs.c:52721:36: warning: invalid conversion from ‘void*’ to ‘JSPromiseData*’ [-fpermissive]
      JSPromiseData *s = JS_GetOpaque(promise, JS_CLASS_PROMISE);
                         ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2864,7 +3312,7 @@ quickjs.c:52729:45: warning: invalid conversion from ‘int’ to ‘JSPromiseSt
                         ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
                                              |
                                              int
-quickjs.c: In function ‘int js_create_resolving_functions(JSContext*, JSValue*, JSValue)’:
+quickjs.c: In function ‘int js_create_resolving_functions(JSContext*, __JSValue**, JSValueConst)’:
 quickjs.c:52810:19: warning: invalid conversion from ‘void*’ to ‘JSPromiseFunctionDataResolved*’ [-fpermissive]
      sr = js_malloc(ctx, sizeof(*sr));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
@@ -2881,25 +3329,25 @@ quickjs.c:52916:36: warning: invalid conversion from ‘void*’ to ‘JSPromise
                         ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
                                     |
                                     void*
-quickjs.c: In function ‘void js_promise_mark(JSRuntime*, JSValue, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.c: In function ‘void js_promise_mark(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
 quickjs.c:52936:36: warning: invalid conversion from ‘void*’ to ‘JSPromiseData*’ [-fpermissive]
      JSPromiseData *s = JS_GetOpaque(val, JS_CLASS_PROMISE);
                         ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
                                     |
                                     void*
-quickjs.c: In function ‘JSValue js_promise_constructor(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_promise_constructor(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:52969:19: warning: invalid conversion from ‘void*’ to ‘JSPromiseData*’ [-fpermissive]
      s = js_mallocz(ctx, sizeof(*s));
          ~~~~~~~~~~^~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_new_promise_capability(JSContext*, JSValue*, JSValue)’:
+quickjs.c: In function ‘__JSValue* js_new_promise_capability(JSContext*, __JSValue**, JSValueConst)’:
 quickjs.c:53048:21: warning: invalid conversion from ‘void*’ to ‘JSCFunctionDataRecord*’ [-fpermissive]
      s = JS_GetOpaque(executor, JS_CLASS_C_FUNCTION_DATA);
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘int perform_promise_then(JSContext*, JSValue, JSValue*, JSValue*)’:
+quickjs.c: In function ‘int perform_promise_then(JSContext*, JSValueConst, const __JSValue**, const __JSValue**)’:
 quickjs.c:53478:36: warning: invalid conversion from ‘void*’ to ‘JSPromiseData*’ [-fpermissive]
      JSPromiseData *s = JS_GetOpaque(promise, JS_CLASS_PROMISE);
                         ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2910,7 +3358,7 @@ quickjs.c:53486:24: warning: invalid conversion from ‘void*’ to ‘JSPromise
               ~~~~~~~~~~^~~~~~~~~~~~~~~~~~
                         |
                         void*
-quickjs.c: In function ‘JSValue js_promise_then(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_promise_then(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:53535:22: warning: invalid conversion from ‘void*’ to ‘JSPromiseData*’ [-fpermissive]
      s = JS_GetOpaque2(ctx, this_val, JS_CLASS_PROMISE);
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2935,19 +3383,19 @@ quickjs.c:53686:21: warning: invalid conversion from ‘void*’ to ‘JSAsyncFr
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘void js_async_from_sync_iterator_mark(JSRuntime*, JSValue, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.c: In function ‘void js_async_from_sync_iterator_mark(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
 quickjs.c:53698:21: warning: invalid conversion from ‘void*’ to ‘JSAsyncFromSyncIteratorData*’ [-fpermissive]
          JS_GetOpaque(val, JS_CLASS_ASYNC_FROM_SYNC_ITERATOR);
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘JSValue JS_CreateAsyncFromSyncIterator(JSContext*, JSValue)’:
+quickjs.c: In function ‘__JSValue* JS_CreateAsyncFromSyncIterator(JSContext*, JSValueConst)’:
 quickjs.c:53719:19: warning: invalid conversion from ‘void*’ to ‘JSAsyncFromSyncIteratorData*’ [-fpermissive]
      s = js_mallocz(ctx, sizeof(*s));
          ~~~~~~~~~~^~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_async_from_sync_iterator_next(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_async_from_sync_iterator_next(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:53778:21: warning: invalid conversion from ‘void*’ to ‘JSAsyncFromSyncIteratorData*’ [-fpermissive]
      s = JS_GetOpaque(this_val, JS_CLASS_ASYNC_FROM_SYNC_ITERATOR);
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3007,7 +3455,7 @@ quickjs.h:1119:100: error: either all initializer clauses should be designated o
 quickjs.c:55383:5: note: in expansion of macro ‘JS_ALIAS_DEF’
      JS_ALIAS_DEF("toGMTString", "toUTCString" ),
      ^~~~~~~~~~~~
-quickjs.c: In function ‘JSValue JS_ToBigIntCtorFree(JSContext*, JSValue)’:
+quickjs.c: In function ‘__JSValue* JS_ToBigIntCtorFree(JSContext*, JSValue)’:
 quickjs.c:55476:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
           ^~~~~~~~~~~~~~
@@ -3020,12 +3468,12 @@ quickjs.c:55497:10: warning: narrowing conversion of ‘JS_TAG_STRING_ROPE’ fr
 quickjs.c:55500:10: warning: narrowing conversion of ‘JS_TAG_OBJECT’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_OBJECT:
           ^~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_bigint_asUintN(JSContext*, JSValue, int, JSValue*, int)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_bigint_asUintN(JSContext*, JSValueConst, int, const __JSValue**, int)’:
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:55601:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          JSBigInt *r, *p = JS_VALUE_GET_PTR(a);
                            ^~~~~~~~~~~~~~~~
@@ -3036,7 +3484,7 @@ quickjs.h:1111:95: error: either all initializer clauses should be designated or
 quickjs.c:55640:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "BigInt", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_array_buffer_constructor3(JSContext*, JSValue, uint64_t, uint64_t*, JSClassID, uint8_t*, void (*)(JSRuntime*, void*, void*), void*, BOOL)’:
+quickjs.c: In function ‘__JSValue* js_array_buffer_constructor3(JSContext*, JSValueConst, uint64_t, uint64_t*, JSClassID, uint8_t*, void (*)(JSRuntime*, void*, void*), void*, BOOL)’:
 quickjs.c:56053:21: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      abuf = js_malloc(ctx, sizeof(*abuf));
             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
@@ -3054,37 +3502,41 @@ quickjs.c:56071:36: warning: invalid conversion from ‘void*’ to ‘uint8_t*�
                           ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
                                     |
                                     void*
-quickjs.c: In function ‘JSValue js_array_buffer_get_detached(JSContext*, JSValue)’:
+quickjs.c: In function ‘__JSValue* js_array_buffer_constructor0(JSContext*, JSValueConst, int, const __JSValue**, JSClassID)’:
+quickjs.c:56166:13: warning: comparison of integer expressions of different signedness: ‘uint64_t’ {aka ‘long unsigned int’} and ‘int64_t’ {aka ‘long int’} [-Wsign-compare]
+     if (len > i || i > MAX_SAFE_INTEGER)
+         ~~~~^~~
+quickjs.c: In function ‘__JSValue* js_array_buffer_get_detached(JSContext*, JSValueConst)’:
 quickjs.c:56262:40: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      JSArrayBuffer *abuf = JS_GetOpaque2(ctx, this_val, JS_CLASS_ARRAY_BUFFER);
                            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                         |
                                         void*
-quickjs.c: In function ‘JSValue js_array_buffer_get_byteLength(JSContext*, JSValue, int)’:
+quickjs.c: In function ‘__JSValue* js_array_buffer_get_byteLength(JSContext*, JSValueConst, int)’:
 quickjs.c:56274:40: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      JSArrayBuffer *abuf = JS_GetOpaque2(ctx, this_val, class_id);
                            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
                                         |
                                         void*
-quickjs.c: In function ‘JSValue js_array_buffer_get_maxByteLength(JSContext*, JSValue, int)’:
+quickjs.c: In function ‘__JSValue* js_array_buffer_get_maxByteLength(JSContext*, JSValueConst, int)’:
 quickjs.c:56285:40: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      JSArrayBuffer *abuf = JS_GetOpaque2(ctx, this_val, class_id);
                            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
                                         |
                                         void*
-quickjs.c: In function ‘JSValue js_array_buffer_get_resizable(JSContext*, JSValue, int)’:
+quickjs.c: In function ‘__JSValue* js_array_buffer_get_resizable(JSContext*, JSValueConst, int)’:
 quickjs.c:56297:40: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      JSArrayBuffer *abuf = JS_GetOpaque2(ctx, this_val, class_id);
                            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
                                         |
                                         void*
-quickjs.c: In function ‘void JS_DetachArrayBuffer(JSContext*, JSValue)’:
+quickjs.c: In function ‘void JS_DetachArrayBuffer(JSContext*, JSValueConst)’:
 quickjs.c:56348:39: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      JSArrayBuffer *abuf = JS_GetOpaque(obj, JS_CLASS_ARRAY_BUFFER);
                            ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                        |
                                        void*
-quickjs.c: In function ‘JSValue js_array_buffer_transfer(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_array_buffer_transfer(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:56408:25: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      abuf = JS_GetOpaque2(ctx, this_val, JS_CLASS_ARRAY_BUFFER);
             ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3100,7 +3552,7 @@ quickjs.c:56460:36: warning: invalid conversion from ‘void*’ to ‘uint8_t*�
                           ~~~~~~~~~~^~~~~~~~~~~~~~~~~~
                                     |
                                     void*
-quickjs.c: In function ‘JSValue js_array_buffer_resize(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_array_buffer_resize(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:56487:25: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      abuf = JS_GetOpaque2(ctx, this_val, class_id);
             ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3111,7 +3563,7 @@ quickjs.c:56518:26: warning: invalid conversion from ‘void*’ to ‘uint8_t*�
                 ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                           |
                           void*
-quickjs.c: In function ‘JSValue js_array_buffer_slice(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_array_buffer_slice(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:56538:25: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      abuf = JS_GetOpaque2(ctx, this_val, class_id);
             ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3171,19 +3623,35 @@ quickjs.h:1111:95: error: either all initializer clauses should be designated or
 quickjs.c:56620:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "SharedArrayBuffer", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue JS_NewTypedArray(JSContext*, int, JSValue*, JSTypedArrayEnum)’:
+quickjs.c: In function ‘BOOL typed_array_is_oob(JSObject*)’:
+quickjs.c:56655:20: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     if (ta->offset > len)
+         ~~~~~~~~~~~^~~~~
+quickjs.c: In function ‘__JSValue* JS_NewTypedArray(JSContext*, int, const __JSValue**, JSTypedArrayEnum)’:
 quickjs.c:56762:61: warning: arithmetic between different enumeration types ‘<unnamed enum>’ and ‘JSTypedArrayEnum’ [-Wdeprecated-enum-enum-conversion]
                                        JS_CLASS_UINT8C_ARRAY + type);
                                        ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
-quickjs.c: In function ‘JSValue js_typed_array_indexOf(JSContext*, JSValue, int, JSValue*, int)’:
-quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
- #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
-                             ~~~~~~~^~~~
-                                    |
-                                    void*
+quickjs.c: In function ‘__JSValue* js_typed_array_indexOf(JSContext*, JSValueConst, int, const __JSValue**, int)’:
+quickjs.c:57379:13: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
+     if (len > p->u.array.count && special == special_includes &&
+         ~~~~^~~~~~~~~~~~~~~~~~
+quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
+ #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
+                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                             |
+                             void*
 quickjs.c:57417:18: note: in expansion of macro ‘JS_VALUE_GET_PTR’
              p1 = JS_VALUE_GET_PTR(argv[0]);
                   ^~~~~~~~~~~~~~~~
+quickjs.c:57420:25: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             if (p1->len > sz)
+                 ~~~~~~~~^~~~
+quickjs.c:57425:25: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             if (p1->len <= sz) {
+                 ~~~~~~~~^~~~~
+quickjs.c:57427:32: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+             } else if (p1->len == sz + 1 && p1->tab[sz] == 0) {
+                        ~~~~~~~~^~~~~~~~~
 quickjs.c:57459:32: warning: invalid conversion from ‘const void*’ to ‘const uint8_t*’ {aka ‘const unsigned char*’} [-fpermissive]
                      pp = memchr(pv + k, v, len - k);
                           ~~~~~~^~~~~~~~~~~~~~~~~~~~
@@ -3195,17 +3663,32 @@ quickjs.c:58024:35: warning: invalid conversion from ‘void*’ to ‘TA_sort_c
                                    ^~~~~~
                                    |
                                    void*
-quickjs.c: In function ‘JSValue js_typed_array_sort(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_typed_array_sort(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:58153:34: warning: invalid conversion from ‘void*’ to ‘uint32_t*’ {aka ‘unsigned int*’} [-fpermissive]
              array_idx = js_malloc(ctx, len * sizeof(array_idx[0]));
                          ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                   |
                                   void*
+quickjs.c:58158:26: warning: comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+             for(i = 0; i < len; i++)
+                        ~~^~~~~
 quickjs.c:58161:25: warning: invalid conversion from ‘void*’ to ‘uint8_t*’ {aka ‘unsigned char*’} [-fpermissive]
              tsc.array = array;
                          ^~~~~
                          |
                          void*
+quickjs.c:58176:34: warning: comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+                     for(i = 0; i < len; i++) {
+                                ~~^~~~~
+quickjs.c:58182:34: warning: comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+                     for(i = 0; i < len; i++) {
+                                ~~^~~~~
+quickjs.c:58188:34: warning: comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+                     for(i = 0; i < len; i++) {
+                                ~~^~~~~
+quickjs.c:58194:34: warning: comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+                     for(i = 0; i < len; i++) {
+                                ~~^~~~~
 quickjs.c: At global scope:
 quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
  #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
@@ -3237,31 +3720,51 @@ quickjs.h:1112:92: error: either all initializer clauses should be designated or
 quickjs.c:58282:5: note: in expansion of macro ‘JS_PROP_INT32_DEF’
      JS_PROP_INT32_DEF("BYTES_PER_ELEMENT", 8, 0),
      ^~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘int typed_array_init(JSContext*, JSValue, JSValue, uint64_t, uint64_t, BOOL)’:
+quickjs.c: In function ‘int typed_array_init(JSContext*, JSValueConst, JSValue, uint64_t, uint64_t, BOOL)’:
 quickjs.c:58304:19: warning: invalid conversion from ‘void*’ to ‘JSTypedArray*’ [-fpermissive]
      ta = js_malloc(ctx, sizeof(*ta));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_typed_array_constructor_ta(JSContext*, JSValue, JSValue, int, uint32_t)’:
+quickjs.c: In function ‘__JSValue* js_typed_array_constructor_ta(JSContext*, JSValueConst, JSValueConst, int, uint32_t)’:
 quickjs.c:58449:24: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      abuf = JS_GetOpaque(buffer, JS_CLASS_ARRAY_BUFFER);
             ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                         |
                         void*
-quickjs.c: In function ‘JSValue js_dataview_constructor(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_typed_array_constructor(JSContext*, JSValueConst, int, const __JSValue**, int)’:
+quickjs.c:58516:28: warning: comparison of integer expressions of different signedness: ‘uint64_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+                 if (offset > abuf->byte_length) {
+                     ~~~~~~~^~~~~~~~~~~~~~~~~~~
+quickjs.c:58534:51: warning: comparison of integer expressions of different signedness: ‘uint64_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+                 if ((offset + (len << size_log2)) > abuf->byte_length) {
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘__JSValue* js_dataview_constructor(JSContext*, JSValueConst, int, const __JSValue**)’:
+quickjs.c:58609:16: warning: comparison of integer expressions of different signedness: ‘uint64_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+     if (offset > abuf->byte_length)
+         ~~~~~~~^~~~~~~~~~~~~~~~~~~
+quickjs.c:58633:16: warning: comparison of integer expressions of different signedness: ‘uint64_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+     if (offset > abuf->byte_length) {
+         ~~~~~~~^~~~~~~~~~~~~~~~~~~
+quickjs.c:58637:29: warning: comparison of integer expressions of different signedness: ‘uint64_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+     } else if (offset + len > abuf->byte_length) {
+                ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
 quickjs.c:58642:19: warning: invalid conversion from ‘void*’ to ‘JSTypedArray*’ [-fpermissive]
      ta = js_malloc(ctx, sizeof(*ta));
           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
                    |
                    void*
-quickjs.c: In function ‘JSValue js_dataview_getValue(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘BOOL dataview_is_oob(JSObject*)’:
+quickjs.c:58670:20: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
+     if (ta->offset > abuf->byte_length)
+         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+quickjs.c: In function ‘__JSValue* js_dataview_getValue(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:58747:23: warning: invalid conversion from ‘void*’ to ‘JSTypedArray*’ [-fpermissive]
      ta = JS_GetOpaque2(ctx, this_obj, JS_CLASS_DATAVIEW);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: In function ‘JSValue js_dataview_setValue(JSContext*, JSValue, int, JSValue*, int)’:
+quickjs.c: In function ‘__JSValue* js_dataview_setValue(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:58861:23: warning: invalid conversion from ‘void*’ to ‘JSTypedArray*’ [-fpermissive]
      ta = JS_GetOpaque2(ctx, this_obj, JS_CLASS_DATAVIEW);
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3274,7 +3777,11 @@ quickjs.h:1111:95: error: either all initializer clauses should be designated or
 quickjs.c:58968:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "DataView", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
-quickjs.c: In function ‘JSValue js_atomics_wait(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘int js_atomics_get_ptr(JSContext*, void**, JSObject**, uint64_t*, int*, JSClassID*, JSValueConst, JSValueConst, int)’:
+quickjs.c:59031:13: warning: comparison of integer expressions of different signedness: ‘uint64_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
+     if (idx >= old_len)
+         ~~~~^~~~~~~~~~
+quickjs.c: In function ‘__JSValue* js_atomics_wait(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:59387:19: warning: invalid conversion from ‘void*’ to ‘int32_t*’ {aka ‘int*’} [-fpermissive]
      waiter->ptr = ptr;
                    ^~~
@@ -3327,13 +3834,13 @@ quickjs.c:59597:38: warning: invalid conversion from ‘void*’ to ‘JSWeakRef
                           ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
                                       |
                                       void*
-quickjs.c: In function ‘JSValue js_weakref_constructor(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_weakref_constructor(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:59629:36: warning: invalid conversion from ‘void*’ to ‘JSWeakRefData*’ [-fpermissive]
      JSWeakRefData *wrd = js_mallocz(ctx, sizeof(*wrd));
                           ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
                                     |
                                     void*
-quickjs.c: In function ‘JSValue js_weakref_deref(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_weakref_deref(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:59643:39: warning: invalid conversion from ‘void*’ to ‘JSWeakRefData*’ [-fpermissive]
      JSWeakRefData *wrd = JS_GetOpaque2(ctx, this_val, JS_CLASS_WEAK_REF);
                           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3352,19 +3859,19 @@ quickjs.c:59677:51: warning: invalid conversion from ‘void*’ to ‘JSFinaliz
                                        ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                    |
                                                    void*
-quickjs.c: In function ‘void js_finrec_mark(JSRuntime*, JSValue, void (*)(JSRuntime*, JSGCObjectHeader*))’:
+quickjs.c: In function ‘void js_finrec_mark(JSRuntime*, JSValueConst, void (*)(JSRuntime*, JSGCObjectHeader*))’:
 quickjs.c:59697:51: warning: invalid conversion from ‘void*’ to ‘JSFinalizationRegistryData*’ [-fpermissive]
      JSFinalizationRegistryData *frd = JS_GetOpaque(val, JS_CLASS_FINALIZATION_REGISTRY);
                                        ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                                    |
                                                    void*
-quickjs.c: In function ‘JSValue js_finrec_constructor(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_finrec_constructor(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:59759:21: warning: invalid conversion from ‘void*’ to ‘JSFinalizationRegistryData*’ [-fpermissive]
      frd = js_mallocz(ctx, sizeof(*frd));
            ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: In function ‘JSValue js_finrec_register(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_finrec_register(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:59780:24: warning: invalid conversion from ‘void*’ to ‘JSFinalizationRegistryData*’ [-fpermissive]
      frd = JS_GetOpaque2(ctx, this_val, JS_CLASS_FINALIZATION_REGISTRY);
            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3375,7 +3882,7 @@ quickjs.c:59793:20: warning: invalid conversion from ‘void*’ to ‘JSFinRecE
            ~~~~~~~~~^~~~~~~~~~~~~~~~~~~
                     |
                     void*
-quickjs.c: In function ‘JSValue js_finrec_unregister(JSContext*, JSValue, int, JSValue*)’:
+quickjs.c: In function ‘__JSValue* js_finrec_unregister(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:59805:52: warning: invalid conversion from ‘void*’ to ‘JSFinalizationRegistryData*’ [-fpermissive]
      JSFinalizationRegistryData *frd = JS_GetOpaque2(ctx, this_val, JS_CLASS_FINALIZATION_REGISTRY);
                                        ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3388,3 +3895,34 @@ quickjs.h:1111:95: error: either all initializer clauses should be designated or
 quickjs.c:59834:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
      JS_PROP_STRING_DEF("[Symbol.toStringTag]", "FinalizationRegistry", JS_PROP_CONFIGURABLE ),
      ^~~~~~~~~~~~~~~~~~
+quickjs.c:50501:12: warning: ‘int js_proxy_get_own_property_names(JSContext*, JSPropertyEnum**, uint32_t*, JSValueConst)’ defined but not used [-Wunused-function]
+ static int js_proxy_get_own_property_names(JSContext *ctx,
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+quickjs.c:50439:12: warning: ‘int js_proxy_delete_property(JSContext*, JSValueConst, JSAtom)’ defined but not used [-Wunused-function]
+ static int js_proxy_delete_property(JSContext *ctx, JSValueConst obj,
+            ^~~~~~~~~~~~~~~~~~~~~~~~
+quickjs.c:50141:12: warning: ‘int js_proxy_set(JSContext*, JSValueConst, JSAtom, JSValueConst, JSValueConst, int)’ defined but not used [-Wunused-function]
+ static int js_proxy_set(JSContext *ctx, JSValueConst obj, JSAtom atom,
+            ^~~~~~~~~~~~
+quickjs.c:50091:16: warning: ‘__JSValue* js_proxy_get(JSContext*, JSValueConst, JSAtom, JSValueConst)’ defined but not used [-Wunused-function]
+ static JSValue js_proxy_get(JSContext *ctx, JSValueConst obj, JSAtom atom,
+                ^~~~~~~~~~~~
+quickjs.c:50047:12: warning: ‘int js_proxy_has(JSContext*, JSValueConst, JSAtom)’ defined but not used [-Wunused-function]
+ static int js_proxy_has(JSContext *ctx, JSValueConst obj, JSAtom atom)
+            ^~~~~~~~~~~~
+quickjs.c:50019:12: warning: ‘int js_proxy_prevent_extensions(JSContext*, JSValueConst)’ defined but not used [-Wunused-function]
+ static int js_proxy_prevent_extensions(JSContext *ctx, JSValueConst obj)
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+quickjs.c:49993:12: warning: ‘int js_proxy_is_extensible(JSContext*, JSValueConst)’ defined but not used [-Wunused-function]
+ static int js_proxy_is_extensible(JSContext *ctx, JSValueConst obj)
+            ^~~~~~~~~~~~~~~~~~~~~~
+quickjs.c:49954:12: warning: ‘int js_proxy_set_prototype(JSContext*, JSValueConst, JSValueConst)’ defined but not used [-Wunused-function]
+ static int js_proxy_set_prototype(JSContext *ctx, JSValueConst obj,
+            ^~~~~~~~~~~~~~~~~~~~~~
+quickjs.c:49913:16: warning: ‘__JSValue* js_proxy_get_prototype(JSContext*, JSValueConst)’ defined but not used [-Wunused-function]
+ static JSValue js_proxy_get_prototype(JSContext *ctx, JSValueConst obj)
+                ^~~~~~~~~~~~~~~~~~~~~~
+quickjs.c:44531:12: warning: ‘int js_string_delete_property(JSContext*, JSValueConst, JSAtom)’ defined but not used [-Wunused-function]
+ static int js_string_delete_property(JSContext *ctx,
+            ^~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Makefile:354: .obj/quickjs.check.o] Error 1

@@ -71,12 +71,12 @@ OBJDIR:=$(OBJDIR)/ubsan
 endif
 
 ifdef CONFIG_DARWIN
-# use clang instead of gcc
+# use clang++ instead of g++
 CONFIG_CLANG=y
 CONFIG_DEFAULT_AR=y
 endif
 ifdef CONFIG_FREEBSD
-# use clang instead of gcc
+# use clang++ instead of g++
 CONFIG_CLANG=y
 CONFIG_DEFAULT_AR=y
 CONFIG_LTO=
@@ -99,8 +99,8 @@ else
 endif
 
 ifdef CONFIG_CLANG
-  HOST_CC=clang
-  CC=$(CROSS_PREFIX)clang
+  HOST_CC=clang++
+  CC=$(CROSS_PREFIX)clang++
   CFLAGS+=-g -Wall -MMD -MF $(OBJDIR)/$(@F).d
   CFLAGS += -Wextra
   CFLAGS += -Wno-sign-compare
@@ -122,19 +122,19 @@ ifdef CONFIG_CLANG
   LIB_FUZZING_ENGINE ?= "-fsanitize=fuzzer"
 else ifdef CONFIG_COSMO
   CONFIG_LTO=
-  HOST_CC=gcc
+  HOST_CC=g++
   CC=cosmocc
   # cosmocc does not correct support -MF
   CFLAGS=-g -Wall #-MMD -MF $(OBJDIR)/$(@F).d
   CFLAGS += -Wno-array-bounds -Wno-format-truncation
   AR=cosmoar
 else
-  HOST_CC=gcc
-  CC=$(CROSS_PREFIX)gcc
-  CFLAGS+=-g -Wall -MMD -MF $(OBJDIR)/$(@F).d
+  HOST_CC=g++
+  CC=$(CROSS_PREFIX)g++
+  CFLAGS+=-g -std=c++26 -fpermissive -fno-diagnostics-show-line-numbers -Wall -MMD -MF $(OBJDIR)/$(@F).d
   CFLAGS += -Wno-array-bounds -Wno-format-truncation -Wno-infinite-recursion
   ifdef CONFIG_LTO
-    AR=$(CROSS_PREFIX)gcc-ar
+    AR=$(CROSS_PREFIX)g++-ar
   else
     AR=$(CROSS_PREFIX)ar
   endif
@@ -209,7 +209,7 @@ endif
 PROGS=qjs$(EXE) qjsc$(EXE) run-test262$(EXE)
 
 ifneq ($(CROSS_PREFIX),)
-QJSC_CC=gcc
+QJSC_CC=g++
 QJSC=./host-qjsc
 PROGS+=$(QJSC)
 else
