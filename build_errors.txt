@@ -1839,175 +1839,6 @@ quickjs.c:40744:24: warning: invalid conversion from ‘uint8_t’ {aka ‘unsig
                      ~~~^~~~~~~~~
                         |
                         uint8_t {aka unsigned char}
-quickjs.c: At global scope:
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:40791:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("lineNumber", js_function_proto_lineNumber, nullptr, 0 ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:40792:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("columnNumber", js_function_proto_lineNumber, nullptr, 1 ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40940:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("name", "Error", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40941:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:40949:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("name", name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),\
-     ^~~~~~~~~~~~~~~~
-quickjs.c:40952:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_EvalError)
-     ^~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.c:40952:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_EvalError)
-     ^~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:40949:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("name", name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),\
-     ^~~~~~~~~~~~~~~~
-quickjs.c:40953:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_RangeError)
-     ^~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.c:40953:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_RangeError)
-     ^~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:40949:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("name", name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),\
-     ^~~~~~~~~~~~~~~~
-quickjs.c:40954:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_ReferenceError)
-     ^~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.c:40954:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_ReferenceError)
-     ^~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:40949:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("name", name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),\
-     ^~~~~~~~~~~~~~~~
-quickjs.c:40955:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_SyntaxError)
-     ^~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.c:40955:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_SyntaxError)
-     ^~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:40949:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("name", name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),\
-     ^~~~~~~~~~~~~~~~
-quickjs.c:40956:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_TypeError)
-     ^~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.c:40956:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_TypeError)
-     ^~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:40949:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("name", name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),\
-     ^~~~~~~~~~~~~~~~
-quickjs.c:40957:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_URIError)
-     ^~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.c:40957:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_URIError)
-     ^~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:40949:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("name", name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),\
-     ^~~~~~~~~~~~~~~~
-quickjs.c:40958:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_InternalError)
-     ^~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.c:40958:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_InternalError)
-     ^~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:40949:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("name", name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),\
-     ^~~~~~~~~~~~~~~~
-quickjs.c:40959:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_AggregateError)
-     ^~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:40950:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("message", "", JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.c:40959:5: note: in expansion of macro ‘DEF’
-     DEF(JS_ATOM_AggregateError)
-     ^~~
 quickjs.c: In function ‘__JSValue* js_array_push(JSContext*, JSValueConst, int, const __JSValue**, int)’:
 quickjs.c:42138:57: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
                     JS_VALUE_GET_INT(p->prop[0].u.value) == p->u.array.count &&
@@ -2064,13 +1895,6 @@ quickjs.c:43186:23: warning: invalid conversion from ‘void*’ to ‘JSIterato
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:43214:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Iterator Concat", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘__JSValue* js_iterator_concat(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.c:43223:19: warning: invalid conversion from ‘void*’ to ‘JSIteratorConcatData*’ [-fpermissive]
      it = js_malloc(ctx, sizeof(*it) + 2*argc * sizeof(it->values[0]));
@@ -2100,127 +1924,6 @@ quickjs.c:43756:23: warning: invalid conversion from ‘void*’ to ‘JSIterato
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:44027:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Iterator Helper", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44031:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("at", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44032:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("copyWithin", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44033:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("entries", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44034:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("fill", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44035:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("find", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44036:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("findIndex", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44037:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("findLast", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44038:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("findLastIndex", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44039:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("flat", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44040:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("flatMap", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44041:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("includes", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44042:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("keys", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44043:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("toReversed", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44044:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("toSorted", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44045:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("toSpliced", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1117:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_BOOL_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_BOOL, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:44046:5: note: in expansion of macro ‘JS_PROP_BOOL_DEF’
-     JS_PROP_BOOL_DEF("values", TRUE, JS_PROP_C_W_E),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
-                                                                                                    ^
-quickjs.c:44086:5: note: in expansion of macro ‘JS_ALIAS_DEF’
-     JS_ALIAS_DEF("[Symbol.iterator]", "values" ),
-     ^~~~~~~~~~~~
-quickjs.h:1118:89: error: either all initializer clauses should be designated or none of them should be
- #define JS_OBJECT_DEF(name, tab, len, prop_flags) { name, prop_flags, JS_DEF_OBJECT, 0, .u = { .prop_list = { tab, len } } }
-                                                                                         ^
-quickjs.c:44089:5: note: in expansion of macro ‘JS_OBJECT_DEF’
-     JS_OBJECT_DEF("[Symbol.unscopables]", js_array_unscopables_funcs, countof(js_array_unscopables_funcs), JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:44094:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Array Iterator", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘__JSValue* js_number_constructor(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*’ [-fpermissive]
  #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
@@ -2231,66 +1934,6 @@ quickjs.c:44117:31: note: in expansion of macro ‘JS_VALUE_GET_PTR’
                  JSBigInt *p = JS_VALUE_GET_PTR(val);
                                ^~~~~~~~~~~~~~~~
 quickjs.c: At global scope:
-quickjs.h:1120:111: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_BASE_DEF(name, from, base) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, base } } }
-                                                                                                               ^
-quickjs.c:44195:5: note: in expansion of macro ‘JS_ALIAS_BASE_DEF’
-     JS_ALIAS_BASE_DEF("parseInt", "parseInt", 0 ),
-     ^~~~~~~~~~~~~~~~~
-quickjs.h:1120:111: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_BASE_DEF(name, from, base) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, base } } }
-                                                                                                               ^
-quickjs.c:44196:5: note: in expansion of macro ‘JS_ALIAS_BASE_DEF’
-     JS_ALIAS_BASE_DEF("parseFloat", "parseFloat", 0 ),
-     ^~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:44201:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("MAX_VALUE", 1.7976931348623157e+308, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:44202:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("MIN_VALUE", 5e-324, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:44203:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("NaN", NAN, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:44204:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("NEGATIVE_INFINITY", -INFINITY, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:44205:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("POSITIVE_INFINITY", INFINITY, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:44206:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("EPSILON", 2.220446049250313e-16, 0 ), /* ES6 */
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:44207:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("MAX_SAFE_INTEGER", 9007199254740991.0, 0 ), /* ES6 */
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:44208:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("MIN_SAFE_INTEGER", -9007199254740991.0, 0 ), /* ES6 */
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c:44549:1: error: designator order for field ‘JSClassExoticMethods::delete_property’ does not match declaration order in ‘const JSClassExoticMethods’
  };
  ^
@@ -2337,31 +1980,6 @@ quickjs.c:46029:23: warning: invalid conversion from ‘void*’ to ‘JSArrayIt
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: At global scope:
-quickjs.h:1112:92: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_INT32_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_INT32, 0, .u = { .i32 = val } }
-                                                                                            ^
-quickjs.c:46135:5: note: in expansion of macro ‘JS_PROP_INT32_DEF’
-     JS_PROP_INT32_DEF("length", 0, JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~
-quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
-                                                                                                    ^
-quickjs.c:46162:5: note: in expansion of macro ‘JS_ALIAS_DEF’
-     JS_ALIAS_DEF("trimRight", "trimEnd" ),
-     ^~~~~~~~~~~~
-quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
-                                                                                                    ^
-quickjs.c:46164:5: note: in expansion of macro ‘JS_ALIAS_DEF’
-     JS_ALIAS_DEF("trimLeft", "trimStart" ),
-     ^~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:46190:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "String Iterator", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘void sum_precise_add(SumPreciseState*, double)’:
 quickjs.c:46456:55: warning: invalid conversion from ‘int’ to ‘SumPreciseStateEnum’ [-fpermissive]
                  s->state = SUM_PRECISE_STATE_INFINITY + sgn;
@@ -2372,307 +1990,6 @@ quickjs.c: In function ‘double sum_precise_get_result(SumPreciseState*)’:
 quickjs.c:46558:29: warning: comparison of integer expressions of different signedness: ‘int64_t’ {aka ‘long int’} and ‘uint64_t’ {aka ‘long unsigned int’} [-Wsign-compare]
      if (n == 1 && s->acc[0] < ((uint64_t)1 << 52))
                    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
-quickjs.c: At global scope:
-quickjs.c:46682:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [4], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("abs", 1, JS_CFUNC_f_f, fabs ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46682:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46683:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("floor", 1, JS_CFUNC_f_f, floor ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46683:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46684:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("ceil", 1, JS_CFUNC_f_f, ceil ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46684:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46685:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, double (&)(double))’
-     JS_CFUNC_F_F_DEF("round", 1, JS_CFUNC_f_f, js_math_round ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46685:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46686:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("sqrt", 1, JS_CFUNC_f_f, sqrt ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46686:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46688:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("acos", 1, JS_CFUNC_f_f, acos ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46688:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46689:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("asin", 1, JS_CFUNC_f_f, asin ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46689:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46690:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("atan", 1, JS_CFUNC_f_f, atan ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46690:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46691:23: error: no matching function for call to ‘JS_CFUNC_F_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_F_DEF("atan2", 2, JS_CFUNC_f_f_f, atan2 ),
-     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46691:23: note: there is 1 candidate
-quickjs.h:1107:6: note: candidate 1: ‘template<class auto:4> auto JS_CFUNC_F_F_F_DEF(const char*, uint8_t, auto:4)’
- auto JS_CFUNC_F_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f_f, { .f_f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~~~
-quickjs.h:1107:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46692:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [4], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("cos", 1, JS_CFUNC_f_f, cos ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46692:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46693:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [4], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("exp", 1, JS_CFUNC_f_f, exp ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46693:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46694:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [4], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("log", 1, JS_CFUNC_f_f, log ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46694:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46695:23: error: no matching function for call to ‘JS_CFUNC_F_F_F_DEF(const char [4], int, JSCFunctionEnum, double (&)(double, double))’
-     JS_CFUNC_F_F_F_DEF("pow", 2, JS_CFUNC_f_f_f, js_pow ),
-     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46695:23: note: there is 1 candidate
-quickjs.h:1107:6: note: candidate 1: ‘template<class auto:4> auto JS_CFUNC_F_F_F_DEF(const char*, uint8_t, auto:4)’
- auto JS_CFUNC_F_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f_f, { .f_f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~~~
-quickjs.h:1107:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46696:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [4], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("sin", 1, JS_CFUNC_f_f, sin ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46696:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46697:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [4], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("tan", 1, JS_CFUNC_f_f, tan ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46697:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46699:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("trunc", 1, JS_CFUNC_f_f, trunc ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46699:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46700:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, double (&)(double))’
-     JS_CFUNC_F_F_DEF("sign", 1, JS_CFUNC_f_f, js_math_sign ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46700:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46701:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("cosh", 1, JS_CFUNC_f_f, cosh ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46701:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46702:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("sinh", 1, JS_CFUNC_f_f, sinh ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46702:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46703:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("tanh", 1, JS_CFUNC_f_f, tanh ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46703:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46704:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("acosh", 1, JS_CFUNC_f_f, acosh ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46704:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46705:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("asinh", 1, JS_CFUNC_f_f, asinh ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46705:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46706:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("atanh", 1, JS_CFUNC_f_f, atanh ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46706:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46707:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("expm1", 1, JS_CFUNC_f_f, expm1 ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46707:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46708:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("log1p", 1, JS_CFUNC_f_f, log1p ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46708:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46709:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("log2", 1, JS_CFUNC_f_f, log2 ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46709:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46710:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [6], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("log10", 1, JS_CFUNC_f_f, log10 ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46710:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46711:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [5], int, JSCFunctionEnum, <unresolved overloaded function type>)’
-     JS_CFUNC_F_F_DEF("cbrt", 1, JS_CFUNC_f_f, cbrt ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46711:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46714:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [9], int, JSCFunctionEnum, double (&)(double))’
-     JS_CFUNC_F_F_DEF("f16round", 1, JS_CFUNC_f_f, js_math_f16round ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46714:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.c:46715:21: error: no matching function for call to ‘JS_CFUNC_F_F_DEF(const char [7], int, JSCFunctionEnum, double (&)(double))’
-     JS_CFUNC_F_F_DEF("fround", 1, JS_CFUNC_f_f, js_math_fround ),
-     ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-quickjs.c:46715:21: note: there is 1 candidate
-quickjs.h:1106:6: note: candidate 1: ‘template<class auto:3> auto JS_CFUNC_F_F_DEF(const char*, uint8_t, auto:3)’
- auto JS_CFUNC_F_F_DEF(const char* name, uint8_t length, auto func1) { return JSCFunctionListEntry{ name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_CFUNC, 0, { .func = { length, JS_CFUNC_f_f, { .f_f = func1 } } } }; }
-      ^~~~~~~~~~~~~~~~
-quickjs.h:1106:6: note: candidate expects 3 arguments, 4 provided
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:46719:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Math", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:46720:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("E", 2.718281828459045, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:46721:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("LN10", 2.302585092994046, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:46722:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("LN2", 0.6931471805599453, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:46723:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("LOG2E", 1.4426950408889634, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:46724:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("LOG10E", 0.4342944819032518, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:46725:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("PI", 3.141592653589793, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:46726:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("SQRT1_2", 0.7071067811865476, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:46727:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("SQRT2", 1.4142135623730951, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1118:89: error: either all initializer clauses should be designated or none of them should be
- #define JS_OBJECT_DEF(name, tab, len, prop_flags) { name, prop_flags, JS_DEF_OBJECT, 0, .u = { .prop_list = { tab, len } } }
-                                                                                         ^
-quickjs.c:46731:5: note: in expansion of macro ‘JS_OBJECT_DEF’
-     JS_OBJECT_DEF("Math", js_math_funcs, countof(js_math_funcs), JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~
 quickjs.c: In function ‘int lre_check_stack_overflow(void*, size_t)’:
 quickjs.c:47286:22: warning: invalid conversion from ‘void*’ to ‘JSContext*’ [-fpermissive]
      JSContext *ctx = opaque;
@@ -2730,61 +2047,6 @@ quickjs.c: In function ‘__JSValue* js_regexp_Symbol_replace(JSContext*, JSValu
 quickjs.c:48244:22: warning: comparison of integer expressions of different signedness: ‘int’ and ‘uint32_t’ {aka ‘unsigned int’} [-Wsign-compare]
          for(n = 1; n < nCaptures; n++) {
                     ~~^~~~~~~~~~~
-quickjs.c: At global scope:
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:48519:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("global", js_regexp_get_flag, nullptr, LRE_FLAG_GLOBAL ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:48520:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("ignoreCase", js_regexp_get_flag, nullptr, LRE_FLAG_IGNORECASE ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:48521:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("multiline", js_regexp_get_flag, nullptr, LRE_FLAG_MULTILINE ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:48522:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("dotAll", js_regexp_get_flag, nullptr, LRE_FLAG_DOTALL ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:48523:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("unicode", js_regexp_get_flag, nullptr, LRE_FLAG_UNICODE ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:48524:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("unicodeSets", js_regexp_get_flag, nullptr, LRE_FLAG_UNICODE_SETS ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:48525:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("sticky", js_regexp_get_flag, nullptr, LRE_FLAG_STICKY ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:48526:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("hasIndices", js_regexp_get_flag, nullptr, LRE_FLAG_INDICES ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:48540:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "RegExp String Iterator", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int json_parse_record_resize_hash(JSContext*, JSONParseRecordObject*, uint32_t)’:
 quickjs.c:48668:31: warning: invalid conversion from ‘void*’ to ‘uint32_t*’ {aka ‘unsigned int*’} [-fpermissive]
      new_hash_table = js_malloc(ctx, sizeof(new_hash_table[0]) * new_hash_size);
@@ -2809,31 +2071,6 @@ quickjs.c: In function ‘__JSValue* internalize_json_property(JSContext*, JSVal
 quickjs.c:49014:25: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
                  if (idx < pr->u.array.count) {
                      ~~~~^~~~~~~~~~~~~~~~~~~
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:49679:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "JSON", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1118:89: error: either all initializer clauses should be designated or none of them should be
- #define JS_OBJECT_DEF(name, tab, len, prop_flags) { name, prop_flags, JS_DEF_OBJECT, 0, .u = { .prop_list = { tab, len } } }
-                                                                                         ^
-quickjs.c:49683:5: note: in expansion of macro ‘JS_OBJECT_DEF’
-     JS_OBJECT_DEF("JSON", js_json_funcs, countof(js_json_funcs), JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:49853:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Reflect", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1118:89: error: either all initializer clauses should be designated or none of them should be
- #define JS_OBJECT_DEF(name, tab, len, prop_flags) { name, prop_flags, JS_DEF_OBJECT, 0, .u = { .prop_list = { tab, len } } }
-                                                                                         ^
-quickjs.c:49857:5: note: in expansion of macro ‘JS_OBJECT_DEF’
-     JS_OBJECT_DEF("Reflect", js_reflect_funcs, countof(js_reflect_funcs), JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~
 quickjs.c: In function ‘void js_proxy_finalizer(JSRuntime*, JSValue)’:
 quickjs.c:49864:34: warning: invalid conversion from ‘void*’ to ‘JSProxyData*’ [-fpermissive]
      JSProxyData *s = JS_GetOpaque(val, JS_CLASS_PROXY);
@@ -2889,13 +2126,6 @@ quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruc
 quickjs.c:50911:9: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      p = JS_VALUE_GET_PTR(val);
          ^~~~~~~~~~~~~~~~
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:50926:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Symbol", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘__JSValue* js_symbol_keyFor(JSContext*, JSValueConst, int, const __JSValue**)’:
 quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
  #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
@@ -2905,85 +2135,6 @@ quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruc
 quickjs.c:50948:9: note: in expansion of macro ‘JS_VALUE_GET_PTR’
      p = JS_VALUE_GET_PTR(argv[0]);
          ^~~~~~~~~~~~~~~~
-quickjs.c: At global scope:
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50957:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("toPrimitive", JS_ATOM_Symbol_toPrimitive, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50958:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("iterator", JS_ATOM_Symbol_iterator, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50959:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("match", JS_ATOM_Symbol_match, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50960:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("matchAll", JS_ATOM_Symbol_matchAll, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50961:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("replace", JS_ATOM_Symbol_replace, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50962:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("search", JS_ATOM_Symbol_search, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50963:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("split", JS_ATOM_Symbol_split, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50964:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("toStringTag", JS_ATOM_Symbol_toStringTag, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50965:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("isConcatSpreadable", JS_ATOM_Symbol_isConcatSpreadable, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50966:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("hasInstance", JS_ATOM_Symbol_hasInstance, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50967:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("species", JS_ATOM_Symbol_species, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50968:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("unscopables", JS_ATOM_Symbol_unscopables, 0),
-     ^~~~~~~~~~~~~~~~
-quickjs.h:1116:90: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_ATOM_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_ATOM, 0, .u = { .i32 = val } }
-                                                                                          ^
-quickjs.c:50969:5: note: in expansion of macro ‘JS_PROP_ATOM_DEF’
-     JS_PROP_ATOM_DEF("asyncIterator", JS_ATOM_Symbol_asyncIterator, 0),
-     ^~~~~~~~~~~~~~~~
 quickjs.c: In function ‘BOOL js_weakref_is_target(JSValueConst)’:
 quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSAtomStruct*’ {aka ‘JSString*’} [-fpermissive]
  #define JS_VALUE_GET_PTR(v) (void *)((intptr_t)(v) & ~0xf)
@@ -3205,85 +2356,6 @@ quickjs.c:52434:22: warning: invalid conversion from ‘void*’ to ‘JSMapStat
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                       |
                       void*
-quickjs.c: At global scope:
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:52492:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("size", js_map_get_size, nullptr, 0),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
-                                                                                                    ^
-quickjs.c:52497:5: note: in expansion of macro ‘JS_ALIAS_DEF’
-     JS_ALIAS_DEF("[Symbol.iterator]", "entries" ),
-     ^~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:52498:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Map", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:52503:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Map Iterator", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:52511:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("size", js_map_get_size, nullptr, MAGIC_SET ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
-                                                                                                    ^
-quickjs.c:52521:5: note: in expansion of macro ‘JS_ALIAS_DEF’
-     JS_ALIAS_DEF("keys", "values" ),
-     ^~~~~~~~~~~~
-quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
-                                                                                                    ^
-quickjs.c:52522:5: note: in expansion of macro ‘JS_ALIAS_DEF’
-     JS_ALIAS_DEF("[Symbol.iterator]", "values" ),
-     ^~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:52524:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Set", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:52529:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Set Iterator", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:52541:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "WeakMap", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:52548:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "WeakSet", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:52604:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "GeneratorFunction", JS_PROP_CONFIGURABLE),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:52611:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Generator", JS_PROP_CONFIGURABLE),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘JSPromiseStateEnum JS_PromiseState(JSContext*, JSValue)’:
 quickjs.c:52642:36: warning: invalid conversion from ‘void*’ to ‘JSPromiseData*’ [-fpermissive]
      JSPromiseData *s = JS_GetOpaque(promise, JS_CLASS_PROMISE);
@@ -3364,19 +2436,6 @@ quickjs.c:53535:22: warning: invalid conversion from ‘void*’ to ‘JSPromise
          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                       |
                       void*
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:53662:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Promise", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:53667:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "AsyncFunction", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘void js_async_from_sync_iterator_finalizer(JSRuntime*, JSValue)’:
 quickjs.c:53686:21: warning: invalid conversion from ‘void*’ to ‘JSAsyncFromSyncIteratorData*’ [-fpermissive]
          JS_GetOpaque(val, JS_CLASS_ASYNC_FROM_SYNC_ITERATOR);
@@ -3401,43 +2460,6 @@ quickjs.c:53778:21: warning: invalid conversion from ‘void*’ to ‘JSAsyncFr
          ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      |
                      void*
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:53894:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "AsyncGeneratorFunction", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:53903:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "AsyncGenerator", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:54288:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("Infinity", 1.0 / 0.0, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1114:94: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_DOUBLE_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_DOUBLE, 0, .u = { .f64 = val } }
-                                                                                              ^
-quickjs.c:54289:5: note: in expansion of macro ‘JS_PROP_DOUBLE_DEF’
-     JS_PROP_DOUBLE_DEF("NaN", NAN, 0 ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1115:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_UNDEFINED_DEF(name, prop_flags) { name, prop_flags, JS_DEF_PROP_UNDEFINED, 0, .u = { .i32 = 0 } }
-                                                                                               ^
-quickjs.c:54290:5: note: in expansion of macro ‘JS_PROP_UNDEFINED_DEF’
-     JS_PROP_UNDEFINED_DEF("undefined", 0 ),
-     ^~~~~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:54291:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "global", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘double set_date_fields(double*, int)’:
 quickjs.c:54474:19: warning: using value of assignment with ‘volatile’-qualified left operand is deprecated [-Wvolatile]
      time += (temp = m * 60000);
@@ -3448,13 +2470,6 @@ quickjs.c:54475:19: warning: using value of assignment with ‘volatile’-quali
 quickjs.c:54479:16: warning: using value of assignment with ‘volatile’-qualified left operand is deprecated [-Wvolatile]
      tv = (temp = day * 86400000) + time;   /* prevent generation of FMA */
           ~~~~~~^~~~~~~~~~~~~~~~~
-quickjs.c: At global scope:
-quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
-                                                                                                    ^
-quickjs.c:55383:5: note: in expansion of macro ‘JS_ALIAS_DEF’
-     JS_ALIAS_DEF("toGMTString", "toUTCString" ),
-     ^~~~~~~~~~~~
 quickjs.c: In function ‘__JSValue* JS_ToBigIntCtorFree(JSContext*, JSValue)’:
 quickjs.c:55476:10: warning: narrowing conversion of ‘JS_TAG_FIRST’ from ‘int’ to ‘unsigned int’ [-Wnarrowing]
      case JS_TAG_BIG_INT:
@@ -3477,13 +2492,6 @@ quickjs.h:120:29: warning: invalid conversion from ‘void*’ to ‘JSBigInt*�
 quickjs.c:55601:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
          JSBigInt *r, *p = JS_VALUE_GET_PTR(a);
                            ^~~~~~~~~~~~~~~~
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:55640:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "BigInt", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘__JSValue* js_array_buffer_constructor3(JSContext*, JSValueConst, uint64_t, uint64_t*, JSClassID, uint8_t*, void (*)(JSRuntime*, void*, void*), void*, BOOL)’:
 quickjs.c:56053:21: warning: invalid conversion from ‘void*’ to ‘JSArrayBuffer*’ [-fpermissive]
      abuf = js_malloc(ctx, sizeof(*abuf));
@@ -3574,55 +2582,6 @@ quickjs.c:56569:29: warning: invalid conversion from ‘void*’ to ‘JSArrayBu
                 ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
                              |
                              void*
-quickjs.c: At global scope:
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:56597:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("byteLength", js_array_buffer_get_byteLength, nullptr, JS_CLASS_ARRAY_BUFFER ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:56598:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("maxByteLength", js_array_buffer_get_maxByteLength, nullptr, JS_CLASS_ARRAY_BUFFER ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:56599:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("resizable", js_array_buffer_get_resizable, nullptr, JS_CLASS_ARRAY_BUFFER ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:56605:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "ArrayBuffer", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:56615:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("byteLength", js_array_buffer_get_byteLength, nullptr, JS_CLASS_SHARED_ARRAY_BUFFER ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:56616:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("maxByteLength", js_array_buffer_get_maxByteLength, nullptr, JS_CLASS_SHARED_ARRAY_BUFFER ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1110:120: error: either all initializer clauses should be designated or none of them should be
- #define JS_CGETSET_MAGIC_DEF(name, fgetter, fsetter, magic) { name, JS_PROP_CONFIGURABLE, JS_DEF_CGETSET_MAGIC, magic, .u = { .getset = { .get = { .getter_magic = fgetter }, .set = { .setter_magic = fsetter } } } }
-                                                                                                                        ^
-quickjs.c:56617:5: note: in expansion of macro ‘JS_CGETSET_MAGIC_DEF’
-     JS_CGETSET_MAGIC_DEF("growable", js_array_buffer_get_resizable, nullptr, JS_CLASS_SHARED_ARRAY_BUFFER ),
-     ^~~~~~~~~~~~~~~~~~~~
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:56620:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "SharedArrayBuffer", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘BOOL typed_array_is_oob(JSObject*)’:
 quickjs.c:56655:20: warning: comparison of integer expressions of different signedness: ‘uint32_t’ {aka ‘unsigned int’} and ‘int’ [-Wsign-compare]
      if (ta->offset > len)
@@ -3689,37 +2648,6 @@ quickjs.c:58188:34: warning: comparison of integer expressions of different sign
 quickjs.c:58194:34: warning: comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
                      for(i = 0; i < len; i++) {
                                 ~~^~~~~
-quickjs.c: At global scope:
-quickjs.h:1119:100: error: either all initializer clauses should be designated or none of them should be
- #define JS_ALIAS_DEF(name, from) { name, JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE, JS_DEF_ALIAS, 0, .u = { .alias = { from, -1 } } }
-                                                                                                    ^
-quickjs.c:58247:5: note: in expansion of macro ‘JS_ALIAS_DEF’
-     JS_ALIAS_DEF("[Symbol.iterator]", "values" ),
-     ^~~~~~~~~~~~
-quickjs.h:1112:92: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_INT32_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_INT32, 0, .u = { .i32 = val } }
-                                                                                            ^
-quickjs.c:58279:5: note: in expansion of macro ‘JS_PROP_INT32_DEF’
-     JS_PROP_INT32_DEF("BYTES_PER_ELEMENT", 1, 0),
-     ^~~~~~~~~~~~~~~~~
-quickjs.h:1112:92: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_INT32_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_INT32, 0, .u = { .i32 = val } }
-                                                                                            ^
-quickjs.c:58280:5: note: in expansion of macro ‘JS_PROP_INT32_DEF’
-     JS_PROP_INT32_DEF("BYTES_PER_ELEMENT", 2, 0),
-     ^~~~~~~~~~~~~~~~~
-quickjs.h:1112:92: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_INT32_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_INT32, 0, .u = { .i32 = val } }
-                                                                                            ^
-quickjs.c:58281:5: note: in expansion of macro ‘JS_PROP_INT32_DEF’
-     JS_PROP_INT32_DEF("BYTES_PER_ELEMENT", 4, 0),
-     ^~~~~~~~~~~~~~~~~
-quickjs.h:1112:92: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_INT32_DEF(name, val, prop_flags) { name, prop_flags, JS_DEF_PROP_INT32, 0, .u = { .i32 = val } }
-                                                                                            ^
-quickjs.c:58282:5: note: in expansion of macro ‘JS_PROP_INT32_DEF’
-     JS_PROP_INT32_DEF("BYTES_PER_ELEMENT", 8, 0),
-     ^~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int typed_array_init(JSContext*, JSValueConst, JSValue, uint64_t, uint64_t, BOOL)’:
 quickjs.c:58304:19: warning: invalid conversion from ‘void*’ to ‘JSTypedArray*’ [-fpermissive]
      ta = js_malloc(ctx, sizeof(*ta));
@@ -3770,13 +2698,6 @@ quickjs.c:58861:23: warning: invalid conversion from ‘void*’ to ‘JSTypedAr
           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                        |
                        void*
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:58968:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "DataView", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int js_atomics_get_ptr(JSContext*, void**, JSObject**, uint64_t*, int*, JSClassID*, JSValueConst, JSValueConst, int)’:
 quickjs.c:59031:13: warning: comparison of integer expressions of different signedness: ‘uint64_t’ {aka ‘long unsigned int’} and ‘int’ [-Wsign-compare]
      if (idx >= old_len)
@@ -3787,19 +2708,6 @@ quickjs.c:59387:19: warning: invalid conversion from ‘void*’ to ‘int32_t*�
                    ^~~
                    |
                    void*
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:59479:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "Atomics", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
-quickjs.h:1118:89: error: either all initializer clauses should be designated or none of them should be
- #define JS_OBJECT_DEF(name, tab, len, prop_flags) { name, prop_flags, JS_DEF_OBJECT, 0, .u = { .prop_list = { tab, len } } }
-                                                                                         ^
-quickjs.c:59483:5: note: in expansion of macro ‘JS_OBJECT_DEF’
-     JS_OBJECT_DEF("Atomics", js_atomics_funcs, countof(js_atomics_funcs), JS_PROP_WRITABLE | JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~
 quickjs.c: In function ‘int JS_AddIntrinsicTypedArrays(JSContext*)’:
 quickjs.c:59561:9: error: jump to label ‘fail’
          fail:
@@ -3846,13 +2754,6 @@ quickjs.c:59643:39: warning: invalid conversion from ‘void*’ to ‘JSWeakRef
                           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                        |
                                        void*
-quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:59654:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "WeakRef", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘void js_finrec_finalizer(JSRuntime*, JSValue)’:
 quickjs.c:59677:51: warning: invalid conversion from ‘void*’ to ‘JSFinalizationRegistryData*’ [-fpermissive]
      JSFinalizationRegistryData *frd = JS_GetOpaque(val, JS_CLASS_FINALIZATION_REGISTRY);
@@ -3889,12 +2790,6 @@ quickjs.c:59805:52: warning: invalid conversion from ‘void*’ to ‘JSFinaliz
                                                     |
                                                     void*
 quickjs.c: At global scope:
-quickjs.h:1111:95: error: either all initializer clauses should be designated or none of them should be
- #define JS_PROP_STRING_DEF(name, cstr, prop_flags) { name, prop_flags, JS_DEF_PROP_STRING, 0, .u = { .str = cstr } }
-                                                                                               ^
-quickjs.c:59834:5: note: in expansion of macro ‘JS_PROP_STRING_DEF’
-     JS_PROP_STRING_DEF("[Symbol.toStringTag]", "FinalizationRegistry", JS_PROP_CONFIGURABLE ),
-     ^~~~~~~~~~~~~~~~~~
 quickjs.c:50501:12: warning: ‘int js_proxy_get_own_property_names(JSContext*, JSPropertyEnum**, uint32_t*, JSValueConst)’ defined but not used [-Wunused-function]
  static int js_proxy_get_own_property_names(JSContext *ctx,
             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
