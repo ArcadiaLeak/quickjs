@@ -1985,7 +1985,7 @@ void JS_FreeRuntime(JSRuntime *rt)
 
     JS_FreeValueRT(rt, rt->current_exception);
 
-    list_for_each_safe(el, el1, &rt->job_list) {
+    for(el = (&rt->job_list)->next, el1 = el->next; el != (&rt->job_list); el = el1, el1 = el->next) {
         JSJobEntry *e = list_entry(el, JSJobEntry, link);
         for(i = 0; i < e->argc; i++)
             JS_FreeValueRT(rt, e->argv[i]);
@@ -2129,7 +2129,7 @@ void JS_FreeRuntime(JSRuntime *rt)
                    "    %6s %s\n",
                    "REFCNT", "VALUE");
         }
-        list_for_each_safe(el, el1, &rt->string_list) {
+        for(el = (&rt->string_list)->next, el1 = el->next; el != (&rt->string_list); el = el1, el1 = el->next) {
             JSString *str = list_entry(el, JSString, link);
             if (rt->rt_info) {
                 printf(" ");
@@ -2268,7 +2268,7 @@ typedef enum JSFreeModuleEnum {
 static void js_free_modules(JSContext *ctx, JSFreeModuleEnum flag)
 {
     struct list_head *el, *el1;
-    list_for_each_safe(el, el1, &ctx->loaded_modules) {
+    for(el = (&ctx->loaded_modules)->next, el1 = el->next; el != (&ctx->loaded_modules); el = el1, el1 = el->next) {
         JSModuleDef *m = list_entry(el, JSModuleDef, link);
         if (flag == JS_FREE_MODULE_ALL ||
             (flag == JS_FREE_MODULE_NOT_RESOLVED && !m->resolved)) {
@@ -6292,7 +6292,7 @@ static void gc_decref(JSRuntime *rt)
     /* decrement the refcount of all the children of all the GC
        objects and move the GC objects with zero refcount to
        tmp_obj_list */
-    list_for_each_safe(el, el1, &rt->gc_obj_list) {
+    for(el = (&rt->gc_obj_list)->next, el1 = el->next; el != (&rt->gc_obj_list); el = el1, el1 = el->next) {
         p = list_entry(el, JSGCObjectHeader, link);
         assert(p->mark == 0);
         mark_children(rt, p, gc_decref_child);
@@ -6382,7 +6382,7 @@ static void gc_free_cycles(JSRuntime *rt)
     }
     rt->gc_phase = JS_GC_PHASE_NONE;
 
-    list_for_each_safe(el, el1, &rt->gc_zero_ref_count_list) {
+    for(el = (&rt->gc_zero_ref_count_list)->next, el1 = el->next; el != (&rt->gc_zero_ref_count_list); el = el1, el1 = el->next) {
         p = list_entry(el, JSGCObjectHeader, link);
         assert(p->gc_obj_type == JS_GC_OBJ_TYPE_JS_OBJECT ||
                p->gc_obj_type == JS_GC_OBJ_TYPE_FUNCTION_BYTECODE ||
@@ -20779,7 +20779,7 @@ static void js_async_generator_free(JSRuntime *rt,
     struct list_head *el, *el1;
     JSAsyncGeneratorRequest *req;
 
-    list_for_each_safe(el, el1, &s->queue) {
+    for(el = (&s->queue)->next, el1 = el->next; el != (&s->queue); el = el1, el1 = el->next) {
         req = list_entry(el, JSAsyncGeneratorRequest, link);
         JS_FreeValueRT(rt, req->result);
         JS_FreeValueRT(rt, req->promise);
@@ -31564,7 +31564,7 @@ static void js_free_function_def(JSContext *ctx, JSFunctionDef *fd)
     struct list_head *el, *el1;
 
     /* free the child functions */
-    list_for_each_safe(el, el1, &fd->child_list) {
+    for(el = (&fd->child_list)->next, el1 = el->next; el != (&fd->child_list); el = el1, el1 = el->next) {
         JSFunctionDef *fd1;
         fd1 = list_entry(el, JSFunctionDef, link);
         js_free_function_def(ctx, fd1);
@@ -35465,7 +35465,7 @@ static JSValue js_create_function(JSContext *ctx, JSFunctionDef *fd)
     } 
 
     /* first create all the child functions */
-    list_for_each_safe(el, el1, &fd->child_list) {
+    for(el = (&fd->child_list)->next, el1 = el->next; el != (&fd->child_list); el = el1, el1 = el->next) {
         JSFunctionDef *fd1;
         int cpool_idx;
 
@@ -51385,7 +51385,7 @@ static void map_delete_weakrefs(JSRuntime *rt, JSWeakRefHeader *wh)
     JSMapRecord *mr1, **pmr;
     uint32_t h;
 
-    list_for_each_safe(el, el1, &s->records) {
+    for(el = (&s->records)->next, el1 = el->next; el != (&s->records); el = el1, el1 = el->next) {
         JSMapRecord *mr = list_entry(el, JSMapRecord, link);
         if (!js_weakref_is_live(mr->key)) {
 
@@ -51558,7 +51558,7 @@ static JSValue js_map_clear(JSContext *ctx, JSValueConst this_val,
     /* remove from the hash table */
     memset(s->hash_table, 0, sizeof(s->hash_table[0]) * s->hash_size);
     
-    list_for_each_safe(el, el1, &s->records) {
+    for(el = (&s->records)->next, el1 = el->next; el != (&s->records); el = el1, el1 = el->next) {
         mr = list_entry(el, JSMapRecord, link);
         map_delete_record_internal(ctx->rt, s, mr);
     }
@@ -51750,7 +51750,7 @@ static void js_map_finalizer(JSRuntime *rt, JSValue val)
     if (s) {
         /* if the object is deleted we are sure that no iterator is
            using it */
-        list_for_each_safe(el, el1, &s->records) {
+        for(el = (&s->records)->next, el1 = el->next; el != (&s->records); el = el1, el1 = el->next) {
             mr = list_entry(el, JSMapRecord, link);
             if (!mr->empty) {
                 if (s->is_weak)
@@ -52738,7 +52738,7 @@ static void fulfill_or_reject_promise(JSContext *ctx, JSValueConst promise,
         }
     }
 
-    list_for_each_safe(el, el1, &s->promise_reactions[is_reject]) {
+    for(el = (&s->promise_reactions[is_reject])->next, el1 = el->next; el != (&s->promise_reactions[is_reject]); el = el1, el1 = el->next) {
         rd = list_entry(el, JSPromiseReactionData, link);
         args[0] = rd->resolving_funcs[0];
         args[1] = rd->resolving_funcs[1];
@@ -52750,7 +52750,7 @@ static void fulfill_or_reject_promise(JSContext *ctx, JSValueConst promise,
         promise_reaction_data_free(ctx->rt, rd);
     }
 
-    list_for_each_safe(el, el1, &s->promise_reactions[1 - is_reject]) {
+    for(el = (&s->promise_reactions[1 - is_reject])->next, el1 = el->next; el != (&s->promise_reactions[1 - is_reject]); el = el1, el1 = el->next) {
         rd = list_entry(el, JSPromiseReactionData, link);
         list_del(&rd->link);
         promise_reaction_data_free(ctx->rt, rd);
@@ -52920,7 +52920,7 @@ static void js_promise_finalizer(JSRuntime *rt, JSValue val)
     if (!s)
         return;
     for(i = 0; i < 2; i++) {
-        list_for_each_safe(el, el1, &s->promise_reactions[i]) {
+        for(el = (&s->promise_reactions[i])->next, el1 = el->next; el != (&s->promise_reactions[i]); el = el1, el1 = el->next) {
             JSPromiseReactionData *rd =
                 list_entry(el, JSPromiseReactionData, link);
             promise_reaction_data_free(rt, rd);
@@ -56199,7 +56199,7 @@ static void js_array_buffer_finalizer(JSRuntime *rt, JSValue val)
         /* The ArrayBuffer finalizer may be called before the typed
            array finalizers using it, so abuf->array_list is not
            necessarily empty. */
-        list_for_each_safe(el, el1, &abuf->array_list) {
+        for(el = (&abuf->array_list)->next, el1 = el->next; el != (&abuf->array_list); el = el1, el1 = el->next) {
             JSTypedArray *ta;
             JSObject *p1;
 
@@ -59442,7 +59442,7 @@ static JSValue js_atomics_notify(JSContext *ctx,
         /* 'argv[0]' is a SharedArrayBuffer so it cannot be detached nor reduced */
         pthread_mutex_lock(&js_atomics_mutex);
         init_list_head(&waiter_list);
-        list_for_each_safe(el, el1, &js_atomics_waiter_list) {
+        for(el = (&js_atomics_waiter_list)->next, el1 = el->next; el != (&js_atomics_waiter_list); el = el1, el1 = el->next) {
             waiter = list_entry(el, JSAtomicsWaiter, link);
             if (waiter->ptr == ptr) {
                 list_del(&waiter->link);
@@ -59678,7 +59678,7 @@ static void js_finrec_finalizer(JSRuntime *rt, JSValue val)
     JSFinalizationRegistryData *frd = JS_GetOpaque(val, JS_CLASS_FINALIZATION_REGISTRY);
     if (frd) {
         struct list_head *el, *el1;
-        list_for_each_safe(el, el1, &frd->entries) {
+        for(el = (&frd->entries)->next, el1 = el->next; el != (&frd->entries); el = el1, el1 = el->next) {
             JSFinRecEntry *fre = list_entry(el, JSFinRecEntry, link);
             js_weakref_free(rt, fre->target);
             js_weakref_free(rt, fre->token);
@@ -59717,7 +59717,7 @@ static void finrec_delete_weakref(JSRuntime *rt, JSWeakRefHeader *wh)
     JSFinalizationRegistryData *frd = container_of(wh, JSFinalizationRegistryData, weakref_header);
     struct list_head *el, *el1;
 
-    list_for_each_safe(el, el1, &frd->entries) {
+    for(el = (&frd->entries)->next, el1 = el->next; el != (&frd->entries); el = el1, el1 = el->next) {
         JSFinRecEntry *fre = list_entry(el, JSFinRecEntry, link);
 
         if (!js_weakref_is_live(fre->token)) {
@@ -59815,7 +59815,7 @@ static JSValue js_finrec_unregister(JSContext *ctx, JSValueConst this_val, int a
         return JS_ThrowTypeError(ctx, "invalid unregister token");
 
     removed = FALSE;
-    list_for_each_safe(el, el1, &frd->entries) {
+    for(el = (&frd->entries)->next, el1 = el->next; el != (&frd->entries); el = el1, el1 = el->next) {
         JSFinRecEntry *fre = list_entry(el, JSFinRecEntry, link);
         if (js_weakref_is_live(fre->token) && js_same_value(ctx, fre->token, token)) {
             js_weakref_free(ctx->rt, fre->target);

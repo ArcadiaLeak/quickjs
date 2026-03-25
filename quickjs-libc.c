@@ -3528,7 +3528,7 @@ static void js_free_message_pipe(JSWorkerMessagePipe *ps)
     ref_count = atomic_add_int(&ps->ref_count, -1);
     assert(ref_count >= 0);
     if (ref_count == 0) {
-        list_for_each_safe(el, el1, &ps->msg_queue) {
+        for(el = (&ps->msg_queue)->next, el1 = el->next; el != (&ps->msg_queue); el = el1, el1 = el->next) {
             msg = list_entry(el, JSWorkerMessage, link);
             js_free_message(msg);
         }
@@ -4130,22 +4130,22 @@ void js_std_free_handlers(JSRuntime *rt)
     JSThreadState *ts = JS_GetRuntimeOpaque(rt);
     struct list_head *el, *el1;
 
-    list_for_each_safe(el, el1, &ts->os_rw_handlers) {
+    for(el = (&ts->os_rw_handlers)->next, el1 = el->next; el != (&ts->os_rw_handlers); el = el1, el1 = el->next) {
         JSOSRWHandler *rh = list_entry(el, JSOSRWHandler, link);
         free_rw_handler(rt, rh);
     }
 
-    list_for_each_safe(el, el1, &ts->os_signal_handlers) {
+    for(el = (&ts->os_signal_handlers)->next, el1 = el->next; el != (&ts->os_signal_handlers); el = el1, el1 = el->next) {
         JSOSSignalHandler *sh = list_entry(el, JSOSSignalHandler, link);
         free_sh(rt, sh);
     }
 
-    list_for_each_safe(el, el1, &ts->os_timers) {
+    for(el = (&ts->os_timers)->next, el1 = el->next; el != (&ts->os_timers); el = el1, el1 = el->next) {
         JSOSTimer *th = list_entry(el, JSOSTimer, link);
         free_timer(rt, th);
     }
 
-    list_for_each_safe(el, el1, &ts->rejected_promise_list) {
+    for(el = (&ts->rejected_promise_list)->next, el1 = el->next; el != (&ts->rejected_promise_list); el = el1, el1 = el->next) {
         JSRejectedPromiseEntry *rp = list_entry(el, JSRejectedPromiseEntry, link);
         JS_FreeValueRT(rt, rp->promise);
         JS_FreeValueRT(rt, rp->reason);
@@ -4156,7 +4156,7 @@ void js_std_free_handlers(JSRuntime *rt)
     js_free_message_pipe(ts->recv_pipe);
     js_free_message_pipe(ts->send_pipe);
 
-    list_for_each_safe(el, el1, &ts->port_list) {
+    for(el = (&ts->port_list)->next, el1 = el->next; el != (&ts->port_list); el = el1, el1 = el->next) {
         JSWorkerMessageHandler *port = list_entry(el, JSWorkerMessageHandler, link);
         /* unlink the message ports. They are freed by the Worker object */
         port->link.prev = nullptr;

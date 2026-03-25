@@ -574,7 +574,7 @@ static void js_agent_free(JSContext *ctx)
     struct list_head *el, *el1;
     Test262Agent *agent;
 
-    list_for_each_safe(el, el1, &agent_list) {
+    for(el = (&agent_list)->next, el1 = el->next; el != (&agent_list); el = el1, el1 = el->next) {
         agent = list_entry(el, Test262Agent, link);
         pthread_join(agent->tid, nullptr);
         JS_FreeValue(ctx, agent->broadcast_sab);
