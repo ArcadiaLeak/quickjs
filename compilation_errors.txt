@@ -1,87 +1,3 @@
-quickjs.c:6821:59: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6821 |     fprintf(fp, "QuickJS memory usage -- " CONFIG_VERSION " version, %d-bit, malloc limit: %"PRId64"\n\n",
-      |                                                           ^
-quickjs.c:6883:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6883 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per block)\n",
-      |                     ^
-quickjs.c:6883:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6883 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per block)\n",
-      |                                     ^
-quickjs.c:6886:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6886 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%d overhead, %0.1f average slack)\n",
-      |                     ^
-quickjs.c:6886:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6886 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%d overhead, %0.1f average slack)\n",
-      |                                     ^
-quickjs.c:6892:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6892 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per atom)\n",
-      |                     ^
-quickjs.c:6892:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6892 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per atom)\n",
-      |                                     ^
-quickjs.c:6897:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6897 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per string)\n",
-      |                     ^
-quickjs.c:6897:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6897 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per string)\n",
-      |                                     ^
-quickjs.c:6902:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6902 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per object)\n",
-      |                     ^
-quickjs.c:6902:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6902 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per object)\n",
-      |                                     ^
-quickjs.c:6905:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6905 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per object)\n",
-      |                     ^
-quickjs.c:6905:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6905 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per object)\n",
-      |                                     ^
-quickjs.c:6908:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6908 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per shape)\n",
-      |                     ^
-quickjs.c:6908:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6908 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per shape)\n",
-      |                                     ^
-quickjs.c:6913:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6913 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"\n",
-      |                     ^
-quickjs.c:6913:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6913 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"\n",
-      |                                     ^
-quickjs.c:6915:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6915 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per function)\n",
-      |                     ^
-quickjs.c:6915:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6915 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per function)\n",
-      |                                     ^
-quickjs.c:6919:25: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6919 |             fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per function)\n",
-      |                         ^
-quickjs.c:6919:41: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6919 |             fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per function)\n",
-      |                                         ^
-quickjs.c:6926:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6926 |         fprintf(fp, "%-20s %8"PRId64"\n", "C functions", s->c_func_count);
-      |                     ^
-quickjs.c:6929:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6929 |         fprintf(fp, "%-20s %8"PRId64"\n", "arrays", s->array_count);
-      |                     ^
-quickjs.c:6931:25: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6931 |             fprintf(fp, "%-20s %8"PRId64"\n", "  fast arrays", s->fast_array_count);
-      |                         ^
-quickjs.c:6932:25: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6932 |             fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per fast array)\n",
-      |                         ^
-quickjs.c:6932:41: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6932 |             fprintf(fp, "%-20s %8"PRId64" %8"PRId64"  (%0.1f per fast array)\n",
-      |                                         ^
-quickjs.c:6939:21: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6939 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"\n",
-      |                     ^
-quickjs.c:6939:37: warning: invalid suffix on literal; C++11 requires a space between literal and string macro [-Wliteral-suffix]
- 6939 |         fprintf(fp, "%-20s %8"PRId64" %8"PRId64"\n",
-      |                                     ^
 quickjs.c:190:22: warning: uninitialized ‘const typed_array_size_log2’ [-fpermissive]
   190 | static uint8_t const typed_array_size_log2[JS_TYPED_ARRAY_COUNT];
       |                      ^~~~~~~~~~~~~~~~~~~~~
@@ -381,14 +297,6 @@ quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSGCObjectH
 quickjs.c:6155:27: note: in expansion of macro ‘JS_VALUE_GET_PTR’
  6155 |             mark_func(rt, JS_VALUE_GET_PTR(val));
       |                           ^~~~~~~~~~~~~~~~
-quickjs.c: In function ‘void JS_DumpMemoryUsage(FILE*, const JSMemoryUsage*, JSRuntime*)’:
-quickjs.c:6821:43: error: expected ‘)’ before ‘CONFIG_VERSION’
- 6821 |     fprintf(fp, "QuickJS memory usage -- " CONFIG_VERSION " version, %d-bit, malloc limit: %"PRId64"\n\n",
-      |            ~                              ^~~~~~~~~~~~~~~
-      |                                           )
-quickjs.c:6821:17: warning: too many arguments for format [-Wformat-extra-args]
- 6821 |     fprintf(fp, "QuickJS memory usage -- " CONFIG_VERSION " version, %d-bit, malloc limit: %"PRId64"\n\n",
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~
 quickjs.c: In function ‘int JS_AutoInitProperty(JSContext*, JSObject*, JSAtom, JSProperty*, JSShapeProperty*)’:
 quickjs.h:242:36: warning: invalid conversion from ‘void*’ to ‘JSVarRef*’ [-fpermissive]
   242 | #define JS_VALUE_GET_PTR(v) ((v).u.ptr)
