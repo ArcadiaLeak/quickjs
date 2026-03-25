@@ -20,6 +20,7 @@ qjscalc
 qjscalc.c
 repl.c
 run-test262
+run-test262-debug
 run-test262.exe
 test262
 test262_*.txt
